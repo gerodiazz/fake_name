@@ -157,7 +157,7 @@ export default async function DiagnosticoCompartido({
               Hacer el diagnóstico
             </a>
             <a
-              href="/#referidos"
+              href="/referidos"
               className="min-h-[44px] inline-flex items-center text-[13px] lowercase text-tinta-2 transition-opacity duration-100 hover:text-tinta active:opacity-55"
             >
               cómo funciona el programa de referidos

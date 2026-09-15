@@ -7,8 +7,14 @@
  * estimación, no la de un cliente inventado. Debajo, la lista de procesos y el
  * plazo, en una línea.
  *
- * El número es una ESTIMACIÓN y el texto lo dice: horas involucradas en esos
- * procesos, calculadas sobre promedios del rubro. No se promete recuperarlas.
+ * El número es una ESTIMACIÓN y el texto lo dice, dos veces y en dos lugares
+ * distintos: debajo del número, donde se explica qué mide y qué no, y al pie
+ * del bloque. Son las horas que hoy se van en hacer esos procesos a mano,
+ * calculadas sobre promedios del rubro. No se promete recuperarlas: prometer
+ * un ahorro sobre una estimación de seis preguntas sería inventar una métrica.
+ *
+ * Debajo del CTA está lo que el visitante se lleva si agenda. Antes el
+ * recorrido terminaba en un botón sin decir qué había del otro lado.
  */
 
 import NumeroGigante from "@/components/NumeroGigante";
@@ -92,6 +98,13 @@ export default function Resultado({
         </p>
       </BandaKlein>
 
+      {/* Qué mide el número, dicho acá y no al pie: es donde se lo mira. */}
+      <p className="mt-6 max-w-[52ch] text-[14px] leading-relaxed text-tinta-2">
+        Es el tiempo que hoy se va en hacer estos procesos a mano, sumado a lo
+        largo de un año. No es un ahorro prometido ni un precio: es el tamaño
+        del problema, para saber si vale la pena resolverlo.
+      </p>
+
       {/* La lista de procesos queda a la vista: es el alcance del trabajo. */}
       <div className="mt-10">
         <p className="kicker kicker-tinta">
@@ -139,6 +152,32 @@ export default function Resultado({
         Estimación sobre promedios del rubro. En la reunión se ajusta con datos
         reales.
       </p>
+
+      {/* Qué hay del otro lado del botón. Son las tres cosas que salen de la
+          reunión, y las tres se sostienen sin haber hablado con nadie. */}
+      <div className="hairline hairline-t mt-10 pt-6">
+        <p className="kicker kicker-tinta">Qué sale de la reunión</p>
+        <ul className="mt-4 max-w-[52ch]">
+          {[
+            "Esta misma lista revisada sobre el proceso real, no sobre promedios.",
+            "Alcance, plazo y precio cerrados por escrito, o la respuesta de que no hay nada que automatizar.",
+            "Una estimación del costo mensual de las APIs según el volumen de uso.",
+          ].map((linea) => (
+            <li
+              key={linea}
+              className="flex gap-3 py-1.5 text-[14px] leading-relaxed text-tinta-2"
+            >
+              <span aria-hidden="true" className="select-none">
+                ·
+              </span>
+              <span>{linea}</span>
+            </li>
+          ))}
+        </ul>
+        <p className="mt-3 text-[13px] text-tinta-2">
+          45 minutos, sin costo y sin compromiso.
+        </p>
+      </div>
 
       {/* Enganche de referidos, dentro del mismo bloque. */}
       <EngancheReferidos

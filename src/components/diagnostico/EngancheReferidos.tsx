@@ -3,8 +3,8 @@
 /**
  * ENGANCHE DE REFERIDOS — vive dentro de la sección 02, debajo del resultado.
  *
- * Aquí no se explica el programa completo (eso es la sección 04): se ofrece el
- * atajo y el monto.
+ * Aquí no se explica el programa completo (eso es /referidos, que tiene su
+ * propia página): se ofrece el atajo y el monto.
  *
  * El botón de compartir arma un mensaje de WhatsApp con el resultado y el
  * código de referido. El enlace incluido apunta a /d, una página que genera
@@ -13,6 +13,7 @@
  */
 
 import { useState } from "react";
+import Link from "next/link";
 import { REFERIDOS, enDolares } from "@/lib/referidos";
 
 type Props = {
@@ -123,18 +124,18 @@ export default function EngancheReferidos({
         <span className="tabular-nums text-tinta">{codigo || "—"}</span>
       </p>
 
-      {/* Ancla a la sección 04, donde está toda la mecánica. */}
-      <a
-        href="#referidos"
+      {/* A la página del programa, donde está toda la mecánica. */}
+      <Link
+        href="/referidos"
         className="
           mt-5 inline-flex min-h-[44px] items-center gap-2 text-[13px]
           text-tinta-2 transition-[opacity,transform] duration-100
           hover:text-tinta active:opacity-55
         "
       >
-        <span aria-hidden="true">↓</span>
+        <span aria-hidden="true">→</span>
         Cómo funciona el programa de referidos
-      </a>
+      </Link>
     </div>
   );
 }

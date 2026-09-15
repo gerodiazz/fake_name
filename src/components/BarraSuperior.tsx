@@ -4,8 +4,7 @@
  * BARRA SUPERIOR — el índice del expediente
  *
  * No es un menú de sitio: es el índice de un documento numerado. Cada sección
- * aparece con su número (02 a 07) y la que se está leyendo es la única en
- * Klein. Eso reemplaza cualquier subrayado, pastilla o caja: el color hace de
+ * aparece con su número y la que se está leyendo es la única en Klein. Eso reemplaza cualquier subrayado, pastilla o caja: el color hace de
  * indicador y el resto sigue siendo tinta sobre papel.
  *
  * La marca a la izquierda hace de 01: vuelve al hero.
@@ -21,25 +20,21 @@
  */
 
 import { useEffect, useRef, useState } from "react";
+import { SECCIONES, SECCIONES_DEL_INDICE } from "@/lib/secciones";
 import { SITIO } from "@/lib/sitio";
 
 /**
- * Las secciones tal como están en la página, en orden. Los números y los ids
- * tienen que coincidir con los de `src/app/page.tsx`: si una sección cambia de
- * número, se cambia en los dos lugares.
+ * Las secciones del índice salen de src/lib/secciones.ts, que es el mismo
+ * lugar del que las lee la home. Antes estaban escritas dos veces —acá y en
+ * page.tsx— con sus números a mano: reordenar la página significaba editar los
+ * dos archivos y confiar en no equivocarse.
  *
- * Los nombres son más cortos que los kickers de cada sección ("Agendar" en vez
- * de "Agendar diagnóstico"): a 11px y en mayúsculas, seis nombres largos no
- * entran en una línea.
+ * El índice de desktop muestra solo las secciones marcadas `enIndice`: a 11px
+ * y en mayúsculas, once nombres no entran en un renglón. El panel de mobile
+ * las muestra todas, porque ahí hay lugar de sobra.
  */
-const SECCIONES = [
-  { id: "diagnostico", numero: "02", nombre: "Diagnóstico" },
-  { id: "como-trabajamos", numero: "03", nombre: "Cómo trabajamos" },
-  { id: "referidos", numero: "04", nombre: "Referidos" },
-  { id: "socios", numero: "05", nombre: "Socios" },
-  { id: "faq", numero: "06", nombre: "Preguntas" },
-  { id: "contacto", numero: "07", nombre: "Agendar" },
-] as const;
+const DE_DESKTOP = SECCIONES_DEL_INDICE;
+const DE_MOBILE = SECCIONES.filter((seccion) => seccion.id !== "contenido");
 
 /** Alto de la barra si todavía no se pudo medir el nodo. */
 const ALTO_BARRA_FALLBACK = 56;
@@ -63,7 +58,7 @@ export default function BarraSuperior() {
       const limite = (barra.current?.offsetHeight ?? ALTO_BARRA_FALLBACK) + 8;
 
       let actual = "";
-      for (const seccion of SECCIONES) {
+      for (const seccion of DE_MOBILE) {
         const nodo = document.getElementById(seccion.id);
         if (nodo && nodo.getBoundingClientRect().top <= limite) {
           actual = seccion.id;
@@ -76,7 +71,7 @@ export default function BarraSuperior() {
       const fondo =
         window.scrollY + window.innerHeight >=
         document.documentElement.scrollHeight - 4;
-      if (fondo) actual = SECCIONES[SECCIONES.length - 1].id;
+      if (fondo) actual = DE_MOBILE[DE_MOBILE.length - 1].id;
 
       setActiva(actual);
     };
@@ -127,7 +122,7 @@ export default function BarraSuperior() {
         {/* Índice completo, de md para arriba. Los números aparecen recién en
             lg: antes de eso el renglón queda justo. */}
         <ul className="hidden items-center gap-6 md:flex lg:gap-7">
-          {SECCIONES.map((seccion) => {
+          {DE_DESKTOP.map((seccion) => {
             const esActiva = activa === seccion.id;
             return (
               <li key={seccion.id}>
@@ -140,7 +135,7 @@ export default function BarraSuperior() {
                   <span aria-hidden="true" className="nav-numero hidden lg:inline">
                     {seccion.numero}
                   </span>
-                  {seccion.nombre}
+                  {seccion.corto}
                 </a>
               </li>
             );
@@ -175,7 +170,7 @@ export default function BarraSuperior() {
         className="absolute inset-x-0 top-full hairline hairline-b bg-papel md:hidden"
       >
         <ul className="mx-auto w-full max-w-[1120px] px-5">
-          {SECCIONES.map((seccion, i) => {
+          {DE_MOBILE.map((seccion, i) => {
             const esActiva = activa === seccion.id;
             return (
               <li key={seccion.id} className={i > 0 ? "hairline hairline-t" : ""}>
@@ -193,7 +188,7 @@ export default function BarraSuperior() {
                     {seccion.numero}
                   </span>
                   <span className="font-serif text-[19px] leading-snug">
-                    {seccion.nombre}
+                    {seccion.corto}
                   </span>
                 </a>
               </li>

@@ -4,8 +4,14 @@
  * "fakename" es un nombre provisorio y aparece como tal en todo el sitio.
  * Cuando se defina el nombre real, se cambia aquí y en los textos de marca.
  *
- * Los datos de contacto están marcados como PLACEHOLDER: hay que completarlos
- * antes de publicar. No se inventan datos de clientes en ningún lado.
+ * CRITERIO PARA LOS DATOS QUE FALTAN
+ *
+ * Un dato que todavía no es real no se rellena con uno inventado: se deja en
+ * null y la parte del sitio que lo muestra desaparece hasta que exista. Un
+ * teléfono falso o un nombre "PLACEHOLDER" a la vista cuesta más que no
+ * mostrar nada.
+ *
+ * El inventario completo de lo que falta está en DATOS-PENDIENTES.md.
  */
 
 export const SITIO = {
@@ -25,26 +31,51 @@ export const SITIO = {
   /** Dominio de producción. Cambiar cuando exista el definitivo. */
   url: process.env.NEXT_PUBLIC_URL_SITIO ?? "https://fakename.com.ar",
 
-  /* --- PLACEHOLDER: completar antes de publicar --- */
+  /**
+   * PLACEHOLDER — BLOQUEANTE PARA PUBLICAR.
+   * Es la dirección a la que va el formulario de contacto: si no es real, el
+   * sitio no recibe nada. Es el único dato de relleno que queda visible,
+   * porque sin una dirección el formulario no tiene a dónde ir.
+   */
   email: "hola@fakename.com.ar",
-  telefono: "+54 9 11 0000 0000",
+
+  /**
+   * Teléfono de contacto. En null mientras no sea real: el bloque de contacto
+   * directo simplemente no lo muestra.
+   */
+  telefono: null as string | null,
   /** Formato E.164 sin signos, para armar enlaces de WhatsApp. */
-  telefonoWhatsApp: "5491100000000",
-  ciudad: "Buenos Aires, Argentina",
+  telefonoWhatsApp: null as string | null,
+  /** Ciudad, cuando se quiera mostrar dónde está el estudio. */
+  ciudad: null as string | null,
+
+  /**
+   * Enlace de agendamiento directo (Cal.com, Calendly o el que se use). En
+   * null, el sitio ofrece solo el formulario; apenas exista la URL, aparece el
+   * botón de "Agendar directo" al lado del formulario, sin tocar código.
+   */
+  agenda: null as string | null,
 } as const;
 
 /**
- * Los dos socios. Viven aquí, y no dentro de la sección 05, porque los datos
- * estructurados del layout los necesitan para declarar los founders de la
- * organización.
+ * Los dos socios.
+ *
+ * Viven aquí, y no dentro de la sección, porque los datos estructurados del
+ * layout los necesitan para declarar los founders de la organización.
  *
  * ┌──────────────────────────────────────────────────────────────────────┐
- * │ PLACEHOLDER — COMPLETAR ANTES DE PUBLICAR                            │
- * │ Nombre, trayectoria y foto son de relleno. La trayectoria tiene que   │
- * │ ser verificable: una línea, sin adjetivos.                            │
+ * │ ARREGLO VACÍO A PROPÓSITO — COMPLETAR ANTES DE PUBLICAR              │
  * │                                                                       │
- * │ Para la foto: poner el archivo en /public/socios/ y cambiar `foto` a   │
- * │ su ruta. El componente pasa solo a usar next/image.                   │
+ * │ Antes había dos objetos con "PLACEHOLDER · Nombre del primer socio" y │
+ * │ un recuadro que decía "Foto pendiente". Eso se veía en producción.    │
+ * │                                                                       │
+ * │ Mientras el arreglo esté vacío, la sección 05 muestra solo lo que sí  │
+ * │ es cierto: que son dos y que el desarrollo no se terceriza. Al cargar │
+ * │ los dos objetos aparecen las fichas, y los founders de los datos      │
+ * │ estructurados se completan solos.                                     │
+ * │                                                                       │
+ * │ La trayectoria tiene que ser verificable: una línea, sin adjetivos.   │
+ * │ Para la foto: el archivo va en /public/socios/ y `foto` apunta ahí.   │
  * └──────────────────────────────────────────────────────────────────────┘
  */
 export type Socio = {
@@ -57,19 +88,4 @@ export type Socio = {
   alt: string;
 };
 
-export const SOCIOS: Socio[] = [
-  {
-    nombre: "PLACEHOLDER · Nombre del primer socio",
-    trayectoria:
-      "PLACEHOLDER · Una línea de trayectoria verificable: dónde trabajó, cuántos años, en qué. Sin adjetivos.",
-    foto: null,
-    alt: "Retrato del primer socio de fakename",
-  },
-  {
-    nombre: "PLACEHOLDER · Nombre del segundo socio",
-    trayectoria:
-      "PLACEHOLDER · Una línea de trayectoria verificable: dónde trabajó, cuántos años, en qué. Sin adjetivos.",
-    foto: null,
-    alt: "Retrato del segundo socio de fakename",
-  },
-];
+export const SOCIOS: Socio[] = [];

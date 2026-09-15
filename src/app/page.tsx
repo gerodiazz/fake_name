@@ -1,12 +1,19 @@
 /**
- * PÁGINA ÚNICA
+ * HOME
  *
- * Las siete secciones del expediente, en orden. El diagnóstico (02) es la
- * pieza central: todo lo que viene después se lee en función de lo que el
- * visitante contestó ahí, y el resultado viaja hasta el formulario de la 07.
+ * El recorrido sigue el orden en que un visitante decide: entender qué es
+ * esto, verlo funcionando, reconocer su propio problema, saber quién lo va a
+ * construir, entender el modelo, bajar el riesgo y recién ahí escribir.
  *
- * No hay sección de casos, testimonios, logos ni métricas de resultados. La
- * prueba del sitio es el diagnóstico: el visitante ve su propia estimación.
+ * EL ORDEN Y LA NUMERACIÓN NO ESTÁN ACÁ. Viven en src/lib/secciones.ts, que
+ * es también de donde los lee la barra superior. Cada sección recibe su número
+ * por prop: mover una sección es mover una línea de aquel arreglo, y la
+ * numeración del expediente se recalcula sola.
+ *
+ * El programa de referidos ya no está en esta página: tiene su propia ruta,
+ * /referidos. Son dos funnels distintos —uno le vende a la empresa que tiene
+ * el proceso, el otro a quien puede presentarla— y mezclarlos hacía que la
+ * home tuviera que vender dos cosas a la vez.
  *
  * Un solo H1, el del hero. Cada sección abre con un H2 que lleva el término
  * por el que se busca ese contenido.
@@ -17,13 +24,18 @@ import Hero from "@/components/Hero";
 import Seccion from "@/components/Seccion";
 import TitularRevelado from "@/components/TitularRevelado";
 import Diagnostico from "@/components/diagnostico/Diagnostico";
-import ComoTrabajamos from "@/components/secciones/ComoTrabajamos";
-import Referidos from "@/components/secciones/Referidos";
+import Demostracion from "@/components/secciones/Demostracion";
+import Ejemplos from "@/components/secciones/Ejemplos";
 import Socios from "@/components/secciones/Socios";
+import ComoTrabajamos from "@/components/secciones/ComoTrabajamos";
+import Condiciones from "@/components/secciones/Condiciones";
+import Control from "@/components/secciones/Control";
+import Casos from "@/components/secciones/Casos";
 import Faq from "@/components/secciones/Faq";
 import Contacto from "@/components/secciones/Contacto";
 import PieDePagina from "@/components/PieDePagina";
 import { PREGUNTAS_UNIVERSALES, RUBROS } from "@/lib/diagnostico";
+import { kickerDe, numeroDe } from "@/lib/secciones";
 
 /**
  * Las preguntas del diagnóstico, escritas en el HTML inicial.
@@ -70,15 +82,26 @@ export default function Home() {
   return (
     <>
       {/* Índice del expediente. Vive acá y no en el layout porque sus enlaces
-          son anclas de esta página: /d tiene su propio recorrido. */}
+          son anclas de esta página: /d y /referidos tienen su propio
+          recorrido. */}
       <BarraSuperior />
 
       <main>
-        {/* 01 · Hero */}
-        <Hero />
+        {/* 01 · Entender */}
+        <Hero numero={numeroDe("contenido")} />
 
-        {/* 02 · Diagnóstico interactivo */}
-        <Seccion id="diagnostico" numero="02" kicker="Diagnóstico">
+        {/* 02 · Ver la solución funcionando */}
+        <Demostracion
+          numero={numeroDe("demostracion")}
+          kicker={kickerDe("demostracion")}
+        />
+
+        {/* 03 · Reconocer el problema propio, con números propios */}
+        <Seccion
+          id="diagnostico"
+          numero={numeroDe("diagnostico")}
+          kicker={kickerDe("diagnostico")}
+        >
           <div className="pb-16 pt-2 sm:pb-24">
             <TitularRevelado
               como="h2"
@@ -86,9 +109,11 @@ export default function Home() {
             >
               Diagnóstico de procesos automatizables
             </TitularRevelado>
-            <p className="mt-5 max-w-[48ch] text-[15px] text-tinta-2 sm:text-[16px]">
-              Seis preguntas sobre cómo se trabaja hoy. Al final queda una lista
-              de procesos y una estimación de horas.
+            <p className="mt-5 max-w-[50ch] text-[15px] leading-relaxed text-tinta-2 sm:text-[16px]">
+              Seis preguntas sobre cómo se trabaja hoy. Al terminar queda la
+              lista de procesos que se pueden pasar a software, una estimación
+              de las horas que hoy consumen y un plazo de implementación. No se
+              piden datos de contacto para verlo.
             </p>
 
             <div className="mt-10">
@@ -99,20 +124,35 @@ export default function Home() {
           </div>
         </Seccion>
 
-        {/* 03 · Cómo trabajamos */}
-        <ComoTrabajamos />
+        {/* 04 · Reconocer el problema, con nombre y apellido */}
+        <Ejemplos numero={numeroDe("ejemplos")} kicker={kickerDe("ejemplos")} />
 
-        {/* 04 · Programa de referidos */}
-        <Referidos />
+        {/* 05 · Confiar: quién lo construye */}
+        <Socios numero={numeroDe("socios")} kicker={kickerDe("socios")} />
 
-        {/* 05 · Quiénes estamos detrás */}
-        <Socios />
+        {/* 06 · Entender el modelo: las cuatro etapas y sus plazos */}
+        <ComoTrabajamos
+          numero={numeroDe("como-trabajamos")}
+          kicker={kickerDe("como-trabajamos")}
+        />
 
-        {/* 06 · FAQ */}
-        <Faq />
+        {/* 07 · Entender el modelo: qué se contrata y qué se recibe */}
+        <Condiciones
+          numero={numeroDe("condiciones")}
+          kicker={kickerDe("condiciones")}
+        />
 
-        {/* 07 · Contacto */}
-        <Contacto />
+        {/* 08 · Bajar el riesgo: control, errores y datos */}
+        <Control numero={numeroDe("control")} kicker={kickerDe("control")} />
+
+        {/* 09 · Prueba. No se renderiza mientras no haya casos reales. */}
+        <Casos numero={numeroDe("casos")} kicker={kickerDe("casos")} />
+
+        {/* 10 · Lo secundario */}
+        <Faq numero={numeroDe("faq")} kicker={kickerDe("faq")} />
+
+        {/* 11 · Contactar */}
+        <Contacto numero={numeroDe("contacto")} kicker={kickerDe("contacto")} />
       </main>
 
       <PieDePagina />

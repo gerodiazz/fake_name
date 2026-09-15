@@ -15,6 +15,7 @@
 
 import Seccion from "@/components/Seccion";
 import TitularRevelado from "@/components/TitularRevelado";
+import { SITIO } from "@/lib/sitio";
 
 /** Las cuatro etapas, con su plazo habitual. */
 const PASOS = [
@@ -118,15 +119,21 @@ function Diagrama() {
   );
 }
 
-export default function ComoTrabajamos() {
+export default function ComoTrabajamos({
+  numero,
+  kicker,
+}: {
+  numero: string;
+  kicker: string;
+}) {
   return (
     <Seccion
       id="como-trabajamos"
-      numero="03"
-      kicker="Cómo trabajamos"
+      numero={numero}
+      kicker={kicker}
       aire
       marcasRegistro
-      textoVertical="fakename · 2026"
+      textoVertical={`${SITIO.nombre} · ${new Date().getFullYear()}`}
     >
       <div className="pb-28 pt-2 sm:pb-40">
         <TitularRevelado como="h2" className="titular max-w-[18ch] text-[clamp(1.75rem,7.5vw,3rem)]">

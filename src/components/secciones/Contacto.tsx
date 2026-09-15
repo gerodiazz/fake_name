@@ -1,20 +1,29 @@
 "use client";
 
 /**
- * SECCIÓN 07 — CONTACTO (footer)
+ * SECCIÓN 11 — AGENDAR (cierre del sitio)
  *
  * El formulario llega precargado con el resultado del diagnóstico: rubro,
  * procesos marcados, horas y plazo. Lo contestado arriba no hay que volver a
  * explicarlo. Si alguien edita el campo, deja de sobrescribirse: a partir de
  * ahí el texto es suyo.
  *
+ * QUÉ SE CORRIGIÓ ACÁ
+ *
+ * · El select de presupuesto tenía dos opciones que decían lo mismo: "Sin
+ *   definir" (la vacía) y "Todavía no está definido". Quedó una sola.
+ * · El teléfono ya era opcional, pero no se notaba: ahora lo dice el campo.
+ * · Cuando exista un enlace de agendamiento (SITIO.agenda), aparece como
+ *   alternativa al formulario. El contacto no tiene que ser una barrera: quien
+ *   quiere reservar un horario y listo, lo hace sin escribir nada.
+ *
  * ENVÍO — PLACEHOLDER: abre el cliente de correo con todo escrito. Cuando haya
  * backend o CRM se reemplaza `enviar()` y el resto queda igual.
  *
  * ┌──────────────────────────────────────────────────────────────────────┐
  * │ PLACEHOLDER — COMPLETAR ANTES DE PUBLICAR                            │
- * │ Email, teléfono y ciudad salen de src/lib/sitio.ts y hoy son de       │
- * │ relleno. Los rangos de presupuesto de abajo también hay que           │
+ * │ El email al que va este formulario sale de src/lib/sitio.ts y hoy es │
+ * │ de relleno. Los rangos de presupuesto de abajo también hay que        │
  * │ confirmarlos contra el precio real del trabajo.                       │
  * └──────────────────────────────────────────────────────────────────────┘
  */
@@ -24,16 +33,18 @@ import Seccion from "@/components/Seccion";
 import TitularRevelado from "@/components/TitularRevelado";
 import { CampoArea, CampoSelect, CampoTexto } from "@/components/Campo";
 import { useDiagnostico } from "@/lib/estado-diagnostico";
+import { RANGO_INVERSION } from "@/lib/condiciones";
 import { SITIO } from "@/lib/sitio";
 
 /** PLACEHOLDER: confirmar los tramos contra el precio real del trabajo. */
 const RANGOS = [
-  { valor: "", texto: "Sin definir" },
+  // La opción vacía ES la de "todavía no está definido": antes había dos
+  // opciones distintas que decían exactamente lo mismo.
+  { valor: "", texto: "Todavía no está definido" },
   { valor: "menos-2000", texto: "Menos de USD 2.000" },
   { valor: "2000-5000", texto: "USD 2.000 a 5.000" },
   { valor: "5000-10000", texto: "USD 5.000 a 10.000" },
   { valor: "mas-10000", texto: "Más de USD 10.000" },
-  { valor: "no-se", texto: "Todavía no está definido" },
 ];
 
 /**
@@ -48,7 +59,13 @@ const RANGOS = [
 const CONFIRMACION =
   "Se abrió el correo con el caso escrito. Al enviarlo, respondemos dentro de las 24 horas hábiles.";
 
-export default function Contacto() {
+export default function Contacto({
+  numero,
+  kicker,
+}: {
+  numero: string;
+  kicker: string;
+}) {
   const { resumenParaContacto, rubro } = useDiagnostico();
 
   const [nombre, setNombre] = useState("");
@@ -94,7 +111,7 @@ export default function Contacto() {
   }
 
   return (
-    <Seccion id="contacto" numero="07" kicker="Agendar reunión" superficie>
+    <Seccion id="contacto" numero={numero} kicker={kicker} superficie>
       <div className="pb-20 pt-2">
         <TitularRevelado como="h2" className="titular max-w-[18ch] text-[clamp(1.75rem,7.5vw,3rem)]">
           Déjanos el caso y coordinamos una reunión.
@@ -105,6 +122,37 @@ export default function Contacto() {
           estimación de horas. Si no hay nada para automatizar, se dice en la
           reunión.
         </p>
+
+        {/* El orden de magnitud, antes del formulario. Solo aparece cuando
+            haya un rango real cargado: ver RANGO_INVERSION. */}
+        {RANGO_INVERSION ? (
+          <p className="hairline hairline-t hairline-b mt-8 max-w-[46ch] py-5 font-serif text-[19px] leading-snug sm:text-[21px]">
+            {RANGO_INVERSION}
+          </p>
+        ) : null}
+
+        {/* Agendamiento directo, para quien no quiere escribir nada. Aparece
+            solo si existe el enlace. */}
+        {SITIO.agenda ? (
+          <div className="mt-8">
+            <a
+              href={SITIO.agenda}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="
+                inline-flex min-h-[52px] items-center bg-klein px-7 text-[15px]
+                text-superficie transition-opacity duration-100
+                hover:opacity-90 active:opacity-75
+              "
+            >
+              Agendar directo
+            </a>
+            <p className="mt-3 max-w-[44ch] text-[13px] text-tinta-2">
+              Eliges el horario y listo. Si prefieres contarlo por escrito, está
+              el formulario.
+            </p>
+          </div>
+        ) : null}
 
         <div className="mt-12 grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_18rem] lg:gap-16">
           {/* ---- formulario ---- */}
@@ -146,6 +194,7 @@ export default function Contacto() {
                 onCambio={setTelefono}
                 autoCompletar="tel"
                 marcador="11 0000 0000"
+                ayuda="Opcional. Con el email alcanza."
               />
               <div className="sm:col-span-2">
                 <CampoSelect
@@ -155,8 +204,8 @@ export default function Contacto() {
                   onCambio={setPresupuesto}
                   opciones={RANGOS}
                   ayuda="Sirve para saber si el alcance entra. No es un compromiso."
-                  // El select arranca en "Sin definir", que es una opción
-                  // válida: no lleva mensaje de campo obligatorio.
+                  // El select arranca en "Todavía no está definido", que es
+                  // una opción válida: no lleva mensaje de obligatorio.
                 />
               </div>
               <div className="sm:col-span-2">
@@ -179,14 +228,16 @@ export default function Contacto() {
               </div>
             </div>
 
-            {/* El CTA principal del sitio, en Klein. */}
+            {/* El CTA principal del sitio, en Klein. Cuando hay agendamiento
+                directo arriba, este baja a tinta para no competir con él. */}
             <button
               type="submit"
-              className="
-                mt-9 inline-flex min-h-[52px] items-center bg-klein px-7
+              className={`
+                mt-9 inline-flex min-h-[52px] items-center px-7
                 text-[15px] text-superficie transition-opacity duration-100
                 hover:opacity-90 active:opacity-75
-              "
+                ${SITIO.agenda ? "bg-tinta" : "bg-klein"}
+              `}
             >
               Agenda una reunión
             </button>
@@ -211,17 +262,23 @@ export default function Contacto() {
                   {SITIO.email}
                 </a>
               </li>
-              <li>
-                <a
-                  href={`https://wa.me/${SITIO.telefonoWhatsApp}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex min-h-[44px] items-center underline decoration-linea underline-offset-4 transition-opacity duration-100 hover:decoration-tinta-2 active:opacity-55"
-                >
-                  {SITIO.telefono}
-                </a>
-              </li>
-              <li className="text-tinta-2">{SITIO.ciudad}</li>
+              {/* Teléfono y ciudad aparecen cuando existen de verdad: ver el
+                  criterio de datos faltantes en src/lib/sitio.ts. */}
+              {SITIO.telefono && SITIO.telefonoWhatsApp ? (
+                <li>
+                  <a
+                    href={`https://wa.me/${SITIO.telefonoWhatsApp}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex min-h-[44px] items-center underline decoration-linea underline-offset-4 transition-opacity duration-100 hover:decoration-tinta-2 active:opacity-55"
+                  >
+                    {SITIO.telefono}
+                  </a>
+                </li>
+              ) : null}
+              {SITIO.ciudad ? (
+                <li className="text-tinta-2">{SITIO.ciudad}</li>
+              ) : null}
             </ul>
 
             <p className="hairline hairline-t mt-8 max-w-[34ch] pt-6 text-[13px] leading-relaxed text-tinta-2">
