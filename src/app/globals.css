@@ -1638,3 +1638,19 @@ label {
     transition: none !important;
   }
 }
+
+/* --------------------------------------------------------------------------
+   Enlace de LinkedIn de los socios (sección 05)
+
+   Área táctil de 44px y un solo cambio al apuntar: el ícono pasa a tinta
+   plena. Nada de rebotes ni de escalas: son dos íconos en toda la página.
+   -------------------------------------------------------------------------- */
+
+.enlace-linkedin {
+  transition-property: color;
+  transition-duration: 140ms;
+  transition-timing-function: ease-out;
+}
+.enlace-linkedin:hover {
+  color: var(--color-tinta);
+}

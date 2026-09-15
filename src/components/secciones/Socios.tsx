@@ -1,18 +1,18 @@
 /**
  * SECCIÓN 05 — QUIÉNES ESTAMOS DETRÁS
  *
- * Sube en el recorrido: antes venía después del programa de referidos, casi al
- * final. Ahora va inmediatamente después de los ejemplos, que es donde el
- * visitante ya entendió qué hacemos y empieza a preguntarse quiénes somos.
+ * Dos personas con nombre y apellido, con exactamente el mismo peso visual.
+ * No hay un fundador y un segundo: misma columna, mismo cuerpo, mismo orden
+ * de lectura. Esa simetría ES el argumento de la sección.
  *
- * SIN PLACEHOLDERS VISIBLES — antes esta sección mostraba dos fichas que
- * decían "PLACEHOLDER · Nombre del primer socio" y un recuadro con la leyenda
- * "Foto pendiente". Eso se veía en producción y era peor que no mostrar nada.
+ * LO QUE NO SE INVENTA. El rol, la foto y el LinkedIn se dibujan solo cuando
+ * existen de verdad (ver SOCIOS en src/lib/sitio.ts). Sin foto no hay recuadro
+ * vacío ni silueta gris; sin LinkedIn no hay ícono muerto. Un cargo inventado
+ * en la sección que promete que vas a hablar con quien escribe el código es
+ * exactamente donde más caro sale.
  *
- * Mientras SOCIOS esté vacío (ver src/lib/sitio.ts), la sección muestra solo
- * lo que sí es cierto: que son dos, que el desarrollo no se terceriza y que
- * quien atiende la reunión es quien escribe el código. Al cargar los datos
- * reales aparecen las fichas, sin tocar este archivo.
+ * LAS FOTOS VAN DE A DOS. O están las dos o no está ninguna: un marco vacío al
+ * lado de una foto rompe la simetría que la sección necesita.
  *
  * El sitio no lleva logos de clientes, testimonios ni métricas de terceros, y
  * el espacio que queda libre no se rellena con prueba social.
@@ -21,7 +21,57 @@
 import Image from "next/image";
 import Seccion from "@/components/Seccion";
 import TitularRevelado from "@/components/TitularRevelado";
-import { SOCIOS } from "@/lib/sitio";
+import IconoLinkedIn from "@/components/ui/IconoLinkedIn";
+import { SOCIOS, type Socio } from "@/lib/sitio";
+
+/** Las fotos se muestran solo si están las dos. */
+const HAY_FOTOS = SOCIOS.length > 0 && SOCIOS.every((socio) => socio.foto);
+
+function Perfil({ socio }: { socio: Socio }) {
+  return (
+    <article>
+      {HAY_FOTOS && socio.foto ? (
+        // Sin marco, sin sombra y sin recorte circular: un rectángulo
+        // editorial con una hairline de contención, como el resto del sitio.
+        <div className="relative aspect-[4/5] w-full max-w-[20rem] overflow-hidden bg-superficie hairline hairline-t hairline-b">
+          <Image
+            src={socio.foto}
+            alt={socio.nombre}
+            fill
+            sizes="(min-width: 640px) 20rem, 100vw"
+            className="object-cover"
+          />
+        </div>
+      ) : null}
+
+      <h3
+        className={`font-serif text-[23px] leading-tight sm:text-[26px] ${
+          HAY_FOTOS ? "mt-5" : ""
+        }`}
+      >
+        {socio.nombre}
+      </h3>
+
+      {socio.rol ? (
+        <p className="mt-1 text-[14px] leading-relaxed text-tinta-2">
+          {socio.rol}
+        </p>
+      ) : null}
+
+      {socio.linkedin ? (
+        <a
+          href={socio.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Ver perfil de LinkedIn de ${socio.nombre}`}
+          className="enlace-linkedin mt-3 inline-flex h-11 w-11 items-center justify-center text-tinta-2"
+        >
+          <IconoLinkedIn className="h-[18px] w-[18px]" />
+        </a>
+      ) : null}
+    </article>
+  );
+}
 
 export default function Socios({
   numero,
@@ -39,7 +89,7 @@ export default function Socios({
       forma="socios"
       textoVertical="quiénes estamos detrás"
     >
-      <div className="pb-28 pt-2 sm:pb-40">
+      <div className="pb-24 pt-2 sm:pb-32">
         <TitularRevelado
           como="h2"
           className="titular max-w-[20ch] text-[clamp(1.75rem,7.5vw,3rem)]"
@@ -50,40 +100,24 @@ export default function Socios({
         <p className="mt-6 max-w-[46ch] font-serif text-[21px] leading-snug sm:text-[24px]">
           Somos dos. El desarrollo no se terceriza.
         </p>
-        <p className="mt-5 max-w-[50ch] text-[15px] leading-relaxed text-tinta-2 sm:text-[16px]">
+
+        {/* Los dos perfiles. Dos columnas de igual ancho en desktop, apilados
+            abajo de sm. El gap es generoso a propósito: son dos personas, no
+            dos tarjetas de un catálogo. */}
+        <div
+          className={`grid grid-cols-1 gap-10 sm:grid-cols-2 sm:gap-12 ${
+            HAY_FOTOS ? "mt-12" : "mt-10"
+          }`}
+        >
+          {SOCIOS.map((socio) => (
+            <Perfil key={socio.nombre} socio={socio} />
+          ))}
+        </div>
+
+        <p className="hairline hairline-t mt-12 max-w-[52ch] pt-6 text-[15px] leading-relaxed text-tinta-2">
           La reunión de diagnóstico la toma quien después escribe el código. No
           hay un vendedor adelante y un equipo desconocido atrás.
         </p>
-
-        {SOCIOS.length > 0 ? (
-          <div className="mt-20 grid grid-cols-1 gap-16 sm:grid-cols-2 sm:gap-12">
-            {SOCIOS.map((socio) => (
-              <article key={socio.nombre}>
-                {/* La foto. Sin marco ni sombra: solo un hairline de
-                    contención. */}
-                <div className="relative aspect-[4/5] w-full max-w-[19rem] overflow-hidden bg-superficie hairline hairline-t hairline-b">
-                  {socio.foto ? (
-                    <Image
-                      src={socio.foto}
-                      alt={socio.alt}
-                      fill
-                      // Media columna en desktop, el ancho útil en mobile.
-                      sizes="(min-width: 640px) 19rem, 100vw"
-                      className="object-cover"
-                    />
-                  ) : null}
-                </div>
-
-                <h3 className="mt-5 font-serif text-[23px] leading-tight sm:text-[26px]">
-                  {socio.nombre}
-                </h3>
-                <p className="mt-2 max-w-[42ch] text-[14px] leading-relaxed text-tinta-2">
-                  {socio.trayectoria}
-                </p>
-              </article>
-            ))}
-          </div>
-        ) : null}
       </div>
     </Seccion>
   );

@@ -72,34 +72,57 @@ export const SITIO = {
 } as const;
 
 /**
- * Los dos socios.
+ * LOS DOS SOCIOS
  *
- * Viven aquí, y no dentro de la sección, porque los datos estructurados del
- * layout los necesitan para declarar los founders de la organización.
+ * Viven acá, y no dentro de la sección, porque los datos estructurados del
+ * layout los declaran como founders de la organización.
  *
  * ┌──────────────────────────────────────────────────────────────────────┐
- * │ ARREGLO VACÍO A PROPÓSITO — COMPLETAR ANTES DE PUBLICAR              │
+ * │ LO QUE FALTA, Y DÓNDE VA                                             │
  * │                                                                       │
- * │ Antes había dos objetos con "PLACEHOLDER · Nombre del primer socio" y │
- * │ un recuadro que decía "Foto pendiente". Eso se veía en producción.    │
+ * │ Los nombres son reales. El rol, la foto y el LinkedIn están en null   │
+ * │ porque todavía no los tengo, y no se inventan: un cargo inventado en  │
+ * │ la sección que dice "vas a hablar con quien escribe el código" es     │
+ * │ exactamente donde más caro sale.                                      │
  * │                                                                       │
- * │ Mientras el arreglo esté vacío, la sección 05 muestra solo lo que sí  │
- * │ es cierto: que son dos y que el desarrollo no se terceriza. Al cargar │
- * │ los dos objetos aparecen las fichas, y los founders de los datos      │
- * │ estructurados se completan solos.                                     │
+ * │ · FOTO — el archivo va en /public/images/ y `foto` apunta ahí:        │
+ * │       foto: "/images/matheo-telesca.jpg"                              │
+ * │   Formato: JPG o WebP, vertical, al menos 800×1000. Retrato normal,   │
+ * │   sin filtros. Mientras falte la de alguno de los dos, la sección no  │
+ * │   dibuja ningún recuadro de foto: o están las dos, o no está ninguna. │
+ * │   Un marco vacío al lado de una foto rompe la simetría, que es        │
+ * │   justamente lo que esta sección tiene que transmitir.                 │
  * │                                                                       │
- * │ La trayectoria tiene que ser verificable: una línea, sin adjetivos.   │
- * │ Para la foto: el archivo va en /public/socios/ y `foto` apunta ahí.   │
+ * │ · LINKEDIN — la URL completa del perfil:                              │
+ * │       linkedin: "https://www.linkedin.com/in/usuario-real/"           │
+ * │   Sin URL no se dibuja el ícono. No se adivina el nombre de usuario.  │
+ * │                                                                       │
+ * │ · ROL — una o dos palabras, en minúscula. Lo que cada uno hace de     │
+ * │   verdad en los proyectos.                                            │
  * └──────────────────────────────────────────────────────────────────────┘
  */
 export type Socio = {
+  /** Nombre y apellido, como se presenta en una reunión. */
   nombre: string;
-  /** Una línea de trayectoria real. Sin adjetivos. */
-  trayectoria: string;
+  /** Qué hace en los proyectos. En null hasta que esté definido. */
+  rol: string | null;
   /** Ruta dentro de /public, o null mientras no haya foto. */
   foto: string | null;
-  /** Texto alternativo de la foto. */
-  alt: string;
+  /** URL completa del perfil de LinkedIn, o null. Nunca se adivina. */
+  linkedin: string | null;
 };
 
-export const SOCIOS: Socio[] = [];
+export const SOCIOS: Socio[] = [
+  {
+    nombre: "Matheo Telesca",
+    rol: null,
+    foto: null,
+    linkedin: null,
+  },
+  {
+    nombre: "Geronimo Justel",
+    rol: null,
+    foto: null,
+    linkedin: null,
+  },
+];

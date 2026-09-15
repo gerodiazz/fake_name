@@ -76,9 +76,9 @@ export const viewport: Viewport = {
 /**
  * Datos estructurados de organización, para búsqueda. Sin métricas inventadas.
  *
- * Los founders salen de SOCIOS, que hoy está vacío: mientras no haya nombres
- * reales la clave no se declara, porque un founders vacío es peor que ninguno.
- * Al cargarlos en src/lib/sitio.ts, esto queda correcto sin tocar nada más.
+ * Los founders salen de SOCIOS. El cargo y el perfil de LinkedIn se declaran
+ * solo cuando existen: un jobTitle vacío o un sameAs inventado ensucian el
+ * dato en vez de completarlo.
  *
  * El FAQPage no va aquí: lo declara la sección de preguntas, donde viven.
  */
@@ -95,7 +95,8 @@ const datosEstructurados = {
         founders: SOCIOS.map((socio) => ({
           "@type": "Person",
           name: socio.nombre,
-          description: socio.trayectoria,
+          ...(socio.rol ? { jobTitle: socio.rol } : {}),
+          ...(socio.linkedin ? { sameAs: socio.linkedin } : {}),
         })),
       }
     : {}),
