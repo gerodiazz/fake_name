@@ -20,7 +20,23 @@ export type Agente = {
   nombre: string;
   /** Qué hace, en una línea. Descriptivo: sin promesas de resultado. */
   descripcion: string;
-  /** Horas semanales que hoy consume ese proceso hecho a mano. */
+  /**
+   * Horas semanales que suele consumir ese proceso hecho a mano.
+   *
+   * ┌────────────────────────────────────────────────────────────────────┐
+   * │ DE DÓNDE SALE ESTE NÚMERO — REVISAR                                │
+   * │                                                                     │
+   * │ No hay un estudio de mercado detrás: son los rangos que el estudio  │
+   * │ usa como punto de partida para cada tipo de proceso. El sitio lo    │
+   * │ dice así en el resultado ("los rangos que usamos como punto de      │
+   * │ partida... no datos de tu empresa") y no habla de "promedios del    │
+   * │ rubro", que sugeriría una fuente que no existe.                     │
+   * │                                                                     │
+   * │ Hay que revisar estos números contra la experiencia real de los dos │
+   * │ socios: es el único dato del sitio que un cliente puede discutir en │
+   * │ la reunión, y conviene poder defenderlo.                            │
+   * └────────────────────────────────────────────────────────────────────┘
+   */
   horasSemanales: number;
 };
 

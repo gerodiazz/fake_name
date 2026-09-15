@@ -37,28 +37,46 @@ la página, aunque falten datos.
 Son compromisos que el sitio afirma y que hay que poder sostener frente a un
 cliente que los reclame.
 
-- **Condiciones** (`src/lib/condiciones.ts`): pago único, entrega del
-  repositorio completo con documentación y credenciales, APIs pagadas directo
-  al proveedor, 90 días de corrección incluida, el sistema corre en
-  infraestructura de la empresa, precio y plazo cerrados antes de empezar.
-- **Control, errores y datos** (`src/lib/control.ts`): cada punto separa lo que
-  se afirma siempre de lo que se define en la propuesta. Revisar que la parte
-  que se afirma sea cierta en todos los proyectos, no solo en el ideal.
+- **Horas del diagnóstico** (`src/lib/diagnostico.ts`, campo `horasSemanales`
+  de cada agente): es el único número del sitio y sale de rangos de partida,
+  no de un estudio. El sitio lo dice así en el resultado, pero conviene
+  revisar los valores contra la experiencia real: es el dato que un cliente
+  puede discutir en la reunión.
+- **Condiciones** (`src/lib/condiciones.ts`): proyecto cerrado y pago único,
+  entrega del repositorio con documentación y credenciales, servicios externos
+  pagados directo al proveedor, 90 días de corrección, sin dependencia de una
+  cuenta del estudio, precio y plazo cerrados antes de empezar.
+- **Control, errores y datos** (`src/lib/control.ts`): las seis de la lista son
+  capacidades que **pueden** formar parte de una implementación, y están
+  escritas así a propósito. Lo que sí se afirma siempre son las dos de
+  `POSICION`: qué se decide antes de construir y qué pasa con los datos.
+  Revisar que esas dos sean ciertas en todos los proyectos.
+- **Ejemplos por industria** (`src/lib/ejemplos.ts`): son procesos que existen
+  en casi cualquier empresa del rubro y están rotulados como ejemplos, no como
+  trabajos hechos. Confirmar que los seis se puedan construir tal como están
+  descritos: si alguno no, se saca o se reescribe.
+- **Qué es un agente** (`src/lib/agente.ts`): la definición y las dos columnas
+  de la comparación. No dice que el agente "piensa" ni que reemplaza personas,
+  y dice cuándo conviene una automatización simple en vez de un agente.
 - **Plazos** (`src/components/secciones/ComoTrabajamos.tsx`): 45 minutos de
   diagnóstico, 5 días hábiles para la propuesta, 2 a 8 semanas de
   implementación, 1 semana de entrega.
 - **FAQ** (`src/components/secciones/Faq.tsx`): qué no está incluido y qué pasa
   después de los 90 días.
-- **Demostración** (`src/lib/demostracion.ts`): el diálogo y los datos son de
-  ejemplo y la sección lo rotula arriba de la pieza. Si alguna vez se
-  reemplaza por una conversación real, hay que tener el permiso del cliente.
+- **Ejemplo conceptual** (`src/lib/demostracion.ts`): el diálogo y los datos
+  son inventados y la sección lo rotula arriba de la pieza ("Ejemplo
+  conceptual · así podría funcionar"). Si alguna vez se reemplaza por una
+  conversación real, hace falta el permiso del cliente.
 
 ---
 
 ## Lo que el sitio no va a hacer
 
 - No inventa casos, logos, testimonios ni métricas de resultados de terceros.
-- No inventa porcentajes de ahorro. El único número es la estimación de horas
-  que el propio visitante arma en el diagnóstico, y está rotulada como
-  estimación sobre promedios del rubro en los dos lugares donde aparece.
+- No inventa porcentajes de ahorro, ni resultados, ni "de dos días a dos
+  minutos". El único número es la estimación de horas que el propio visitante
+  arma en el diagnóstico, y el resultado dice de dónde sale: de rangos de
+  partida, no de datos de su empresa.
+- No simula un motor de evaluación que no existe. El resultado del diagnóstico
+  ordena lo que el visitante contestó; no le pone un puntaje.
 - No muestra placeholders como si fueran contenido.

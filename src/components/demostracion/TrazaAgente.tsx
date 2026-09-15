@@ -1,23 +1,28 @@
 /**
- * LA PIEZA DE LA DEMOSTRACIÓN — conversación y traza, lado a lado.
+ * EL EJEMPLO CONCEPTUAL — conversación, etapas y marco.
  *
  * Izquierda: el mensaje como entra, en el canal por el que entra.
- * Derecha: lo que ejecuta el software, paso por paso.
+ * Derecha: las seis etapas del recorrido, con el dato concreto de cada una.
+ * Abajo: el marco, o sea lo que el software puede y no puede hacer.
+ *
+ * El marco es la parte que convence a quien tiene que dar acceso a sus
+ * sistemas: información autorizada, herramientas, permisos, reglas, registro e
+ * intervención humana. Sin eso, la pieza se lee como un chatbot enchufado a
+ * una empresa; con eso, como software que opera dentro de un proceso.
  *
  * No hay robots, ni circuitos, ni cerebros: la tecnología se muestra como lo
- * que es, una conversación y un registro de acciones. Las dos columnas usan
- * las mismas hairlines y el mismo kicker que el resto del expediente.
+ * que es, una conversación y un recorrido de acciones.
  *
  * Componente de servidor: es contenido, no interacción. Se lee con JavaScript
- * apagado y no anima nada. La animación paso a paso, si se hace, va después:
- * primero tiene que estar bien la información.
+ * apagado y no anima nada. La animación etapa por etapa, si se hace, va en la
+ * fase visual: primero tiene que estar bien la información.
  */
 
 import {
   DEMOSTRACION,
-  ETIQUETA_TIPO,
+  ETIQUETA_INTERVENCION,
+  type Etapa,
   type Mensaje,
-  type PasoTraza,
 } from "@/lib/demostracion";
 
 /** Un mensaje de la conversación. El del sistema se distingue por el tinte. */
@@ -25,9 +30,7 @@ function Burbuja({ mensaje }: { mensaje: Mensaje }) {
   const esSistema = mensaje.de === "sistema";
 
   return (
-    <li
-      className={`flex flex-col ${esSistema ? "items-end" : "items-start"}`}
-    >
+    <li className={`flex flex-col ${esSistema ? "items-end" : "items-start"}`}>
       <p
         className={`
           max-w-[34ch] px-4 py-3 text-[14px] leading-relaxed
@@ -48,10 +51,8 @@ function Burbuja({ mensaje }: { mensaje: Mensaje }) {
   );
 }
 
-/** Un paso de la traza. El que espera aprobación es el único en Klein. */
-function Paso({ paso, orden }: { paso: PasoTraza; orden: number }) {
-  const esperaAprobacion = paso.tipo === "aprobacion";
-
+/** Una etapa del recorrido. Las que no son automáticas van marcadas. */
+function EtapaDelRecorrido({ etapa, orden }: { etapa: Etapa; orden: number }) {
   return (
     <li className="hairline hairline-t py-4">
       <div className="flex items-baseline gap-4">
@@ -63,17 +64,20 @@ function Paso({ paso, orden }: { paso: PasoTraza; orden: number }) {
         </span>
 
         <div className="min-w-0">
-          <p className="font-serif text-[18px] leading-snug sm:text-[19px]">
-            {paso.accion}
+          <h4 className="font-serif text-[18px] leading-snug sm:text-[19px]">
+            {etapa.nombre}
+          </h4>
+          <p className="mt-1 max-w-[42ch] text-[14px] leading-relaxed text-tinta">
+            {etapa.que}
           </p>
-          <p className="mt-1 text-[13px] leading-relaxed text-tinta-2">
-            {paso.detalle}
+          <p className="mt-1 max-w-[42ch] text-[13px] leading-relaxed text-tinta-2">
+            {etapa.detalle}
           </p>
-          <p
-            className={`kicker mt-2 ${esperaAprobacion ? "" : "kicker-tinta"}`}
-          >
-            {ETIQUETA_TIPO[paso.tipo]}
-          </p>
+          {etapa.intervencion ? (
+            <p className="kicker mt-2">
+              {ETIQUETA_INTERVENCION[etapa.intervencion]}
+            </p>
+          ) : null}
         </div>
       </div>
     </li>
@@ -82,26 +86,45 @@ function Paso({ paso, orden }: { paso: PasoTraza; orden: number }) {
 
 export default function TrazaAgente() {
   return (
-    <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-14">
-      {/* ---- la conversación ---- */}
-      <div>
-        <p className="kicker kicker-tinta">{DEMOSTRACION.canal}</p>
-        <ul className="mt-5 flex flex-col gap-5">
-          {DEMOSTRACION.conversacion.map((mensaje, i) => (
-            <Burbuja key={i} mensaje={mensaje} />
-          ))}
-        </ul>
+    <div>
+      <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-14">
+        {/* ---- la conversación ---- */}
+        <div>
+          <p className="kicker kicker-tinta">{DEMOSTRACION.canal}</p>
+          <ul className="mt-5 flex flex-col gap-5">
+            {DEMOSTRACION.conversacion.map((mensaje, i) => (
+              <Burbuja key={i} mensaje={mensaje} />
+            ))}
+          </ul>
+        </div>
+
+        {/* ---- las seis etapas ---- */}
+        <div>
+          <p className="kicker kicker-tinta">El recorrido, etapa por etapa</p>
+          <ol className="mt-5">
+            {DEMOSTRACION.etapas.map((etapa, i) => (
+              <EtapaDelRecorrido key={etapa.id} etapa={etapa} orden={i + 1} />
+            ))}
+            <li className="hairline hairline-t" aria-hidden="true" />
+          </ol>
+        </div>
       </div>
 
-      {/* ---- lo que ejecuta el software ---- */}
-      <div>
-        <p className="kicker kicker-tinta">Lo que ejecuta el software</p>
-        <ol className="mt-5">
-          {DEMOSTRACION.traza.map((paso, i) => (
-            <Paso key={paso.id} paso={paso} orden={i + 1} />
+      {/* ---- el marco ---- */}
+      <div className="mt-12">
+        <p className="kicker kicker-tinta">
+          Dentro de qué límites trabaja, en este ejemplo
+        </p>
+        <dl className="grilla-expuesta grilla-expuesta-sm mt-5 grid grid-cols-1 hairline hairline-t hairline-b sm:grid-cols-2 lg:grid-cols-3">
+          {DEMOSTRACION.marco.map((limite) => (
+            <div key={limite.titulo} className="py-5 sm:px-5">
+              <dt className="text-[14px] text-tinta">{limite.titulo}</dt>
+              <dd className="mt-1 max-w-[38ch] text-[13px] leading-relaxed text-tinta-2">
+                {limite.detalle}
+              </dd>
+            </div>
           ))}
-          <li className="hairline hairline-t" aria-hidden="true" />
-        </ol>
+        </dl>
       </div>
     </div>
   );

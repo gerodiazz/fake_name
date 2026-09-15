@@ -1,59 +1,62 @@
 /**
- * SECCIÓN 04 — EJEMPLOS DE PROCESOS
+ * SECCIÓN 04 — EJEMPLOS POR INDUSTRIA
  *
- * Los oficios que nombra el diagnóstico —"el que atiende", "el que cotiza"—
- * abiertos en los tres tiempos que un visitante necesita para reconocerse:
+ * Contesta la pregunta que el visitante se hace después de entender qué es un
+ * agente: "¿qué podrían automatizar en una empresa como la mía?".
  *
- *   HOY (a mano) → QUÉ HACE EL SISTEMA → CON QUÉ QUEDA LA EMPRESA
+ * Cada ejemplo cuenta un proceso concreto con las mismas seis etapas de la
+ * sección 02. Que el esqueleto se repita es el argumento: no es un producto
+ * distinto por rubro, es el mismo recorrido aplicado a otro proceso.
  *
- * Antes esta idea existía solo adentro del diagnóstico, donde hay que
- * contestar seis preguntas para verla. Acá está a la vista sin hacer nada.
+ * Los oficios de cada rubro —"el que atiende", "el que cotiza"— son los mismos
+ * que nombra el diagnóstico. Esa continuidad es la que hace que, al llegar a
+ * las preguntas, el visitante ya sepa de qué se está hablando.
  *
- * Ningún ejemplo lleva métricas: el único número del sitio es la estimación
- * que el propio visitante arma en la sección del diagnóstico.
+ * Ningún ejemplo lleva métricas: son ejemplos, no casos. El único número del
+ * sitio es la estimación que el propio visitante arma en el diagnóstico.
  */
 
 import Seccion from "@/components/Seccion";
 import TitularRevelado from "@/components/TitularRevelado";
-import { EJEMPLOS, type Ejemplo } from "@/lib/ejemplos";
+import { EJEMPLOS, ETAPAS, type EjemploIndustria } from "@/lib/ejemplos";
 
-function Ficha({ ejemplo }: { ejemplo: Ejemplo }) {
+function Ficha({ ejemplo }: { ejemplo: EjemploIndustria }) {
   return (
     <article className="hairline hairline-t py-8">
       <h3 className="font-serif text-[23px] leading-tight sm:text-[26px]">
-        {ejemplo.nombre}
+        {ejemplo.industria}
       </h3>
-      <p className="mt-1 text-[11px] uppercase tracking-[0.14em] text-tinta-2">
-        {ejemplo.dondeAparece}
+      <p className="mt-2 max-w-[44ch] text-[15px] leading-relaxed text-tinta">
+        {ejemplo.proceso}
       </p>
 
-      {/* Tiempo 1 — el problema, tal como se vive hoy. */}
-      <p className="mt-5 max-w-[46ch] text-[15px] leading-relaxed text-tinta">
-        {ejemplo.problema}
-      </p>
-
-      {/* Tiempo 2 — lo que ejecuta el sistema. */}
-      <p className="kicker kicker-tinta mt-6">Qué hace el sistema</p>
-      <ol className="mt-3 max-w-[46ch]">
-        {ejemplo.pasos.map((paso, i) => (
-          <li
-            key={paso}
-            className="flex gap-3 py-1.5 text-[14px] leading-relaxed text-tinta-2"
-          >
+      {/* El recorrido. El nombre de la etapa va en la misma línea que el
+          texto: son seis renglones, no seis bloques. */}
+      <ol className="mt-6 max-w-[48ch]">
+        {ejemplo.flujo.map((linea, i) => (
+          <li key={linea} className="flex gap-3 py-1.5">
             <span
               aria-hidden="true"
-              className="shrink-0 text-[11px] tabular-nums tracking-[0.14em] text-tinta-2"
+              className="w-[7.5rem] shrink-0 text-[11px] uppercase leading-[1.6] tracking-[0.14em] text-tinta-2"
             >
-              {String(i + 1).padStart(2, "0")}
+              {ETAPAS[i]}
             </span>
-            <span>{paso}</span>
+            <span className="text-[14px] leading-relaxed text-tinta-2">
+              {linea}
+            </span>
           </li>
         ))}
       </ol>
 
-      {/* Tiempo 3 — el resultado. En serif: es la frase que cierra la ficha. */}
+      {/* En qué estado queda el trabajo. En serif: cierra la ficha. */}
       <p className="hairline hairline-t mt-6 max-w-[46ch] pt-5 font-serif text-[17px] leading-snug sm:text-[18px]">
-        {ejemplo.resultado}
+        {ejemplo.queda}
+      </p>
+
+      {/* Los oficios del rubro, con el lenguaje del diagnóstico. */}
+      <p className="mt-4 text-[13px] text-tinta-2">
+        <span className="kicker kicker-tinta">En este rubro · </span>
+        {ejemplo.oficios.join(" · ")}
       </p>
     </article>
   );
@@ -71,33 +74,39 @@ export default function Ejemplos({
       <div className="pb-24 pt-2 sm:pb-32">
         <TitularRevelado
           como="h2"
-          className="titular max-w-[20ch] text-[clamp(1.75rem,7.5vw,3rem)]"
+          className="titular max-w-[22ch] text-[clamp(1.75rem,7.5vw,3rem)]"
         >
-          Procesos que se pasan a software
+          Qué se puede automatizar en una empresa como la tuya
         </TitularRevelado>
-        <p className="mt-6 max-w-[50ch] text-[15px] leading-relaxed text-tinta-2 sm:text-[16px]">
-          Cada uno es un puesto de trabajo que hoy existe en alguna empresa. No
-          son productos que vendemos hechos: son los procesos que más veces nos
-          tocó construir.
+        <p className="mt-6 max-w-[52ch] text-[15px] leading-relaxed text-tinta-2 sm:text-[16px]">
+          Un proceso por rubro, contado con las mismas seis etapas de arriba.
+          Son ejemplos de procesos que existen en casi cualquier empresa del
+          rubro, no trabajos que hayamos hecho.
         </p>
 
         <div className="mt-12 grid grid-cols-1 gap-x-14 lg:grid-cols-2">
           {EJEMPLOS.map((ejemplo) => (
-            <Ficha key={ejemplo.id} ejemplo={ejemplo} />
+            <Ficha key={ejemplo.rubroId} ejemplo={ejemplo} />
           ))}
         </div>
 
-        <p className="hairline hairline-t mt-10 max-w-[50ch] pt-6 text-[14px] leading-relaxed text-tinta-2">
-          Si el proceso que consume más tiempo no está en esta lista, el
-          diagnóstico igual lo contempla:{" "}
+        <div className="hairline hairline-t mt-10 pt-6">
+          <p className="max-w-[52ch] text-[14px] leading-relaxed text-tinta-2">
+            Si el rubro no está en la lista o el proceso que más tiempo consume
+            no es ninguno de estos, el diagnóstico lo contempla igual: hay un
+            rubro para escribirlo.
+          </p>
           <a
             href="#diagnostico"
-            className="text-tinta underline decoration-linea underline-offset-4 transition-colors duration-100 hover:decoration-tinta-2"
+            className="
+              mt-5 inline-flex min-h-[52px] items-center bg-klein px-7
+              text-[15px] text-superficie transition-opacity duration-100
+              hover:opacity-90 active:opacity-75
+            "
           >
-            hay un rubro para escribirlo
+            Analizar mi proceso
           </a>
-          .
-        </p>
+        </div>
       </div>
     </Seccion>
   );

@@ -32,11 +32,12 @@ export default function Condiciones({
           como="h2"
           className="titular max-w-[20ch] text-[clamp(1.75rem,7.5vw,3rem)]"
         >
-          Condiciones
+          Qué se contrata exactamente
         </TitularRevelado>
-        <p className="mt-6 max-w-[50ch] text-[15px] leading-relaxed text-tinta-2 sm:text-[16px]">
-          Las mismas seis que van escritas en la propuesta. Están acá arriba y
-          no al final, porque son parte de lo que se contrata.
+        <p className="mt-6 max-w-[52ch] text-[15px] leading-relaxed text-tinta-2 sm:text-[16px]">
+          Las seis condiciones que van escritas en la propuesta. Están acá
+          arriba y no en la letra chica del final, porque son parte de lo que
+          se compra.
         </p>
 
         <ul className="grilla-expuesta grilla-expuesta-sm mt-12 grid grid-cols-1 hairline hairline-t hairline-b sm:grid-cols-2 lg:grid-cols-3">

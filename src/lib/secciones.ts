@@ -18,7 +18,7 @@ import { CASOS } from "@/lib/casos";
 
 export type IdSeccion =
   | "contenido"
-  | "demostracion"
+  | "como-funciona"
   | "diagnostico"
   | "ejemplos"
   | "socios"
@@ -56,18 +56,22 @@ type DefinicionSeccion = {
  */
 const DEFINICIONES: DefinicionSeccion[] = [
   { id: "contenido", kicker: "Portada", corto: "Portada", enIndice: false },
-  { id: "demostracion", kicker: "Demostración", corto: "Demostración", enIndice: true },
+  // "Cómo funciona" es una sola sección con dos bloques: qué es un agente,
+  // en castellano, y el ejemplo conceptual del recorrido. Se llama igual que
+  // el botón secundario del hero: el visitante toca "Ver cómo funciona" y
+  // llega a una sección que se llama así.
+  { id: "como-funciona", kicker: "Cómo funciona", corto: "Cómo funciona", enIndice: true },
   { id: "diagnostico", kicker: "Diagnóstico", corto: "Diagnóstico", enIndice: true },
-  { id: "ejemplos", kicker: "Ejemplos", corto: "Ejemplos", enIndice: true },
+  { id: "ejemplos", kicker: "Ejemplos por industria", corto: "Ejemplos", enIndice: true },
   { id: "socios", kicker: "Quiénes estamos detrás", corto: "Quiénes somos", enIndice: false },
-  { id: "como-trabajamos", kicker: "Cómo trabajamos", corto: "Cómo trabajamos", enIndice: true },
-  { id: "condiciones", kicker: "Condiciones", corto: "Condiciones", enIndice: true },
+  { id: "como-trabajamos", kicker: "Cómo trabajamos", corto: "Proceso", enIndice: true },
+  { id: "condiciones", kicker: "Condiciones claras", corto: "Condiciones", enIndice: true },
   { id: "control", kicker: "Control, errores y datos", corto: "Control", enIndice: false },
   // Se enciende sola cuando haya un caso real cargado. Sin casos no hay
   // sección: el sitio no rellena el hueco con prueba social inventada.
   { id: "casos", kicker: "Casos", corto: "Casos", enIndice: true, visible: CASOS.length > 0 },
   { id: "faq", kicker: "Preguntas", corto: "Preguntas", enIndice: false },
-  { id: "contacto", kicker: "Agendar reunión", corto: "Agendar", enIndice: true },
+  { id: "contacto", kicker: "Agendar diagnóstico", corto: "Agendar", enIndice: true },
 ];
 
 export type Seccion = DefinicionSeccion & {

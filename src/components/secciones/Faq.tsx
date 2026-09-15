@@ -32,9 +32,14 @@ import TitularRevelado from "@/components/TitularRevelado";
 
 const PREGUNTAS = [
   {
-    pregunta: "¿Necesito cambiar mis sistemas?",
+    pregunta: "¿Trabajan con los sistemas que ya tenemos?",
     respuesta:
-      "No. El trabajo se hace sobre lo que la empresa ya usa: el sistema de gestión, la planilla, el correo, el WhatsApp. Si algún sistema no tiene forma de integrarse, se dice en el diagnóstico y se busca otro camino antes de la propuesta, no después.",
+      "Sí, y no hace falta cambiar nada: el trabajo se hace sobre lo que la empresa ya usa. El sistema de gestión, la planilla, el correo, el WhatsApp. Si alguno no tiene forma de integrarse, se dice en el diagnóstico y se busca otro camino antes de la propuesta, no después.",
+  },
+  {
+    pregunta: "¿Cuánto cuesta?",
+    respuesta:
+      "Depende de cuántos procesos entren y de con qué sistemas haya que integrarse, así que no hay una lista de precios: no es un producto con versiones. El precio sale de la propuesta, que se escribe después del diagnóstico y antes de empezar, y no se mueve durante el trabajo. Si en el diagnóstico se ve que el alcance no entra en lo que la empresa puede invertir, se dice ahí y no se sigue.",
   },
   {
     pregunta: "¿Cuánto tarda una implementación?",
@@ -62,9 +67,9 @@ const PREGUNTAS = [
       "El consumo de las APIs de los modelos, que se paga directo al proveedor. Las licencias de los sistemas de terceros con los que el software se integra. El soporte una vez pasados los 90 días. Y cualquier proceso que no esté escrito en el alcance de la propuesta: si aparece uno nuevo durante la implementación, se cotiza aparte y se decide antes de seguir.",
   },
   {
-    pregunta: "¿Y si no hay nada para automatizar?",
+    pregunta: "¿Pueden decirme que un proceso no conviene automatizar?",
     respuesta:
-      "Se dice en la reunión. Pasa cuando el trabajo repetitivo ya está resuelto o cuando el proceso cambia demasiado seguido como para que convenga fijarlo en software. En ese caso no hay propuesta y la reunión no se cobra igual.",
+      "Sí, y pasa. Un proceso que ocurre tres veces por mes, o que cambia todos los meses, o que depende de un criterio que nadie tiene escrito, cuesta más automatizarlo que hacerlo a mano. Cuando lo vemos, lo decimos en la reunión: no hay propuesta y la reunión no se cobra igual. Preferimos eso antes que vender un trabajo que no se iba a pagar solo.",
   },
 ];
 

@@ -12,7 +12,10 @@
  *
  * · El select de presupuesto tenía dos opciones que decían lo mismo: "Sin
  *   definir" (la vacía) y "Todavía no está definido". Quedó una sola.
- * · El teléfono ya era opcional, pero no se notaba: ahora lo dice el campo.
+ * · El teléfono ya era opcional, pero ocupaba el mismo lugar que un campo
+ *   obligatorio. Ahora el formulario visible tiene cuatro campos —nombre,
+ *   empresa, email y el caso— y el teléfono y el presupuesto viven detrás de
+ *   un desplegable. Cada campo de más es gente que no completa.
  * · Cuando exista un enlace de agendamiento (SITIO.agenda), aparece como
  *   alternativa al formulario. El contacto no tiene que ser una barrera: quien
  *   quiere reservar un horario y listo, lo hace sin escribir nada.
@@ -114,13 +117,12 @@ export default function Contacto({
     <Seccion id="contacto" numero={numero} kicker={kicker} superficie>
       <div className="pb-20 pt-2">
         <TitularRevelado como="h2" className="titular max-w-[18ch] text-[clamp(1.75rem,7.5vw,3rem)]">
-          Déjanos el caso y coordinamos una reunión.
+          Cuéntanos qué proceso depende hoy de una persona.
         </TitularRevelado>
-        <p className="mt-5 max-w-[48ch] text-[15px] text-tinta-2 sm:text-[16px]">
-          La reunión dura alrededor de cuarenta y cinco minutos y no tiene costo.
-          De ahí sale la lista de procesos que se pueden pasar a software y una
-          estimación de horas. Si no hay nada para automatizar, se dice en la
-          reunión.
+        <p className="mt-5 max-w-[50ch] text-[15px] leading-relaxed text-tinta-2 sm:text-[16px]">
+          Lo analizamos y te decimos si tiene sentido convertirlo en software.
+          La reunión dura unos cuarenta y cinco minutos y no tiene costo. Si no
+          hay nada que convenga automatizar, también se dice.
         </p>
 
         {/* El orden de magnitud, antes del formulario. Solo aparece cuando
@@ -186,28 +188,6 @@ export default function Contacto({
                 autoCompletar="email"
                 marcador="nombre@empresa.com"
               />
-              <CampoTexto
-                id="con-telefono"
-                etiqueta="Teléfono"
-                tipo="tel"
-                valor={telefono}
-                onCambio={setTelefono}
-                autoCompletar="tel"
-                marcador="11 0000 0000"
-                ayuda="Opcional. Con el email alcanza."
-              />
-              <div className="sm:col-span-2">
-                <CampoSelect
-                  id="con-presupuesto"
-                  etiqueta="Rango de presupuesto"
-                  valor={presupuesto}
-                  onCambio={setPresupuesto}
-                  opciones={RANGOS}
-                  ayuda="Sirve para saber si el alcance entra. No es un compromiso."
-                  // El select arranca en "Todavía no está definido", que es
-                  // una opción válida: no lleva mensaje de obligatorio.
-                />
-              </div>
               <div className="sm:col-span-2">
                 <CampoArea
                   id="con-mensaje"
@@ -228,6 +208,41 @@ export default function Contacto({
               </div>
             </div>
 
+            {/* Lo opcional, plegado. Con <details> nativo: sin JavaScript, con
+                teclado y con lector de pantalla, igual que la FAQ. */}
+            <details className="faq hairline hairline-t mt-8">
+              <summary className="flex min-h-[52px] cursor-pointer items-center justify-between gap-6 py-3 text-[14px] text-tinta-2 transition-opacity duration-100 active:opacity-55">
+                Agregar teléfono o presupuesto
+                <span
+                  aria-hidden="true"
+                  className="faq-signo shrink-0 text-[18px] leading-none transition-transform duration-200"
+                >
+                  +
+                </span>
+              </summary>
+              <div className="grid grid-cols-1 gap-7 pb-6 pt-2 sm:grid-cols-2">
+                <CampoTexto
+                  id="con-telefono"
+                  etiqueta="Teléfono"
+                  tipo="tel"
+                  valor={telefono}
+                  onCambio={setTelefono}
+                  autoCompletar="tel"
+                  marcador="11 0000 0000"
+                />
+                <CampoSelect
+                  id="con-presupuesto"
+                  etiqueta="Rango de presupuesto"
+                  valor={presupuesto}
+                  onCambio={setPresupuesto}
+                  opciones={RANGOS}
+                  ayuda="Sirve para saber si el alcance entra. No es un compromiso."
+                  // El select arranca en "Todavía no está definido", que es
+                  // una opción válida: no lleva mensaje de obligatorio.
+                />
+              </div>
+            </details>
+
             {/* El CTA principal del sitio, en Klein. Cuando hay agendamiento
                 directo arriba, este baja a tinta para no competir con él. */}
             <button
@@ -239,14 +254,16 @@ export default function Contacto({
                 ${SITIO.agenda ? "bg-tinta" : "bg-klein"}
               `}
             >
-              Agenda una reunión
+              Agendar diagnóstico
             </button>
 
             <p
               className="mt-4 min-h-[1.5rem] max-w-[46ch] text-[13px] text-tinta-2"
               aria-live="polite"
             >
-              {enviado ? CONFIRMACION : "Respondemos dentro de las 24 horas hábiles."}
+              {enviado
+                ? CONFIRMACION
+                : "Respondemos dentro de las 24 horas hábiles."}
             </p>
           </form>
 

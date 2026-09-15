@@ -1,0 +1,80 @@
+/**
+ * SECCIÓN 02 — CÓMO FUNCIONA
+ *
+ * Va inmediatamente después del hero porque es lo primero que el visitante
+ * necesita: entender qué es esto. Antes, el sitio explicaba y no mostraba
+ * nada, y encima usaba la palabra "agente" sin definirla nunca.
+ *
+ * Tiene dos bloques, en este orden:
+ *
+ *   1. QUÉ ES UN AGENTE — la definición en castellano y la comparación con la
+ *      automatización simple. Primero hay que entender la categoría.
+ *   2. EJEMPLO CONCEPTUAL — el recorrido completo sobre un caso, con el marco
+ *      de permisos y reglas dentro del que trabaja.
+ *
+ * Se llama igual que el botón secundario del hero: el visitante toca "Ver cómo
+ * funciona" y llega a una sección que se llama así.
+ *
+ * El rótulo de "ejemplo conceptual" va ARRIBA de la pieza, antes de que nadie
+ * pueda confundirla con el caso de un cliente. No es letra chica al pie.
+ */
+
+import Seccion from "@/components/Seccion";
+import TitularRevelado from "@/components/TitularRevelado";
+import QueEsUnAgente from "@/components/demostracion/QueEsUnAgente";
+import TrazaAgente from "@/components/demostracion/TrazaAgente";
+import { DEMOSTRACION } from "@/lib/demostracion";
+
+export default function ComoFunciona({
+  numero,
+  kicker,
+}: {
+  numero: string;
+  kicker: string;
+}) {
+  return (
+    <Seccion id="como-funciona" numero={numero} kicker={kicker} superficie>
+      <div className="pb-20 pt-2 sm:pb-28">
+        <TitularRevelado
+          como="h2"
+          className="titular mt-5 max-w-[20ch] text-[clamp(1.75rem,7.5vw,3rem)]"
+        >
+          Qué es un agente, sin vueltas
+        </TitularRevelado>
+
+        <div className="mt-10">
+          <QueEsUnAgente />
+        </div>
+
+        {/* ---- el ejemplo ---- */}
+        <div className="hairline hairline-t mt-20 pt-12">
+          <p className="kicker">{DEMOSTRACION.rotulo}</p>
+
+          <h3 className="titular mt-5 max-w-[22ch] text-[clamp(1.5rem,6vw,2.4rem)]">
+            {DEMOSTRACION.titulo}
+          </h3>
+          <p className="mt-5 max-w-[52ch] text-[15px] leading-relaxed text-tinta-2 sm:text-[16px]">
+            {DEMOSTRACION.bajada}
+          </p>
+
+          <div className="mt-10">
+            <TrazaAgente />
+          </div>
+
+          {/* El cierre engancha con la sección de control: lo que se ve acá es
+              lo mismo que se explica allá. */}
+          <p className="hairline hairline-t mt-12 max-w-[58ch] pt-6 text-[14px] leading-relaxed text-tinta-2">
+            {DEMOSTRACION.cierre}{" "}
+            <a
+              href="#control"
+              className="text-tinta underline decoration-linea underline-offset-4 transition-colors duration-100 hover:decoration-tinta-2"
+            >
+              Qué pasa si se equivoca
+            </a>
+            .
+          </p>
+        </div>
+      </div>
+    </Seccion>
+  );
+}

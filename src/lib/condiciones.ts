@@ -32,42 +32,45 @@ export const CONDICIONES: Condicion[] = [
     id: "pago-unico",
     titulo: "Pago único",
     detalle:
-      "Se paga una vez, por el desarrollo y la implementación. El soporte posterior es opcional y se cotiza aparte.",
-    implicancia: "No hay suscripción obligatoria para que el sistema siga funcionando.",
+      "La implementación se presupuesta como proyecto cerrado y se paga una vez. El soporte posterior es opcional y se cotiza aparte.",
+    implicancia:
+      "No hay suscripción obligatoria para que el software siga funcionando.",
   },
   {
     id: "codigo-del-cliente",
     titulo: "El código es del cliente",
     detalle:
-      "Se entrega el repositorio completo, la documentación y las credenciales, a nombre de la empresa.",
+      "El software desarrollado pertenece a la empresa. Se entrega el repositorio completo, la documentación y las credenciales, a su nombre.",
     implicancia: "Lo puede seguir el equipo interno o cualquier otro proveedor.",
   },
   {
     id: "costos-de-api",
     titulo: "Costos de API",
     detalle:
-      "La empresa paga el consumo de los modelos en su propia cuenta y directo al proveedor. No hay intermediación ni recargo.",
-    implicancia: "El costo mensual se estima antes de empezar, no aparece después.",
+      "La empresa paga los servicios externos que usa su sistema —el consumo de los modelos, entre otros— en su propia cuenta y directo al proveedor. No hay intermediación ni recargo.",
+    implicancia:
+      "El costo mensual se estima antes de empezar, no aparece después.",
   },
   {
     id: "noventa-dias",
-    titulo: "90 días",
+    titulo: "90 días de corrección",
     detalle:
-      "Desde la entrega, la corrección está incluida: da igual si el error es propio o si cambió el sistema con el que el software se integra.",
-    implicancia: "El período de prueba real no lo paga el cliente.",
+      "Desde la entrega hay 90 días para corregir problemas de la implementación entregada, sin costo. Da igual si el error es propio o si cambió el sistema con el que el software se integra.",
+    implicancia: "Los primeros meses de uso real no los paga el cliente.",
   },
   {
     id: "sin-lock-in",
     titulo: "Sin lock-in",
     detalle:
-      "El sistema corre en la infraestructura de la empresa y no depende de una cuenta del estudio para funcionar.",
-    implicancia: "Si la relación termina, el software sigue andando igual.",
+      "El software no depende de una cuenta ni de un servidor del estudio para funcionar. Dónde corre lo define la empresa.",
+    implicancia:
+      "Nadie queda obligado a seguir con nosotros para poder usar lo que se construyó.",
   },
   {
     id: "alcance-cerrado",
     titulo: "Alcance cerrado",
     detalle:
-      "Precio, alcance y plazo quedan por escrito antes de empezar. Si el alcance no cierra, no hay propuesta y no se debe nada.",
+      "Qué se va a construir, cuánto cuesta y cuánto demora quedan por escrito antes de empezar. Si el alcance no cierra, no hay propuesta y no se debe nada.",
     implicancia: "No se factura por hora contra un alcance que se mueve.",
   },
 ];

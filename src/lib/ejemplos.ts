@@ -1,138 +1,154 @@
 /**
- * EJEMPLOS DE PROCESOS (sección 04)
+ * EJEMPLOS POR INDUSTRIA (sección 05)
  *
- * Los mismos oficios que nombra el diagnóstico —"el que atiende", "el que
- * cotiza"— pero acá abiertos en tres tiempos: qué pasa hoy, qué hace el
- * sistema, con qué queda la empresa.
+ * Contesta una sola pregunta: "¿qué podrían automatizar en una empresa como
+ * la mía?". Por eso está ordenado por industria y no por tipo de tecnología.
  *
- * REGLA DE ESCRITURA
+ * CÓMO ESTÁ ESCRITO
  *
- * · Los nombres son de OFICIO, nunca de tecnología. Es la misma regla que en
- *   src/lib/diagnostico.ts y los nombres se mantienen en sincronía a mano:
- *   `agenteId` apunta al agente del diagnóstico cuando existe el equivalente.
+ * · Cada ejemplo es un PROCESO CONCRETO contado con las mismas seis etapas de
+ *   la sección 02 —solicitud, interpretación, consulta, acción, registro,
+ *   escalamiento—. Que el esqueleto se repita es el argumento: no es un
+ *   producto distinto por rubro, es el mismo recorrido aplicado a otro
+ *   proceso. Además deja al lector imaginando su propio caso.
  *
- * · `resultado` describe el estado en el que queda el trabajo, no un ahorro.
- *   No hay porcentajes, no hay "hasta un X%", no hay dinero. Las únicas horas
- *   del sitio son las que el visitante estima él mismo en el diagnóstico, y
- *   ahí están rotuladas como estimación.
+ * · Nada de "automatizamos la gestión comercial". Una frase así no se puede
+ *   imaginar. "Una consulta entra por WhatsApp, el sistema identifica qué
+ *   propiedad busca y avisa al vendedor", sí.
  *
- * · `pasos` son las acciones que ejecuta el sistema, en orden y en tercera
- *   persona. Es lo que se contrata: si un paso no se puede construir, se saca.
+ * · Los oficios son los mismos que nombra el diagnóstico —"el que atiende",
+ *   "el que cotiza"— y `rubroId` apunta al rubro correspondiente de
+ *   src/lib/diagnostico.ts. Los nombres se mantienen en sincronía a mano.
+ *
+ * · NINGÚN RESULTADO NUMÉRICO. Ni porcentajes, ni horas, ni "de dos días a
+ *   dos minutos". `queda` describe el estado en el que queda el trabajo, que
+ *   es verificable, en vez de una mejora, que habría que inventar.
  */
 
-export type Ejemplo = {
-  id: string;
-  /** Nombre de oficio. El mismo que usa el diagnóstico. */
-  nombre: string;
-  /** Id del agente equivalente en el diagnóstico, o null si no hay. */
-  agenteId: string | null;
-  /** Qué ocurre hoy, con el proceso hecho a mano. */
-  problema: string;
-  /** Las acciones que ejecuta el sistema, en orden. */
-  pasos: string[];
-  /** En qué estado queda el trabajo. Descriptivo: sin métricas. */
-  resultado: string;
-  /** Dónde aparece más seguido. Orienta al lector, no promete nada. */
-  dondeAparece: string;
+/** Las seis etapas, en orden. Las mismas de src/lib/demostracion.ts. */
+export const ETAPAS = [
+  "Solicitud",
+  "Interpretación",
+  "Consulta",
+  "Acción",
+  "Registro",
+  "Escalamiento",
+] as const;
+
+export type EjemploIndustria = {
+  /** Id del rubro en src/lib/diagnostico.ts. */
+  rubroId: string;
+  industria: string;
+  /** El proceso, en una línea, para quien no quiere leer las seis etapas. */
+  proceso: string;
+  /** Una línea por etapa, en el orden de ETAPAS. */
+  flujo: string[];
+  /** Los oficios del diagnóstico que aparecen en este rubro. */
+  oficios: string[];
+  /** En qué estado queda el trabajo. Descriptivo, sin métricas. */
+  queda: string;
 };
 
-export const EJEMPLOS: Ejemplo[] = [
+export const EJEMPLOS: EjemploIndustria[] = [
   {
-    id: "el-que-atiende",
-    nombre: "El que atiende",
-    agenteId: "comercio-atiende",
-    problema:
-      "Las consultas de precio, disponibilidad y envío entran por mensaje a cualquier hora. Alguien las contesta una por una, mirando el sistema.",
-    pasos: [
-      "Lee el mensaje y entiende qué se está preguntando.",
-      "Consulta precio y disponibilidad en el sistema de la empresa.",
-      "Responde con el dato real, no con una respuesta armada de antemano.",
-      "Deriva a una persona cuando la consulta se sale de lo previsto.",
+    rubroId: "comercio",
+    industria: "Comercio y retail",
+    proceso: "Un pedido que llega por mensaje fuera de horario",
+    flujo: [
+      "Entra un mensaje pidiendo precio y disponibilidad.",
+      "El sistema identifica producto, cantidad y si el cliente ya existe.",
+      "Consulta precio y stock en el sistema de la empresa.",
+      "Responde con el dato real y prepara el pedido.",
+      "Guarda la conversación y el pedido generado.",
+      "Si el producto no está o el cliente es nuevo, avisa al vendedor.",
     ],
-    resultado:
-      "La consulta queda contestada con el dato del sistema, a la hora que llegó, y la conversación queda registrada.",
-    dondeAparece: "Comercio, gastronomía, servicios",
+    oficios: ["El que atiende", "El que carga", "El que publica"],
+    queda:
+      "El pedido queda preparado para revisar a la mañana, con la consulta ya contestada.",
   },
   {
-    id: "el-que-cotiza",
-    nombre: "El que cotiza",
-    agenteId: "servicios-cotiza",
-    problema:
-      "Cada cotización se arma a mano sobre la anterior: se copia un documento viejo, se cambian los precios y se revisa que no haya quedado nada del cliente anterior.",
-    pasos: [
-      "Toma los datos del pedido y los ítems que corresponden.",
-      "Aplica la lista de precios y las condiciones vigentes de la empresa.",
-      "Arma el documento con el formato de la empresa.",
-      "Lo deja listo para revisar antes de que salga.",
+    rubroId: "servicios",
+    industria: "Servicios profesionales",
+    proceso: "Un pedido de presupuesto que hoy se arma a mano",
+    flujo: [
+      "Llega una consulta por mail o por formulario.",
+      "El sistema identifica qué servicio se pide y con qué alcance.",
+      "Busca la lista de precios y las condiciones vigentes.",
+      "Arma el presupuesto y lo deja para que una persona lo apruebe.",
+      "Guarda el borrador junto con la consulta que lo originó.",
+      "Si el pedido no entra en la lista de precios, lo pasa a quien cotiza.",
     ],
-    resultado:
-      "La cotización queda escrita con los precios vigentes y una persona la aprueba antes de enviarla.",
-    dondeAparece: "Servicios profesionales, industria",
+    oficios: ["El que cotiza", "El que insiste", "El que resume"],
+    queda:
+      "El presupuesto queda escrito con los precios vigentes y aprobado por una persona antes de salir.",
   },
   {
-    id: "el-que-carga",
-    nombre: "El que carga",
-    agenteId: "comercio-carga",
-    problema:
-      "Los pedidos llegan por mensaje o por correo y alguien los transcribe al sistema, ítem por ítem, con el riesgo de equivocarse en una cantidad.",
-    pasos: [
-      "Lee el pedido como llegó, en el texto que escribió el cliente.",
-      "Identifica productos, cantidades y condiciones.",
-      "Verifica contra el catálogo y marca lo que no reconoce.",
-      "Carga el pedido en el sistema y deja el registro de lo que hizo.",
+    rubroId: "salud",
+    industria: "Salud y consultorios",
+    proceso: "Los turnos que hoy ocupan el día de la recepción",
+    flujo: [
+      "Un paciente escribe para pedir, mover o cancelar un turno.",
+      "El sistema identifica profesional, paciente y qué necesita.",
+      "Mira la agenda real y qué horarios están libres.",
+      "Da el turno, lo mueve o lo cancela, y lo confirma el día anterior.",
+      "Deja registrado el movimiento en la agenda.",
+      "Deriva a la recepción cualquier caso clínico o fuera de lo previsto.",
     ],
-    resultado:
-      "El pedido queda cargado y listo para facturar, y lo que el sistema no reconoció queda separado para que lo mire una persona.",
-    dondeAparece: "Comercio, industria y logística",
+    oficios: ["El que agenda", "El que recuerda", "El que tramita"],
+    queda:
+      "La agenda queda actualizada en un solo lugar y el lugar que se libera se ofrece solo.",
   },
   {
-    id: "el-que-agenda",
-    nombre: "El que agenda",
-    agenteId: "salud-agenda",
-    problema:
-      "La recepción pasa el día dando, moviendo y cancelando turnos por teléfono y por mensaje, sobre la misma agenda.",
-    pasos: [
-      "Ofrece los horarios que están realmente libres.",
-      "Da, mueve o cancela el turno en la agenda de cada profesional.",
-      "Confirma el turno el día anterior.",
-      "Ofrece el lugar que se libera a quien está esperando.",
+    rubroId: "inmobiliaria",
+    industria: "Inmobiliaria",
+    proceso: "Una consulta por una propiedad, de las veinte que entran por día",
+    flujo: [
+      "Entra una consulta por WhatsApp o por un portal.",
+      "El sistema identifica qué propiedad busca y con qué condiciones.",
+      "Consulta disponibilidad, precio y estado de la publicación.",
+      "Responde, propone horarios de visita y registra el contacto.",
+      "Deja la consulta cargada con todo lo que se preguntó.",
+      "Avisa al vendedor cuando hay intención real o algo que decidir.",
     ],
-    resultado:
-      "La agenda queda actualizada en un solo lugar y la recepción deja de ser el cuello de botella.",
-    dondeAparece: "Salud, servicios, inmobiliaria",
+    oficios: ["El que filtra", "El que agenda", "El que publica"],
+    queda:
+      "El interesado tiene respuesta y el vendedor recibe solo las consultas que valen su tiempo.",
   },
   {
-    id: "el-que-publica",
-    nombre: "El que publica",
-    agenteId: "comercio-publica",
-    problema:
-      "El mismo producto o la misma propiedad se carga a mano en la tienda, en los marketplaces y en cada portal. Cuando cambia un precio, hay que cambiarlo en todos.",
-    pasos: [
-      "Toma la ficha desde una sola carga.",
-      "La publica en cada canal con el formato que ese canal exige.",
-      "Sincroniza precio y disponibilidad cuando cambian en el sistema.",
-      "Avisa cuando un canal rechaza una publicación.",
+    rubroId: "industria",
+    industria: "Industria y logística",
+    proceso: "Órdenes de compra que se transcriben a mano al sistema",
+    flujo: [
+      "Llega una orden de compra por correo, en PDF o en el cuerpo del mail.",
+      "El sistema identifica ítems, cantidades, precios y condiciones.",
+      "Verifica cada ítem contra el catálogo y los precios acordados.",
+      "Carga la orden y marca aparte lo que no reconoció.",
+      "Guarda el documento original junto a lo que cargó.",
+      "Frena y avisa si un precio no coincide o un ítem no existe.",
     ],
-    resultado:
-      "Los canales muestran el mismo precio y la misma disponibilidad que el sistema de la empresa.",
-    dondeAparece: "Comercio, inmobiliaria",
+    oficios: ["El que carga", "El que controla", "El que sigue"],
+    queda:
+      "La orden queda cargada con su documento original al lado, y las diferencias quedan señaladas en vez de pasar de largo.",
   },
   {
-    id: "el-que-insiste",
-    nombre: "El que insiste",
-    // En el diagnóstico este oficio aparece como "El que tramita": pide la
-    // documentación y sostiene el pedido hasta que llega.
-    agenteId: "servicios-tramita",
-    problema:
-      "Los contactos se enfrían y la documentación no llega porque nadie tiene tiempo de volver a escribir por tercera vez.",
-    pasos: [
-      "Responde al contacto nuevo apenas entra.",
-      "Sostiene el seguimiento con el ritmo que defina la empresa.",
-      "Pide lo que falta y controla que esté completo.",
-      "Avisa a una persona cuando hay respuesta o cuando hay que frenar.",
+    rubroId: "gastronomia",
+    industria: "Gastronomía y turismo",
+    proceso: "Reservas que entran por teléfono y por mensaje a la vez",
+    flujo: [
+      "Entra una reserva por cualquiera de los dos canales.",
+      "El sistema identifica fecha, cantidad de personas y preferencias.",
+      "Consulta la disponibilidad real, la misma para los dos canales.",
+      "Toma la reserva y la confirma.",
+      "Deja la reserva cargada con el canal por el que entró.",
+      "Deriva los casos especiales: eventos, grupos grandes, reclamos.",
     ],
-    resultado:
-      "El seguimiento se sostiene solo y una persona entra cuando hay algo que decidir.",
-    dondeAparece: "Servicios profesionales, inmobiliaria, salud",
+    oficios: ["El que reserva", "El que atiende", "El que responde"],
+    queda:
+      "Las reservas de los dos canales caen sobre una sola disponibilidad, sin superponerse.",
   },
 ];
+
+/** Busca un ejemplo por rubro, para enlazar con el diagnóstico. */
+export function ejemploDeRubro(rubroId: string): EjemploIndustria | undefined {
+  return EJEMPLOS.find((ejemplo) => ejemplo.rubroId === rubroId);
+}

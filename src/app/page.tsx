@@ -24,7 +24,7 @@ import Hero from "@/components/Hero";
 import Seccion from "@/components/Seccion";
 import TitularRevelado from "@/components/TitularRevelado";
 import Diagnostico from "@/components/diagnostico/Diagnostico";
-import Demostracion from "@/components/secciones/Demostracion";
+import ComoFunciona from "@/components/secciones/ComoFunciona";
 import Ejemplos from "@/components/secciones/Ejemplos";
 import Socios from "@/components/secciones/Socios";
 import ComoTrabajamos from "@/components/secciones/ComoTrabajamos";
@@ -90,10 +90,10 @@ export default function Home() {
         {/* 01 · Entender */}
         <Hero numero={numeroDe("contenido")} />
 
-        {/* 02 · Ver la solución funcionando */}
-        <Demostracion
-          numero={numeroDe("demostracion")}
-          kicker={kickerDe("demostracion")}
+        {/* 02 · Entender qué es un agente y verlo funcionando */}
+        <ComoFunciona
+          numero={numeroDe("como-funciona")}
+          kicker={kickerDe("como-funciona")}
         />
 
         {/* 03 · Reconocer el problema propio, con números propios */}
@@ -124,7 +124,7 @@ export default function Home() {
           </div>
         </Seccion>
 
-        {/* 04 · Reconocer el problema, con nombre y apellido */}
+        {/* 04 · "¿Qué podrían automatizar en una empresa como la mía?" */}
         <Ejemplos numero={numeroDe("ejemplos")} kicker={kickerDe("ejemplos")} />
 
         {/* 05 · Confiar: quién lo construye */}

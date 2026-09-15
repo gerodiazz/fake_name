@@ -17,35 +17,45 @@ import Seccion from "@/components/Seccion";
 import TitularRevelado from "@/components/TitularRevelado";
 import { SITIO } from "@/lib/sitio";
 
-/** Las cuatro etapas, con su plazo habitual. */
+/**
+ * Las cuatro etapas, con su plazo habitual.
+ *
+ * Cada una contesta la pregunta que el cliente tiene en ese momento del
+ * proyecto, y la pregunta va escrita: es la diferencia entre leer una lista de
+ * etapas y entender qué pasa en cada una.
+ */
 const PASOS = [
   {
     numero: "01",
     titulo: "Diagnóstico",
+    pregunta: "¿Qué proceso vamos a automatizar?",
     plazo: "45 minutos · sin costo",
     detalle:
-      "Una reunión para ver el proceso como funciona hoy, con la persona que lo hace. Sin costo.",
+      "Una reunión para ver el proceso como funciona hoy, con la persona que lo hace. De ahí sale qué conviene automatizar y qué no.",
   },
   {
     numero: "02",
     titulo: "Propuesta",
+    pregunta: "¿Qué se construye, cuánto cuesta y cuánto tarda?",
     plazo: "5 días hábiles",
     detalle:
-      "Alcance, plazo y precio cerrados por escrito. Si el alcance no cierra, no hay propuesta y no se debe nada.",
+      "Alcance, plazo y precio cerrados por escrito, antes de empezar. Si el alcance no cierra, no hay propuesta y no se debe nada.",
   },
   {
     numero: "03",
     titulo: "Implementación",
+    pregunta: "¿Cómo pasa de la idea al sistema funcionando?",
     plazo: "2 a 8 semanas",
     detalle:
-      "Desarrollo e integración con los sistemas que la empresa ya usa. Una revisión en cada entrega parcial.",
+      "Desarrollo e integración con los sistemas que la empresa ya usa. Una revisión en cada entrega parcial, no una sola al final.",
   },
   {
     numero: "04",
     titulo: "Entrega",
+    pregunta: "¿Qué queda en manos de la empresa?",
     plazo: "1 semana",
     detalle:
-      "Capacitación y documentación. El sistema queda instalado y es de la empresa.",
+      "El sistema funcionando, el repositorio, la documentación y las credenciales. Más la capacitación de quien lo va a usar.",
   },
 ];
 
@@ -139,9 +149,10 @@ export default function ComoTrabajamos({
         <TitularRevelado como="h2" className="titular max-w-[18ch] text-[clamp(1.75rem,7.5vw,3rem)]">
           Cómo trabajamos
         </TitularRevelado>
-        <p className="mt-6 max-w-[48ch] text-[15px] text-tinta-2 sm:text-[16px]">
-          Cuatro etapas. Los plazos son los habituales; el alcance definitivo
-          sale de la primera.
+        <p className="mt-6 max-w-[50ch] text-[15px] leading-relaxed text-tinta-2 sm:text-[16px]">
+          Cuatro etapas, cada una con su plazo. El precio y el alcance se
+          cierran en la segunda: cuando el trabajo arranca, ya está escrito qué
+          se va a construir, cuánto cuesta y cuándo termina.
         </p>
 
         {/* El diagrama solo en desktop, donde existen las cuatro columnas. */}
@@ -166,7 +177,12 @@ export default function ComoTrabajamos({
               <p className="mt-1 text-[13px] tabular-nums text-tinta-2">
                 {paso.plazo}
               </p>
-              <p className="mt-4 max-w-[46ch] text-[14px] leading-relaxed text-tinta-2 lg:mx-auto">
+              {/* La pregunta que el cliente tiene en esta etapa. En tinta
+                  plena: es lo que se lee cuando se recorre el diagrama. */}
+              <p className="mt-4 max-w-[46ch] text-[14px] leading-relaxed text-tinta lg:mx-auto">
+                {paso.pregunta}
+              </p>
+              <p className="mt-2 max-w-[46ch] text-[14px] leading-relaxed text-tinta-2 lg:mx-auto">
                 {paso.detalle}
               </p>
             </li>

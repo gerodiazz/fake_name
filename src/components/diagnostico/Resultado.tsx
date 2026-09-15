@@ -51,10 +51,11 @@ export default function Resultado({
         <h3 className="titular mt-4 max-w-[20ch] text-[clamp(1.6rem,7vw,2.6rem)]">
           No se marcó ningún proceso.
         </h3>
-        <p className="mt-4 max-w-[48ch] text-[15px] text-tinta-2">
+        <p className="mt-4 max-w-[50ch] text-[15px] leading-relaxed text-tinta-2">
           Puede ser que lo repetitivo ya esté resuelto, o que el proceso que más
-          tiempo consume no esté en la lista. En los dos casos, la reunión de
-          diagnóstico no tiene costo.
+          tiempo consume no esté en la lista. En los dos casos la reunión no
+          tiene costo, y si no hay nada que convenga automatizar, te lo decimos
+          ahí.
         </p>
         <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
           <a
@@ -65,7 +66,7 @@ export default function Resultado({
               hover:opacity-90 active:opacity-75
             "
           >
-            Agenda una reunión
+            Agendar diagnóstico
           </a>
           <button
             type="button"
@@ -82,6 +83,16 @@ export default function Resultado({
   return (
     <div className="anim-emerger py-4">
       <p className="kicker kicker-tinta">Resultado</p>
+
+      {/* Qué es esto que se está mirando. Sin esta línea, el número grande
+          parece un cálculo sobre la empresa del visitante, y no lo es: es lo
+          que contestó, ordenado. */}
+      <p className="mt-4 max-w-[52ch] text-[15px] leading-relaxed text-tinta">
+        Con lo que marcaste identificamos qué procesos son candidatos a pasar a
+        software y qué información hace falta para evaluarlos. No es una
+        cotización ni un análisis de tu empresa: es el punto de partida de la
+        reunión.
+      </p>
 
       {/* El número, sobre la primera de las dos bandas Klein del sitio: ancho
           de viewport, papel sobre azul y tramado risográfico al costado. Es uno
@@ -100,9 +111,9 @@ export default function Resultado({
 
       {/* Qué mide el número, dicho acá y no al pie: es donde se lo mira. */}
       <p className="mt-6 max-w-[52ch] text-[14px] leading-relaxed text-tinta-2">
-        Es el tiempo que hoy se va en hacer estos procesos a mano, sumado a lo
+        Es el tiempo que suele consumir hacer estos procesos a mano, sumado a lo
         largo de un año. No es un ahorro prometido ni un precio: es el tamaño
-        del problema, para saber si vale la pena resolverlo.
+        aproximado del problema, para saber si vale la pena resolverlo.
       </p>
 
       {/* La lista de procesos queda a la vista: es el alcance del trabajo. */}
@@ -148,9 +159,13 @@ export default function Resultado({
         </button>
       </div>
 
-      <p className="mt-4 max-w-[52ch] text-[13px] text-tinta-2">
-        Estimación sobre promedios del rubro. En la reunión se ajusta con datos
-        reales.
+      {/* De dónde sale el número, dicho sin adornos. No hay un motor de
+          evaluación detrás y el sitio no simula que lo haya: son los rangos
+          que usamos como punto de partida para cada tipo de proceso. */}
+      <p className="mt-4 max-w-[54ch] text-[13px] leading-relaxed text-tinta-2">
+        Las horas salen de los rangos que usamos como punto de partida para cada
+        tipo de proceso, no de datos de tu empresa. En la reunión se reemplazan
+        por los que midan ustedes.
       </p>
 
       {/* Qué hay del otro lado del botón. Son las tres cosas que salen de la

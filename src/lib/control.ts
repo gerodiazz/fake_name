@@ -1,88 +1,108 @@
 /**
- * CONTROL, ERRORES Y DATOS (sección 08)
+ * CONTROL, ERRORES Y DATOS (sección 09)
  *
- * La pregunta que no estaba contestada en ningún lado: qué pasa cuando el
- * software se equivoca, y quién manda.
+ * La pregunta que el sitio no contestaba en ningún lado, y que todo el mundo
+ * se hace: ¿qué pasa si la IA se equivoca?
  *
  * ┌──────────────────────────────────────────────────────────────────────┐
- * │ REGLA DE ESTA SECCIÓN                                                │
+ * │ CÓMO ESTÁ ESCRITA ESTA SECCIÓN                                       │
  * │                                                                       │
- * │ No se describe acá ninguna arquitectura que el estudio no tenga       │
- * │ construida. Lo que se afirma es la POSICIÓN de trabajo, que sí se     │
- * │ sostiene en cualquier proyecto: qué se decide con el cliente, qué     │
- * │ queda registrado, quién aprueba qué.                                  │
+ * │ Las seis de abajo son CAPACIDADES que pueden formar parte de una      │
+ * │ implementación según el proceso, no una lista de cosas que todos      │
+ * │ nuestros sistemas tienen. Decir "todos nuestros agentes registran     │
+ * │ cada acción y piden aprobación" sería una afirmación sobre sistemas   │
+ * │ que todavía no se construyeron.                                       │
  * │                                                                       │
- * │ Cuando una decisión depende de cómo se implemente cada sistema, se    │
- * │ dice: para eso está el campo `seDefine`. Es preferible escribir "esto │
- * │ se define en la propuesta" antes que inventar un diagrama.            │
+ * │ Por eso cada punto tiene `cuando`: en qué caso esa capacidad entra en │
+ * │ el proyecto. La decisión es del cliente y se toma antes de construir. │
+ * │                                                                       │
+ * │ No se describe acá ninguna arquitectura que el estudio no tenga. Lo   │
+ * │ que se afirma es la posición de trabajo, que sí se sostiene en        │
+ * │ cualquier proyecto.                                                   │
  * └──────────────────────────────────────────────────────────────────────┘
  */
 
-export type PuntoDeControl = {
+/** La idea que ordena toda la sección. */
+export const PREMISA = "No todo tiene que resolverse automáticamente.";
+
+export type Capacidad = {
   id: string;
-  /** La pregunta que se está contestando, tal como la haría un cliente. */
-  pregunta: string;
-  /** La respuesta que se sostiene en cualquier proyecto. */
-  respuesta: string;
-  /**
-   * Lo que depende de cada implementación y se acuerda con la empresa. Null
-   * cuando la respuesta no tiene nada que negociar.
-   */
-  seDefine: string | null;
+  /** Qué puede hacer el sistema. En infinitivo: es una capacidad, no una promesa. */
+  titulo: string;
+  /** En qué consiste. */
+  detalle: string;
+  /** En qué casos entra en una implementación. */
+  cuando: string;
 };
 
-export const PUNTOS_DE_CONTROL: PuntoDeControl[] = [
-  {
-    id: "sin-certeza",
-    pregunta: "¿Qué pasa cuando el sistema no está seguro?",
-    respuesta:
-      "Se detiene y avisa. Un caso que no entra en lo previsto no se resuelve con una respuesta aproximada: queda marcado y esperando a una persona.",
-    seDefine:
-      "Qué se considera un caso dudoso en cada proceso, y a quién se le avisa.",
-  },
+export const CAPACIDADES: Capacidad[] = [
   {
     id: "aprobacion",
-    pregunta: "¿Qué acciones requieren aprobación?",
-    respuesta:
-      "Las que tienen consecuencia hacia afuera o sobre el dinero. Escribirle a un cliente, confirmar un precio, cargar una operación: cuáles de esas pasan por una persona se decide antes de construir, no después del primer error.",
-    seDefine:
-      "La lista de acciones que quedan automáticas y la de las que esperan aprobación.",
+    titulo: "Pedir aprobación",
+    detalle:
+      "El sistema prepara la acción y la deja esperando: no queda firme hasta que alguien la confirma.",
+    cuando:
+      "En acciones con consecuencia hacia afuera o sobre el dinero: enviar un presupuesto, confirmar un precio, cerrar una operación.",
   },
   {
-    id: "persona",
-    pregunta: "¿Cuándo interviene una persona?",
-    respuesta:
-      "Cuando el sistema lo pide y cuando la empresa quiera. El trabajo se puede tomar en cualquier punto: no hay un modo en el que el software sea el único que puede continuar.",
-    seDefine: null,
+    id: "derivar",
+    titulo: "Derivar a una persona",
+    detalle:
+      "Cuando el caso se sale de lo previsto, el sistema frena y se lo pasa a alguien del equipo con todo el contexto.",
+    cuando:
+      "En cualquier proceso que atienda clientes: siempre hay un caso que no entra en el molde.",
   },
   {
-    id: "registro",
-    pregunta: "¿Cómo se registra lo que hizo?",
-    respuesta:
-      "Cada acción queda registrada: qué hizo, cuándo, con qué datos y qué devolvió el sistema con el que se integró. Ese registro es para la empresa y se puede revisar sin pedirnos nada.",
-    seDefine: "Dónde vive el registro y cuánto tiempo se conserva.",
+    id: "registrar",
+    titulo: "Registrar cada acción",
+    detalle:
+      "Qué hizo, cuándo, con qué datos y qué devolvió el sistema con el que se integró. El registro es de la empresa y se revisa sin pedirnos nada.",
+    cuando:
+      "Cuando hace falta poder reconstruir después qué pasó, que es casi siempre.",
+  },
+  {
+    id: "reglas",
+    titulo: "Aplicar reglas",
+    detalle:
+      "Condiciones duras que el sistema no puede saltear: montos máximos, clientes que tienen que existir en el sistema, horarios, excepciones.",
+    cuando:
+      "Cuando la empresa ya tiene criterios claros sobre qué se puede y qué no.",
   },
   {
     id: "permisos",
-    pregunta: "¿A qué tiene acceso?",
-    respuesta:
-      "A lo mínimo que necesita el proceso, con credenciales propias y separadas de las de las personas. Si un proceso solo necesita leer, solo lee.",
-    seDefine:
-      "Los permisos concretos sobre cada sistema, que da la empresa y puede revocar cuando quiera.",
+    titulo: "Limitar permisos",
+    detalle:
+      "Credenciales propias, separadas de las de las personas, con lo mínimo que el proceso necesita. Si solo necesita leer, solo lee.",
+    cuando:
+      "Siempre que el software toque un sistema de la empresa. Los permisos los da la empresa y los puede revocar cuando quiera.",
   },
   {
-    id: "datos",
-    pregunta: "¿Qué pasa con los datos?",
-    respuesta:
-      "Son de la empresa y quedan en sus sistemas. El estudio no arma una base propia con los datos de un cliente ni los usa para entrenar nada.",
-    seDefine:
-      "Qué datos salen hacia el proveedor del modelo, cuáles no y cómo se anonimizan cuando hace falta.",
-  },
-  {
-    id: "error",
-    pregunta: "¿Y si igual se equivoca?",
-    respuesta:
-      "Se corrige. Durante los primeros 90 días desde la entrega la corrección está incluida, y el registro sirve para encontrar qué pasó en vez de discutirlo.",
-    seDefine: null,
+    id: "detenerse",
+    titulo: "Detenerse ante lo inesperado",
+    detalle:
+      "Si el dato no aparece, si el otro sistema no responde o si el pedido no se entiende, el sistema no improvisa una respuesta: se detiene y avisa.",
+    cuando:
+      "Cuando una respuesta equivocada cuesta más que una respuesta demorada.",
   },
 ];
+
+/**
+ * Lo que sí se afirma siempre, sin depender del proyecto. Son dos, y son las
+ * dos que un cliente necesita escuchar antes de dar acceso a sus sistemas.
+ */
+export const POSICION = [
+  {
+    titulo: "Qué se decide antes de construir",
+    detalle:
+      "Qué acciones quedan automáticas, cuáles esperan aprobación y qué se considera un caso dudoso. Esa lista sale del diagnóstico y va escrita en la propuesta: no se descubre después del primer error.",
+  },
+  {
+    titulo: "Qué pasa con los datos",
+    detalle:
+      "Son de la empresa y quedan en sus sistemas. No armamos una base propia con los datos de un cliente ni los usamos para entrenar nada. Qué información sale hacia el proveedor del modelo y qué no, se define en la propuesta.",
+  },
+];
+
+/** Y si igual se equivoca. Cierra la sección. */
+export const SI_SE_EQUIVOCA =
+  "Se corrige. Durante los primeros 90 días desde la entrega la corrección está incluida, y el registro sirve para encontrar qué pasó en vez de discutirlo.";
