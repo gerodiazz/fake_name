@@ -51,9 +51,8 @@ export default function Socios({
           Somos dos. El desarrollo no se terceriza.
         </p>
         <p className="mt-5 max-w-[50ch] text-[15px] leading-relaxed text-tinta-2 sm:text-[16px]">
-          La reunión de diagnóstico la toma la persona que después escribe el
-          código. No hay un vendedor adelante y un equipo desconocido atrás, y
-          no hay un tercero al que se le pasa el trabajo.
+          La reunión de diagnóstico la toma quien después escribe el código. No
+          hay un vendedor adelante y un equipo desconocido atrás.
         </p>
 
         {SOCIOS.length > 0 ? (

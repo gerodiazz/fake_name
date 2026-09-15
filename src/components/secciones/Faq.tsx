@@ -30,46 +30,50 @@
 import Seccion from "@/components/Seccion";
 import TitularRevelado from "@/components/TitularRevelado";
 
+/**
+ * Siete preguntas y ninguna más.
+ *
+ * Eran ocho, y varias repetían con otras palabras lo que ya dicen las
+ * secciones de condiciones y de control. Las que quedan son las que un
+ * empresario hace de verdad antes de escribir, y cada respuesta ocupa lo que
+ * necesita y ni una línea más: si la respuesta está desarrollada arriba, acá
+ * va la versión corta.
+ */
 const PREGUNTAS = [
   {
-    pregunta: "¿Trabajan con los sistemas que ya tenemos?",
+    pregunta: "¿Esto reemplaza personas?",
     respuesta:
-      "Sí, y no hace falta cambiar nada: el trabajo se hace sobre lo que la empresa ya usa. El sistema de gestión, la planilla, el correo, el WhatsApp. Si alguno no tiene forma de integrarse, se dice en el diagnóstico y se busca otro camino antes de la propuesta, no después.",
+      "No. Se automatiza el trabajo repetitivo de un proceso —cargar, responder lo de siempre, perseguir datos— y las personas quedan para lo que necesita criterio. El propio sistema está construido para frenar y derivar cuando el caso se sale de lo previsto.",
   },
   {
-    pregunta: "¿Cuánto cuesta?",
+    pregunta: "¿Se integra con los sistemas que ya tenemos?",
     respuesta:
-      "Depende de cuántos procesos entren y de con qué sistemas haya que integrarse, así que no hay una lista de precios: no es un producto con versiones. El precio sale de la propuesta, que se escribe después del diagnóstico y antes de empezar, y no se mueve durante el trabajo. Si en el diagnóstico se ve que el alcance no entra en lo que la empresa puede invertir, se dice ahí y no se sigue.",
+      "Sí, y no hace falta cambiar nada: el trabajo se hace sobre el sistema de gestión, la planilla, el correo o el WhatsApp que la empresa ya usa. Si alguno no tiene forma de integrarse, se dice en el diagnóstico y se busca otro camino antes de la propuesta.",
   },
   {
-    pregunta: "¿Cuánto tarda una implementación?",
+    pregunta: "¿Qué pasa cuando el sistema no sabe qué hacer?",
     respuesta:
-      "Dos semanas de base más una semana por proceso, con un tope de ocho. Un proceso queda funcionando alrededor de la tercera semana; cuatro procesos, alrededor de la sexta. El plazo definitivo va escrito en la propuesta.",
+      "Se detiene y avisa. No improvisa una respuesta ni ejecuta una acción a medias: deja el caso con todo su contexto para que lo tome una persona.",
   },
   {
-    pregunta: "¿Qué pasa si cambia el proceso o crece la empresa?",
+    pregunta: "¿Quién es dueño del software y de los datos?",
     respuesta:
-      "El código es de la empresa y queda documentado para poder modificarse. Los cambios chicos los hace el equipo interno; los grandes se cotizan como un trabajo nuevo. No hay un plan que haya que escalar por crecer.",
+      "La empresa, de los dos. El repositorio, la documentación y las credenciales se entregan a su nombre, y los datos quedan en sus sistemas.",
   },
   {
-    pregunta: "¿Qué cubren los 90 días y qué no?",
+    pregunta: "¿Hay una suscripción obligatoria?",
     respuesta:
-      "Cubren los errores de lo que construimos, dentro del alcance que quedó escrito en la propuesta: si algo que entregamos andando deja de andar por algo nuestro, se corrige sin costo. No cubren cambios que haga un tercero o la propia empresa sobre el sistema, requerimientos nuevos ni cambios de alcance. Cuando un pedido cae de ese lado, lo decimos y se cotiza aparte antes de hacerlo. Pasados los 90 días el sistema sigue funcionando igual: no se apaga nada ni hay licencias que renovar, y el soporte es opcional.",
+      "No. Se paga una vez, por el desarrollo y la implementación. El soporte posterior es opcional y nada se apaga por no contratarlo.",
   },
   {
-    pregunta: "¿Puedo seguir con otro proveedor?",
+    pregunta: "¿Cuánto demora y cuánto cuesta un proyecto?",
     respuesta:
-      "Sí, y no hay que pedirnos permiso. El repositorio, la documentación y las credenciales quedan a nombre de la empresa desde la entrega. Cualquier equipo con acceso puede continuar el trabajo.",
+      "Dos semanas de base más una por proceso, con tope de ocho. El precio depende de cuántos procesos entren y de con qué sistemas haya que integrarse, así que no hay lista de precios: sale de la propuesta, que se escribe después del diagnóstico y no se mueve durante el trabajo.",
   },
   {
-    pregunta: "¿Qué no está incluido?",
+    pregunta: "¿Cómo empezamos?",
     respuesta:
-      "El consumo de las APIs de los modelos, que se paga directo al proveedor. Las licencias de los sistemas de terceros con los que el software se integra. El soporte una vez pasados los 90 días. Y cualquier proceso que no esté escrito en el alcance de la propuesta: si aparece uno nuevo durante la implementación, se cotiza aparte y se decide antes de seguir.",
-  },
-  {
-    pregunta: "¿Pueden decirme que un proceso no conviene automatizar?",
-    respuesta:
-      "Sí, y pasa. Un proceso que ocurre tres veces por mes, o que cambia todos los meses, o que depende de un criterio que nadie tiene escrito, cuesta más automatizarlo que hacerlo a mano. Cuando lo vemos, lo decimos en la reunión: no hay propuesta y la reunión no se cobra igual. Preferimos eso antes que vender un trabajo que no se iba a pagar solo.",
+      "Con una reunión de 45 minutos, sin costo, para ver el proceso como funciona hoy. Si de ahí sale que no conviene automatizarlo —porque ocurre poco, porque cambia todos los meses o porque depende de un criterio que nadie tiene escrito—, lo decimos y no hay propuesta.",
   },
 ];
 
@@ -108,21 +112,7 @@ export default function Faq({
           Preguntas frecuentes sobre automatización con IA
         </TitularRevelado>
         <p className="mt-6 max-w-[52ch] text-[15px] text-tinta-2 sm:text-[16px]">
-          Lo secundario. Cómo se cobra y de quién es el código están arriba, en{" "}
-          <a
-            href="#condiciones"
-            className="text-tinta underline decoration-linea underline-offset-4 transition-colors duration-100 hover:decoration-tinta-2"
-          >
-            condiciones
-          </a>
-          ; qué pasa ante un error y dónde quedan los datos, en{" "}
-          <a
-            href="#control"
-            className="text-tinta underline decoration-linea underline-offset-4 transition-colors duration-100 hover:decoration-tinta-2"
-          >
-            control
-          </a>
-          .
+          Las siete que suelen hacernos antes de escribir.
         </p>
 
         <div className="mt-16">

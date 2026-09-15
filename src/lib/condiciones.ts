@@ -1,16 +1,18 @@
 /**
  * CONDICIONES COMERCIALES (sección 07)
  *
- * Esto no es letra chica ni una nota al pie del FAQ: es parte de la oferta, y
- * por eso tiene sección propia y visible. Tres de estos puntos estaban
- * escondidos dentro del acordeón de preguntas frecuentes.
+ * No es letra chica: es parte de la oferta, y por eso tiene sección propia.
+ * Tres de estos puntos estaban escondidos dentro del acordeón de preguntas.
+ *
+ * Cada punto es un título y una línea. Antes eran dos párrafos —el detalle y
+ * "lo que eso significa para el cliente"— y el segundo terminaba diciendo lo
+ * mismo que el primero con otras palabras. Si una condición necesita dos
+ * párrafos para entenderse, el problema es la condición, no el texto.
  *
  * ┌──────────────────────────────────────────────────────────────────────┐
  * │ REVISAR ANTES DE PUBLICAR                                            │
- * │ Cada punto de acá es un compromiso que hay que poder sostener frente │
- * │ a un cliente que lo reclame: los 90 días, la entrega del repositorio │
- * │ completo, el precio cerrado antes de empezar. Los dos socios tienen   │
- * │ que confirmar la redacción tal como está escrita.                     │
+ * │ Cada punto es un compromiso que hay que poder sostener frente a un   │
+ * │ cliente que lo reclame. Los dos socios tienen que confirmarlos.      │
  * └──────────────────────────────────────────────────────────────────────┘
  */
 
@@ -18,13 +20,8 @@ export type Condicion = {
   id: string;
   /** El compromiso, en dos o tres palabras. */
   titulo: string;
-  /** Qué significa, en una línea corta y concreta. */
+  /** Qué significa. Una línea. */
   detalle: string;
-  /**
-   * La consecuencia para el cliente, dicha desde su lado. Es lo que baja el
-   * riesgo de contratar, y por eso va separado del detalle.
-   */
-  implicancia: string;
 };
 
 export const CONDICIONES: Condicion[] = [
@@ -32,47 +29,43 @@ export const CONDICIONES: Condicion[] = [
     id: "pago-unico",
     titulo: "Pago único",
     detalle:
-      "Se presupuesta como proyecto cerrado y se paga una vez. El soporte posterior es opcional y se cotiza aparte.",
-    implicancia:
-      "No hay suscripción obligatoria para que el software siga funcionando.",
+      "Proyecto cerrado, se paga una vez. Ninguna suscripción es obligatoria para que el software siga funcionando.",
   },
   {
     id: "codigo-del-cliente",
     titulo: "El código es del cliente",
     detalle:
-      "Se entrega el repositorio, la documentación y las credenciales, a nombre de la empresa.",
-    implicancia: "Lo puede seguir el equipo interno o cualquier otro proveedor.",
+      "Repositorio, documentación y credenciales, a nombre de la empresa. Lo puede seguir cualquier otro proveedor.",
+  },
+  {
+    id: "datos",
+    titulo: "Los datos son del cliente",
+    detalle:
+      "Quedan en sus sistemas. No armamos una base propia ni los usamos para entrenar nada.",
   },
   {
     id: "costos-de-api",
     titulo: "Costos de API",
     detalle:
-      "Los servicios externos que usa el sistema se pagan en la cuenta de la empresa y directo al proveedor. Sin intermediación ni recargo.",
-    implicancia:
-      "El costo mensual se estima antes de empezar, no aparece después.",
-  },
-  {
-    id: "noventa-dias",
-    titulo: "90 días de corrección",
-    detalle:
-      "Corregimos sin costo los errores de lo que construimos, dentro del alcance acordado. No cubre cambios de terceros o de la empresa, requerimientos nuevos ni ampliaciones: eso se cotiza aparte y se avisa antes.",
-    implicancia:
-      "Lo que entregamos funcionando, sigue funcionando. Sin discutir de quién es la culpa.",
+      "Se pagan en la cuenta de la empresa, directo al proveedor y sin recargo. El costo mensual se estima antes de empezar.",
   },
   {
     id: "sin-lock-in",
     titulo: "Sin lock-in",
     detalle:
-      "No depende de una cuenta ni de un servidor nuestro para funcionar. Dónde corre lo define la empresa.",
-    implicancia:
-      "Nadie queda obligado a seguir con nosotros para poder usar lo que se construyó.",
+      "No depende de una cuenta ni de un servidor nuestro. Dónde corre lo define la empresa.",
   },
   {
     id: "alcance-cerrado",
     titulo: "Alcance cerrado",
     detalle:
-      "Qué se construye, cuánto cuesta y cuánto demora, por escrito antes de empezar. Si el alcance no cierra, no hay propuesta y no se debe nada.",
-    implicancia: "No se factura por hora contra un alcance que se mueve.",
+      "Qué se construye, cuánto cuesta y cuánto demora, por escrito antes de empezar.",
+  },
+  {
+    id: "noventa-dias",
+    titulo: "90 días de corrección",
+    detalle:
+      "Sin costo, los errores de lo que construimos dentro del alcance acordado. No cubre cambios de terceros, requerimientos nuevos ni ampliaciones.",
   },
 ];
 
@@ -83,11 +76,9 @@ export const CONDICIONES: Condicion[] = [
  * trabajo ANTES de completar el formulario: que alguien se descarte solo es
  * preferible a una reunión que no iba a ningún lado, para las dos partes.
  *
- * Queda en null hasta que existan los precios reales. Mientras tanto no se
- * muestra ningún número: un rango inventado acá es de las pocas cosas que
- * pueden hacer perder un cliente en la reunión siguiente.
- *
- * Al escribir algo como "Los proyectos arrancan en USD 2.000", aparece solo
- * arriba del formulario de contacto.
+ * Queda en null hasta que existan los precios reales. Un rango inventado acá
+ * es de las pocas cosas que pueden hacer perder un cliente en la reunión
+ * siguiente. Al escribir algo como "Los proyectos arrancan en USD 2.000",
+ * aparece solo arriba del formulario de contacto.
  */
 export const RANGO_INVERSION: string | null = null;

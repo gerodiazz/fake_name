@@ -63,7 +63,9 @@ const DEFINICIONES: DefinicionSeccion[] = [
   // llega a una sección que se llama así.
   { id: "como-funciona", kicker: "Cómo funciona", corto: "Cómo funciona", enIndice: true },
   { id: "diagnostico", kicker: "Diagnóstico", corto: "Diagnóstico", enIndice: true },
-  { id: "ejemplos", kicker: "Ejemplos por industria", corto: "Ejemplos", enIndice: true },
+  // El kicker dejó de decir "por industria": la sección ya no está organizada
+  // por rubro, son tres procesos y los rubros van en una línea de chips.
+  { id: "ejemplos", kicker: "Ejemplos", corto: "Ejemplos", enIndice: true },
   { id: "socios", kicker: "Quiénes estamos detrás", corto: "Nosotros", enIndice: true },
   { id: "como-trabajamos", kicker: "Cómo trabajamos", corto: "Proceso", enIndice: false },
   { id: "condiciones", kicker: "Condiciones claras", corto: "Condiciones", enIndice: false },

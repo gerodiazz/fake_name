@@ -74,8 +74,8 @@ export default function Hero({ numero }: { numero: string }) {
             {/* Qué pasa si toca el botón principal. Va pegado a los botones:
                 es lo que baja la fricción de tocarlo. */}
             <p className="mt-5 max-w-[44ch] text-[13px] leading-relaxed text-tinta-2">
-              Seis preguntas sobre cómo trabaja tu empresa hoy. No se piden
-              datos de contacto para ver el resultado.
+              Seis preguntas. No se piden datos de contacto para ver el
+              resultado.
             </p>
           </div>
 

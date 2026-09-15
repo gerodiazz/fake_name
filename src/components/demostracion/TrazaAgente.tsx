@@ -262,22 +262,11 @@ export default function TrazaAgente() {
         </div>
       ) : null}
 
-      {/* ---- el marco ---- */}
-      <div className="mt-10">
-        <p className="kicker kicker-tinta">
-          Dentro de qué límites trabaja, en este ejemplo
-        </p>
-        <dl className="grilla-expuesta grilla-expuesta-sm mt-5 grid grid-cols-1 hairline hairline-t hairline-b sm:grid-cols-2 lg:grid-cols-3">
-          {DEMOSTRACION.marco.map((limite) => (
-            <div key={limite.titulo} className="py-5 sm:px-5">
-              <dt className="text-[14px] text-tinta">{limite.titulo}</dt>
-              <dd className="mt-1 max-w-[38ch] text-[13px] leading-relaxed text-tinta-2">
-                {limite.detalle}
-              </dd>
-            </div>
-          ))}
-        </dl>
-      </div>
+      {/* ---- los límites ---- */}
+      <p className="hairline hairline-t mt-6 max-w-[62ch] pt-5 text-[14px] leading-relaxed text-tinta-2">
+        <span className="kicker kicker-tinta">Límites · </span>
+        {DEMOSTRACION.limites}
+      </p>
     </div>
   );
 }

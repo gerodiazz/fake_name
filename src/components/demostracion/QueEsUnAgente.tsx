@@ -5,17 +5,17 @@
  * pie, y no la definía en ningún lado. Quien no trabaja en software se queda
  * con una idea vaga, y una idea vaga no se compra.
  *
- * La comparación de dos columnas es el corazón del bloque: a la izquierda la
- * automatización simple, que casi cualquier empresa ya conoce; a la derecha el
- * recorrido completo. La diferencia se ve en la cantidad de pasos, sin que
- * haya que explicarla.
+ * Las tres columnas son el corazón del bloque, de menos a más: responder,
+ * ejecutar reglas, resolver. La diferencia se ve en la cantidad de eslabones
+ * —uno, dos, seis— sin que haya que explicarla, y el recorrido completo se
+ * cuenta una sola vez, en el ejemplo de abajo.
  *
- * La columna de la izquierda NO está para quedar mal. Que digamos cuándo
- * conviene una regla fija —más barata, más rápida, más fácil de mantener— es
- * parte del argumento: no vendemos agentes para todo.
+ * Las dos primeras columnas NO están para quedar mal. Que digamos cuándo
+ * conviene una regla fija es parte del argumento: no vendemos agentes para
+ * todo.
  */
 
-import { A_VECES_ALCANZA_UNA_REGLA, COMPARACION, DEFINICION } from "@/lib/agente";
+import { CIERRE_COMPARACION, COMPARACION, DEFINICION } from "@/lib/agente";
 
 export default function QueEsUnAgente() {
   return (
@@ -29,28 +29,25 @@ export default function QueEsUnAgente() {
         {DEFINICION}
       </p>
 
-      {/* Las dos columnas. En mobile se apilan y la de la derecha queda
-          segunda, que es el orden en que se explica. */}
-      <div className="grilla-expuesta grilla-expuesta-sm mt-12 grid grid-cols-1 hairline hairline-t hairline-b lg:grid-cols-2">
+      {/* Las tres categorías, de menos a más. La diferencia está en la
+          cantidad de eslabones y no hace falta explicarla. */}
+      <div className="grilla-expuesta grilla-expuesta-sm mt-10 grid grid-cols-1 hairline hairline-t hairline-b sm:grid-cols-3">
         {COMPARACION.map((columna, i) => {
-          // La segunda columna es la que estamos explicando: lleva el Klein.
-          const esAgente = i === 1;
+          // La tercera es la que estamos explicando: lleva el Klein.
+          const esAgente = i === COMPARACION.length - 1;
 
           return (
-            <div key={columna.titulo} className="py-8 lg:px-6">
-              <p className={`kicker ${esAgente ? "" : "kicker-tinta"}`}>
-                {esAgente ? "Lo que construimos" : "Con lo que se confunde"}
-              </p>
-              <h3 className="mt-3 font-serif text-[23px] leading-tight sm:text-[26px]">
+            <div key={columna.titulo} className="py-6 sm:px-5">
+              <h4
+                className={`font-serif text-[21px] leading-tight ${esAgente ? "text-klein" : ""}`}
+              >
                 {columna.titulo}
-              </h3>
-              <p className="mt-2 max-w-[42ch] text-[15px] leading-relaxed text-tinta">
+              </h4>
+              <p className="mt-1 max-w-[30ch] text-[14px] leading-relaxed text-tinta">
                 {columna.resumen}
               </p>
 
-              {/* La cadena. Dos eslabones contra seis: la diferencia se ve
-                  antes de leerse, y el recorrido completo se cuenta abajo. */}
-              <ul className="mt-5 flex flex-wrap items-center gap-x-1.5 gap-y-2">
+              <ul className="mt-4 flex flex-wrap items-center gap-x-1.5 gap-y-2">
                 {columna.cadena.map((eslabon, j) => (
                   <li key={eslabon} className="flex items-center gap-1.5">
                     <span
@@ -66,21 +63,14 @@ export default function QueEsUnAgente() {
                   </li>
                 ))}
               </ul>
-
-              <p className="hairline hairline-t mt-6 max-w-[44ch] pt-4 text-[13px] leading-relaxed text-tinta-2">
-                <span className="kicker kicker-tinta">Cuándo conviene · </span>
-                {columna.cuandoConviene}
-              </p>
             </div>
           );
         })}
       </div>
 
-      {/* Cuándo NO hace falta un agente. Decirlo vale más que la venta. */}
-      <p className="mt-8 max-w-[60ch] text-[14px] leading-relaxed text-tinta-2">
-        {A_VECES_ALCANZA_UNA_REGLA}
+      <p className="mt-6 max-w-[58ch] text-[14px] leading-relaxed text-tinta-2">
+        {CIERRE_COMPARACION}
       </p>
-
     </div>
   );
 }

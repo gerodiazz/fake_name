@@ -73,7 +73,7 @@ export const DEMOSTRACION = {
     {
       de: "sistema",
       texto:
-        "Tengo 20 unidades del filtro 45 mm disponibles y el jueves entra sin problema. Dejo el pedido preparado a nombre de Distribuidora del Sur para que lo confirme el equipo.",
+        "Tengo las 20 unidades y el jueves entra. Dejo el pedido preparado para que lo confirme el equipo.",
       hora: "21:04",
     },
   ] satisfies Mensaje[],
@@ -137,20 +137,13 @@ export const DEMOSTRACION = {
    * chatbot conectado a una empresa sin reglas. Cada punto de acá es una
    * decisión que se toma con el cliente antes de construir.
    */
-  marco: [
-    {
-      titulo: "Información autorizada",
-      detalle: "El catálogo y el stock de la empresa. No inventa datos.",
-    },
-    {
-      titulo: "Herramientas",
-      detalle: "Consultar stock y preparar un pedido. Nada más que eso.",
-    },
-    {
-      titulo: "Permisos",
-      detalle: "Puede preparar el pedido; no puede facturarlo ni tocar precios.",
-    },
-  ],
+  /**
+   * Los límites de ESTE ejemplo, en un renglón. Es lo que separa esto de un
+   * chatbot enchufado a una empresa: el software no hace lo que quiere, hace
+   * lo que se le habilitó.
+   */
+  limites:
+    "En este ejemplo solo puede consultar el catálogo y preparar un pedido: no factura, no toca precios y no inventa datos.",
 
   /** Lo que hay que entender al terminar de mirar la pieza. */
   cierre:

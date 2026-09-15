@@ -31,7 +31,7 @@ const PASOS = [
     pregunta: "¿Qué proceso vamos a automatizar?",
     plazo: "45 minutos · sin costo",
     detalle:
-      "Una reunión para ver el proceso como funciona hoy, con la persona que lo hace. De ahí sale qué conviene automatizar y qué no.",
+      "Vemos el proceso con la persona que lo hace. De ahí sale qué conviene automatizar y qué no.",
   },
   {
     numero: "02",
@@ -39,7 +39,7 @@ const PASOS = [
     pregunta: "¿Qué se construye, cuánto cuesta y cuánto tarda?",
     plazo: "5 días hábiles",
     detalle:
-      "Alcance, plazo y precio cerrados por escrito, antes de empezar. Si el alcance no cierra, no hay propuesta y no se debe nada.",
+      "Alcance, plazo y precio por escrito. Si no cierra, no hay propuesta y no se debe nada.",
   },
   {
     numero: "03",
@@ -47,7 +47,7 @@ const PASOS = [
     pregunta: "¿Cómo pasa de la idea al sistema funcionando?",
     plazo: "2 a 8 semanas",
     detalle:
-      "Desarrollo e integración con los sistemas que la empresa ya usa. Una revisión en cada entrega parcial, no una sola al final.",
+      "Desarrollo e integración con los sistemas que la empresa ya usa, con una revisión en cada entrega parcial.",
   },
   {
     numero: "04",
@@ -55,7 +55,7 @@ const PASOS = [
     pregunta: "¿Qué queda en manos de la empresa?",
     plazo: "1 semana",
     detalle:
-      "El sistema funcionando, el repositorio, la documentación y las credenciales. Más la capacitación de quien lo va a usar.",
+      "El sistema funcionando, el repositorio, la documentación y la capacitación de quien lo va a usar.",
   },
 ];
 
@@ -151,8 +151,7 @@ export default function ComoTrabajamos({
         </TitularRevelado>
         <p className="mt-6 max-w-[50ch] text-[15px] leading-relaxed text-tinta-2 sm:text-[16px]">
           Cuatro etapas, cada una con su plazo. El precio y el alcance se
-          cierran en la segunda: cuando el trabajo arranca, ya está escrito qué
-          se va a construir, cuánto cuesta y cuándo termina.
+          cierran en la segunda, antes de que el trabajo arranque.
         </p>
 
         {/* El diagrama solo en desktop, donde existen las cuatro columnas. */}

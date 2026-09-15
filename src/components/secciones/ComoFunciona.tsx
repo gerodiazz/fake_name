@@ -66,18 +66,15 @@ export default function ComoFunciona({
           <h3 className="titular mt-5 max-w-[22ch] text-[clamp(1.5rem,6vw,2.4rem)]">
             {DEMOSTRACION.titulo}
           </h3>
-          <p className="mt-5 max-w-[52ch] text-[15px] leading-relaxed text-tinta-2 sm:text-[16px]">
-            {DEMOSTRACION.bajada}
-          </p>
-
           <div className="mt-10">
             <TrazaAgente />
           </div>
 
           {/* El cierre engancha con la sección de control: lo que se ve acá es
               lo mismo que se explica allá. */}
-          <p className="hairline hairline-t mt-12 max-w-[58ch] pt-6 text-[14px] leading-relaxed text-tinta-2">
-            {DEMOSTRACION.cierre}{" "}
+          <p className="hairline hairline-t mt-10 max-w-[58ch] pt-6 text-[14px] leading-relaxed text-tinta-2">
+            Qué etapas quedan automáticas y cuáles esperan a una persona se
+            define con la empresa.{" "}
             <a
               href="#control"
               className="text-tinta underline decoration-linea underline-offset-4 transition-colors duration-100 hover:decoration-tinta-2"

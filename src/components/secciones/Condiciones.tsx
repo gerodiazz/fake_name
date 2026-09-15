@@ -32,12 +32,11 @@ export default function Condiciones({
           como="h2"
           className="titular max-w-[20ch] text-[clamp(1.75rem,7.5vw,3rem)]"
         >
-          Qué se contrata exactamente
+          Qué se contrata
         </TitularRevelado>
         <p className="mt-6 max-w-[52ch] text-[15px] leading-relaxed text-tinta-2 sm:text-[16px]">
-          Las seis condiciones que van escritas en la propuesta. Están acá
-          arriba y no en la letra chica del final, porque son parte de lo que
-          se compra.
+          Las mismas que van escritas en la propuesta, acá arriba y no en la
+          letra chica del final.
         </p>
 
         <ul className="grilla-expuesta grilla-expuesta-sm mt-12 grid grid-cols-1 hairline hairline-t hairline-b sm:grid-cols-2 lg:grid-cols-3">
@@ -49,19 +48,12 @@ export default function Condiciones({
               <p className="mt-3 max-w-[40ch] text-[14px] leading-relaxed text-tinta-2">
                 {condicion.detalle}
               </p>
-              {/* La consecuencia, dicha desde el lado del cliente. Va en tinta
-                  plena: es la línea que importa. */}
-              <p className="mt-3 max-w-[40ch] text-[14px] leading-relaxed text-tinta">
-                {condicion.implicancia}
-              </p>
             </li>
           ))}
         </ul>
 
         <p className="mt-8 max-w-[52ch] text-[14px] leading-relaxed text-tinta-2">
-          Lo que no está acá tampoco está en la propuesta. Si algo de lo de
-          arriba no se puede sostener en un proyecto puntual, se dice antes de
-          firmar.
+          Lo que no está acá tampoco está en la propuesta.
         </p>
       </div>
     </Seccion>

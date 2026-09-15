@@ -18,7 +18,7 @@
 
 import Seccion from "@/components/Seccion";
 import TitularRevelado from "@/components/TitularRevelado";
-import { CAPACIDADES, POSICION, PREMISA, SI_SE_EQUIVOCA } from "@/lib/control";
+import { CAPACIDADES, PREMISA, RESPUESTA, SE_DEFINE } from "@/lib/control";
 
 export default function Control({
   numero,
@@ -29,7 +29,7 @@ export default function Control({
 }) {
   return (
     <Seccion id="control" numero={numero} kicker={kicker} aire>
-      <div className="pb-24 pt-2 sm:pb-32">
+      <div className="pb-20 pt-2 sm:pb-28">
         <TitularRevelado
           como="h2"
           className="titular max-w-[22ch] text-[clamp(1.75rem,7.5vw,3rem)]"
@@ -40,42 +40,25 @@ export default function Control({
         <p className="mt-6 max-w-[46ch] font-serif text-[21px] leading-snug sm:text-[24px]">
           {PREMISA}
         </p>
-        <p className="mt-5 max-w-[52ch] text-[15px] leading-relaxed text-tinta-2 sm:text-[16px]">
-          Según el proceso, el sistema puede hacer estas seis cosas. Cuáles
-          entran se decide con la empresa antes de escribir código, y queda en
-          la propuesta.
+        <p className="mt-5 max-w-[54ch] text-[15px] leading-relaxed text-tinta-2 sm:text-[16px]">
+          {RESPUESTA}
         </p>
 
-        <ul className="grilla-expuesta grilla-expuesta-sm mt-12 grid grid-cols-1 hairline hairline-t hairline-b sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="grilla-expuesta grilla-expuesta-sm mt-10 grid grid-cols-1 hairline hairline-t hairline-b sm:grid-cols-2 lg:grid-cols-3">
           {CAPACIDADES.map((capacidad) => (
-            <li key={capacidad.id} className="py-7 sm:px-5">
-              <h3 className="font-serif text-[21px] leading-tight sm:text-[23px]">
+            <li key={capacidad.id} className="py-6 sm:px-5">
+              <h3 className="font-serif text-[19px] leading-tight sm:text-[21px]">
                 {capacidad.titulo}
               </h3>
-              <p className="mt-3 max-w-[40ch] text-[14px] leading-relaxed text-tinta-2">
+              <p className="mt-2 max-w-[38ch] text-[14px] leading-relaxed text-tinta-2">
                 {capacidad.detalle}
               </p>
             </li>
           ))}
         </ul>
 
-        {/* Lo que no depende del proyecto. */}
-        <div className="mt-14">
-          {POSICION.map((punto) => (
-            <div key={punto.titulo}>
-              <h3 className="font-serif text-[21px] leading-tight sm:text-[23px]">
-                {punto.titulo}
-              </h3>
-              <p className="mt-3 max-w-[48ch] text-[15px] leading-relaxed text-tinta-2">
-                {punto.detalle}
-              </p>
-            </div>
-          ))}
-        </div>
-
-        {/* El cierre: y si igual se equivoca. */}
-        <p className="hairline hairline-t mt-12 max-w-[54ch] pt-6 font-serif text-[18px] leading-snug sm:text-[19px]">
-          {SI_SE_EQUIVOCA}
+        <p className="mt-8 max-w-[54ch] text-[14px] leading-relaxed text-tinta-2">
+          {SE_DEFINE}
         </p>
       </div>
     </Seccion>
