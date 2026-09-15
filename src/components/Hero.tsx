@@ -30,15 +30,10 @@ import FragmentoProducto from "@/components/demostracion/FragmentoProducto";
 import Boton from "@/components/ui/Boton";
 
 /**
- * Las cuatro figuras que hoy hacen el trabajo. Van de lo genérico a lo
- * concreto: la última es la que incomoda, y por eso cierra la vuelta.
+ * Las tres figuras que hoy hacen el trabajo. Van de lo genérico a lo concreto,
+ * y la vuelta cierra volviendo a "una persona", que es la del titular fijo.
  */
-const QUIEN_LO_HACE = [
-  "una persona",
-  "una secretaria",
-  "un empleado",
-  "alguien a las nueve de la noche",
-];
+const QUIEN_LO_HACE = ["una persona", "una secretaria", "un empleado"];
 
 export default function Hero({ numero }: { numero: string }) {
   return (
