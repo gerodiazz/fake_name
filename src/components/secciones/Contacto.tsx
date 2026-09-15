@@ -138,7 +138,7 @@ export default function Contacto({
         {SITIO.agenda ? (
           <div className="mt-8">
             <a
-              href={SITIO.agenda}
+              href={SITIO.agenda.url}
               target="_blank"
               rel="noopener noreferrer"
               className="boton boton-principal"
@@ -243,7 +243,7 @@ export default function Contacto({
                 directo arriba, este baja a tinta para no competir con él. */}
             <button
               type="submit"
-              className={`boton mt-9 ${SITIO.agenda ? "boton-principal" : "boton-principal"}`}
+              className="boton boton-principal mt-9"
             >
               Agendar diagnóstico
             </button>

@@ -17,7 +17,10 @@
  * recorrido terminaba en un botón sin decir qué había del otro lado.
  */
 
+import { useEffect } from "react";
 import NumeroGigante from "@/components/NumeroGigante";
+import GuardarDiagnostico from "@/components/diagnostico/GuardarDiagnostico";
+import { registrar } from "@/lib/eventos";
 import { SEMANAS_BASE } from "@/lib/diagnostico";
 import { Banda } from "@/components/Decoracion";
 import PilaAgentes from "@/components/diagnostico/PilaAgentes";
@@ -44,6 +47,13 @@ export default function Resultado({
   codigo,
   onRehacer,
 }: Props) {
+  useEffect(() => {
+    registrar("diagnostic_completed", {
+      rubro: rubroId,
+      procesos: agentes.length,
+    });
+  }, [rubroId, agentes.length]);
+
   // Nadie marcó nada: no hay número que mostrar, pero sí una salida digna.
   if (agentes.length === 0) {
     return (
@@ -73,6 +83,8 @@ export default function Resultado({
             rehacer el diagnóstico
           </button>
         </div>
+
+        <GuardarDiagnostico />
       </div>
     );
   }
@@ -192,6 +204,10 @@ export default function Resultado({
           45 minutos, sin costo y sin compromiso.
         </p>
       </div>
+
+      {/* Guardar el diagnóstico. Va después de que el resultado terminó del
+          todo: nada de lo de arriba depende de dejar un dato. */}
+      <GuardarDiagnostico />
 
       {/* Enganche de referidos, dentro del mismo bloque. */}
       <EngancheReferidos

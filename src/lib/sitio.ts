@@ -53,11 +53,22 @@ export const SITIO = {
   ciudad: null as string | null,
 
   /**
-   * Enlace de agendamiento directo (Cal.com, Calendly o el que se use). En
-   * null, el sitio ofrece solo el formulario; apenas exista la URL, aparece el
-   * botón de "Agendar directo" al lado del formulario, sin tocar código.
+   * AGENDA — todavía no hay ninguna contratada.
+   *
+   * En null, los botones de agendar llevan al formulario de contacto, que ya
+   * llega precargado con el diagnóstico. No se inventa una URL de Calendly ni
+   * de Cal.com: un botón que lleva a un calendario que no existe es peor que
+   * no tener el botón.
+   *
+   * Al contratar una, se completa acá:
+   *
+   *     agenda: { url: "https://cal.com/telescajustel/45min", plataforma: "cal" }
+   *
+   * `plataforma` decide con qué parámetro viaja el resumen del diagnóstico:
+   * Cal.com lo recibe en `notes` y Calendly en `a1`, que son los mecanismos
+   * oficiales de precarga de cada una. Ver src/lib/agenda.ts.
    */
-  agenda: null as string | null,
+  agenda: null as { url: string; plataforma: "cal" | "calendly" } | null,
 } as const;
 
 /**

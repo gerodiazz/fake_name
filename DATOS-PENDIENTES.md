@@ -35,6 +35,41 @@ la página, aunque falten datos.
 
 ---
 
+## Variables de entorno
+
+Se configuran en Vercel, en *Settings → Environment Variables*. Ninguna va al
+navegador: las tres se leen solo del lado del servidor.
+
+| Variable | Para qué | Sin ella |
+|---|---|---|
+| `RESEND_API_KEY` | Enviar el reporte del diagnóstico por email, con [Resend](https://resend.com). La clave se crea en su panel. | El endpoint `/api/reporte` responde 503 y la pantalla dice, con todas las letras, que el envío todavía no está disponible; al visitante se le ofrece copiar el reporte. **No se simula un envío.** |
+| `EMAIL_REMITENTE` | La dirección desde la que sale ese correo, con el dominio verificado en Resend. Por ejemplo `diagnostico@telescajustel.com`. | Igual que arriba: las dos tienen que estar. |
+| `NEXT_PUBLIC_URL_SITIO` | El dominio de producción, para los enlaces absolutos, el sitemap y las imágenes de Open Graph. | Se usa `https://telescajustel.com`, que todavía es un supuesto. |
+
+Si mañana se prefiere otro proveedor de correo, lo único que cambia es la
+llamada `fetch` de `src/app/api/reporte/route.ts`: el reporte se arma aparte,
+en `src/lib/reporte.ts`.
+
+## Agenda
+
+Todavía no hay ninguna contratada, así que el botón "Agendar llamada para
+revisar este diagnóstico" lleva al formulario de contacto, que ya llega
+precargado con el diagnóstico. No se inventó una URL.
+
+Al contratar Cal.com o Calendly, se completa `agenda` en `src/lib/sitio.ts`:
+
+```ts
+agenda: { url: "https://cal.com/telescajustel/45min", plataforma: "cal" }
+```
+
+A partir de ahí, el resumen del diagnóstico —rubro, procesos marcados, horas
+de referencia y plazo— viaja solo hasta el calendario: en `notes` si es
+Cal.com, en `a1` si es Calendly, que son los mecanismos oficiales de precarga
+de cada plataforma. En Calendly hay que crear una pregunta personalizada en el
+evento para que `a1` tenga dónde caer.
+
+---
+
 ## Para confirmar entre los dos socios
 
 Son compromisos que el sitio afirma y que hay que poder sostener frente a un
