@@ -4,60 +4,91 @@
  * Contesta la pregunta que el visitante se hace después de entender qué es un
  * agente: "¿qué podrían automatizar en una empresa como la mía?".
  *
- * Cada ejemplo cuenta un proceso concreto con las mismas seis etapas de la
- * sección 02. Que el esqueleto se repita es el argumento: no es un producto
- * distinto por rubro, es el mismo recorrido aplicado a otro proceso.
+ * NO ES UNA GRILLA DE CARDS. Era una: seis recuadros iguales en dos columnas,
+ * que es la solución por defecto y la que hace que un sitio se parezca a
+ * cualquier otro. Ahora cada rubro es una fila editorial de ancho completo,
+ * con tres tiempos leídos de izquierda a derecha:
  *
- * Los oficios de cada rubro —"el que atiende", "el que cotiza"— son los mismos
- * que nombra el diagnóstico. Esa continuidad es la que hace que, al llegar a
- * las preguntas, el visitante ya sepa de qué se está hablando.
+ *   EL PROCESO HOY  →  QUÉ HACE EL SOFTWARE  →  LO QUE QUEDA
  *
- * Ningún ejemplo lleva métricas: son ejemplos, no casos. El único número del
- * sitio es la estimación que el propio visitante arma en el diagnóstico.
+ * La primera columna dibuja la cadena manual como piezas encadenadas —
+ * WhatsApp, vendedor, planilla, vendedor— y esa acumulación es el argumento:
+ * se ve el problema antes de leerlo. La del medio son las seis etapas del
+ * recorrido, las mismas de la sección 02.
+ *
+ * Los oficios —"el que atiende", "el que cotiza"— son los mismos que nombra el
+ * diagnóstico. Esa continuidad hace que, al llegar a las preguntas, el
+ * visitante ya sepa de qué se está hablando.
+ *
+ * Ningún ejemplo lleva métricas: son ejemplos, no casos.
  */
 
 import Seccion from "@/components/Seccion";
 import TitularRevelado from "@/components/TitularRevelado";
+import Boton from "@/components/ui/Boton";
 import { EJEMPLOS, ETAPAS, type EjemploIndustria } from "@/lib/ejemplos";
 
-function Ficha({ ejemplo }: { ejemplo: EjemploIndustria }) {
+function Fila({ ejemplo }: { ejemplo: EjemploIndustria }) {
   return (
-    <article className="hairline hairline-t py-8">
-      <h3 className="font-serif text-[23px] leading-tight sm:text-[26px]">
-        {ejemplo.industria}
-      </h3>
-      <p className="mt-2 max-w-[44ch] text-[15px] leading-relaxed text-tinta">
-        {ejemplo.proceso}
-      </p>
+    <article className="hairline hairline-t py-10 sm:py-12">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,15rem)_minmax(0,1fr)_minmax(0,15rem)] lg:gap-12">
+        {/* ---- tiempo 1: el proceso hoy ---- */}
+        <div>
+          <h3 className="font-serif text-[23px] leading-tight sm:text-[26px]">
+            {ejemplo.industria}
+          </h3>
+          <p className="mt-2 max-w-[34ch] text-[14px] leading-relaxed text-tinta">
+            {ejemplo.proceso}
+          </p>
 
-      {/* El recorrido. El nombre de la etapa va en la misma línea que el
-          texto: son seis renglones, no seis bloques. */}
-      <ol className="mt-6 max-w-[48ch]">
-        {ejemplo.flujo.map((linea, i) => (
-          <li key={linea} className="flex gap-3 py-1.5">
-            <span
-              aria-hidden="true"
-              className="w-[7.5rem] shrink-0 text-[11px] uppercase leading-[1.6] tracking-[0.14em] text-tinta-2"
-            >
-              {ETAPAS[i]}
-            </span>
-            <span className="text-[14px] leading-relaxed text-tinta-2">
-              {linea}
-            </span>
-          </li>
-        ))}
-      </ol>
+          <p className="kicker kicker-tinta mt-6">El proceso hoy</p>
+          {/* La cadena manual. Las piezas van separadas por flechas: el salto
+              entre una y otra es exactamente lo que cuesta tiempo. */}
+          <ul className="mt-3 flex flex-wrap items-center gap-x-1.5 gap-y-2">
+            {ejemplo.hoy.map((pieza, i) => (
+              <li key={`${pieza}-${i}`} className="flex items-center gap-1.5">
+                <span className="chip">{pieza}</span>
+                {i < ejemplo.hoy.length - 1 ? (
+                  <span className="flecha" aria-hidden="true">
+                    →
+                  </span>
+                ) : null}
+              </li>
+            ))}
+          </ul>
+        </div>
 
-      {/* En qué estado queda el trabajo. En serif: cierra la ficha. */}
-      <p className="hairline hairline-t mt-6 max-w-[46ch] pt-5 font-serif text-[17px] leading-snug sm:text-[18px]">
-        {ejemplo.queda}
-      </p>
+        {/* ---- tiempo 2: qué hace el software ---- */}
+        <div className="border-t-[0.5px] border-linea pt-6 lg:border-l-[0.5px] lg:border-t-0 lg:pl-12 lg:pt-0">
+          <p className="kicker">Qué hace el software</p>
+          <ol className="mt-3">
+            {ejemplo.flujo.map((linea, i) => (
+              <li key={linea} className="flex gap-4 py-1.5">
+                <span
+                  aria-hidden="true"
+                  className="w-[6.5rem] shrink-0 text-[11px] uppercase leading-[1.7] tracking-[0.12em] text-tinta-2"
+                >
+                  {ETAPAS[i]}
+                </span>
+                <span className="text-[14px] leading-relaxed text-tinta-2">
+                  {linea}
+                </span>
+              </li>
+            ))}
+          </ol>
+        </div>
 
-      {/* Los oficios del rubro, con el lenguaje del diagnóstico. */}
-      <p className="mt-4 text-[13px] text-tinta-2">
-        <span className="kicker kicker-tinta">En este rubro · </span>
-        {ejemplo.oficios.join(" · ")}
-      </p>
+        {/* ---- tiempo 3: lo que queda ---- */}
+        <div className="border-t-[0.5px] border-linea pt-6 lg:border-l-[0.5px] lg:border-t-0 lg:pl-12 lg:pt-0">
+          <p className="kicker kicker-tinta">Lo que queda</p>
+          <p className="mt-3 max-w-[34ch] font-serif text-[17px] leading-snug sm:text-[18px]">
+            {ejemplo.queda}
+          </p>
+          <p className="mt-5 text-[13px] leading-relaxed text-tinta-2">
+            {ejemplo.oficios.join(" · ")}
+          </p>
+        </div>
+      </div>
     </article>
   );
 }
@@ -80,32 +111,25 @@ export default function Ejemplos({
         </TitularRevelado>
         <p className="mt-6 max-w-[52ch] text-[15px] leading-relaxed text-tinta-2 sm:text-[16px]">
           Un proceso por rubro, contado con las mismas seis etapas de arriba.
-          Son ejemplos de procesos que existen en casi cualquier empresa del
-          rubro, no trabajos que hayamos hecho.
+          Son procesos que existen en casi cualquier empresa del rubro, no
+          trabajos que hayamos hecho.
         </p>
 
-        <div className="mt-12 grid grid-cols-1 gap-x-14 lg:grid-cols-2">
+        <div className="mt-10">
           {EJEMPLOS.map((ejemplo) => (
-            <Ficha key={ejemplo.rubroId} ejemplo={ejemplo} />
+            <Fila key={ejemplo.rubroId} ejemplo={ejemplo} />
           ))}
         </div>
 
-        <div className="hairline hairline-t mt-10 pt-6">
+        <div className="hairline hairline-t pt-8">
           <p className="max-w-[52ch] text-[14px] leading-relaxed text-tinta-2">
             Si el rubro no está en la lista o el proceso que más tiempo consume
             no es ninguno de estos, el diagnóstico lo contempla igual: hay un
             rubro para escribirlo.
           </p>
-          <a
-            href="#diagnostico"
-            className="
-              mt-5 inline-flex min-h-[52px] items-center bg-klein px-7
-              text-[15px] text-superficie transition-opacity duration-100
-              hover:opacity-90 active:opacity-75
-            "
-          >
+          <Boton href="#diagnostico" className="mt-6">
             Analizar mi proceso
-          </a>
+          </Boton>
         </div>
       </div>
     </Seccion>

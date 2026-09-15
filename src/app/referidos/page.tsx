@@ -75,9 +75,11 @@ export default function ProgramaDeReferidos() {
       <div className="hairline hairline-b">
         <Contenedor>
           <div className="flex h-12 items-center justify-between gap-6 sm:h-14">
+            {/* El alto completo de la barra, no el de la línea de texto: es
+                un blanco de 48px para el pulgar, no de 19. */}
             <Link
               href="/"
-              className="font-serif text-[19px] leading-none"
+              className="flex h-12 items-center font-serif text-[19px] leading-none sm:h-14"
             >
               {SITIO.nombre}
             </Link>
@@ -107,11 +109,7 @@ export default function ProgramaDeReferidos() {
             <div className="mt-10">
               <a
                 href="#alta"
-                className="
-                  inline-flex min-h-[52px] items-center bg-klein px-7
-                  text-[15px] text-superficie transition-opacity duration-100
-                  hover:opacity-90 active:opacity-75
-                "
+                className="boton boton-klein"
               >
                 Quiero referir
               </a>

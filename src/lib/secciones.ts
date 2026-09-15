@@ -39,10 +39,11 @@ type DefinicionSeccion = {
    */
   corto: string;
   /**
-   * Si aparece en el índice de la barra superior. El hero no aparece: la marca
-   * de la izquierda ya vuelve ahí. Las secciones de apoyo tampoco, para que el
-   * índice de desktop siga entrando en una línea; el panel de mobile las lista
-   * todas.
+   * Si aparece en el índice de la barra superior. Son cinco: cómo funciona,
+   * diagnóstico, ejemplos, nosotros y preguntas. El hero no aparece —la marca
+   * de la izquierda ya vuelve ahí— y las secciones de apoyo tampoco: a 11px y
+   * en mayúsculas, once nombres no entran en un renglón, y una barra cargada
+   * es una barra que nadie mira. El panel de mobile las lista todas.
    */
   enIndice: boolean;
   /** Secciones que dependen de datos que todavía no existen. */
@@ -63,15 +64,18 @@ const DEFINICIONES: DefinicionSeccion[] = [
   { id: "como-funciona", kicker: "Cómo funciona", corto: "Cómo funciona", enIndice: true },
   { id: "diagnostico", kicker: "Diagnóstico", corto: "Diagnóstico", enIndice: true },
   { id: "ejemplos", kicker: "Ejemplos por industria", corto: "Ejemplos", enIndice: true },
-  { id: "socios", kicker: "Quiénes estamos detrás", corto: "Quiénes somos", enIndice: false },
-  { id: "como-trabajamos", kicker: "Cómo trabajamos", corto: "Proceso", enIndice: true },
-  { id: "condiciones", kicker: "Condiciones claras", corto: "Condiciones", enIndice: true },
+  { id: "socios", kicker: "Quiénes estamos detrás", corto: "Nosotros", enIndice: true },
+  { id: "como-trabajamos", kicker: "Cómo trabajamos", corto: "Proceso", enIndice: false },
+  { id: "condiciones", kicker: "Condiciones claras", corto: "Condiciones", enIndice: false },
   { id: "control", kicker: "Control, errores y datos", corto: "Control", enIndice: false },
   // Se enciende sola cuando haya un caso real cargado. Sin casos no hay
   // sección: el sitio no rellena el hueco con prueba social inventada.
-  { id: "casos", kicker: "Casos", corto: "Casos", enIndice: true, visible: CASOS.length > 0 },
-  { id: "faq", kicker: "Preguntas", corto: "Preguntas", enIndice: false },
-  { id: "contacto", kicker: "Agendar diagnóstico", corto: "Agendar", enIndice: true },
+  { id: "casos", kicker: "Casos", corto: "Casos", enIndice: false, visible: CASOS.length > 0 },
+  { id: "faq", kicker: "Preguntas", corto: "Preguntas", enIndice: true },
+  // Contacto no es un enlace más del índice: es el botón de la barra, que se
+  // ve siempre. Ponerlo además como enlace sería ofrecer la misma acción dos
+  // veces en el mismo renglón.
+  { id: "contacto", kicker: "Agendar diagnóstico", corto: "Agendar", enIndice: false },
 ];
 
 export type Seccion = DefinicionSeccion & {

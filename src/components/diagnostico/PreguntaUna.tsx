@@ -12,6 +12,7 @@
  * de un pixel al presionar.
  */
 
+import Progreso from "@/components/diagnostico/Progreso";
 import type { Pregunta } from "@/lib/diagnostico";
 
 type Props = {
@@ -39,16 +40,15 @@ export default function PreguntaUna({
 }: Props) {
   return (
     <div className="anim-entrar">
-      {/* Contador tipo expediente: en qué punto del recorrido estamos. */}
-      <p className="kicker kicker-tinta">
-        {String(paso).padStart(2, "0")} / {String(total).padStart(2, "0")}
-      </p>
+      {/* Dónde estamos del recorrido. La barra la lee el ojo; el texto, el
+          lector de pantalla. */}
+      <Progreso paso={paso} total={total} />
 
       {/* La pregunta. El tachado se pinta sobre el span inline para que la
           línea cruce cada renglón cuando ocupa dos líneas. */}
       <h3
         className={`
-          titular mt-4 max-w-[19ch] text-[clamp(1.6rem,7.2vw,2.75rem)]
+          titular mt-6 max-w-[19ch] text-[clamp(1.6rem,7.2vw,2.75rem)]
           transition-colors duration-300
           ${apagada ? "text-tinta-2" : "text-tinta"}
         `}
@@ -59,15 +59,15 @@ export default function PreguntaUna({
       </h3>
 
       {/* Las respuestas. El sí arriba, solo, con aire. El no, abajo y chico. */}
-      <div className="mt-7 flex flex-col items-start">
+      <div className="mt-8 flex flex-col items-start">
         <button
           type="button"
           onClick={onSi}
           disabled={apagada}
           className="
-            inline-flex min-h-[44px] items-center font-serif text-[21px]
-            leading-none text-klein underline decoration-[1.5px]
-            underline-offset-[7px]
+            inline-flex min-h-[52px] items-center pr-4 font-serif
+            text-[22px] leading-none text-klein underline decoration-[1.5px]
+            underline-offset-[7px] sm:text-[24px]
             transition-[opacity,transform] duration-100
             active:opacity-55
             disabled:opacity-40
@@ -81,7 +81,7 @@ export default function PreguntaUna({
           onClick={onNo}
           disabled={apagada}
           className="
-            mt-1 inline-flex min-h-[44px] items-center text-[13px] lowercase
+            mt-1 inline-flex min-h-[48px] items-center pr-4 text-[14px] lowercase
             text-tinta-2
             transition-[opacity,transform] duration-100
             hover:text-tinta

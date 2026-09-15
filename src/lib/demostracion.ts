@@ -44,6 +44,15 @@ export type Etapa = {
   detalle: string;
   /** Marca las etapas que no son automáticas. */
   intervencion?: "aprobacion" | "persona";
+  /**
+   * Lo que muestra el estado mientras esa etapa está corriendo, y lo que
+   * queda cuando termina. Es lo que diferencia "el sistema está ejecutando un
+   * proceso" de "se está generando un texto": un proceso tiene estados.
+   */
+  corriendo: string;
+  estado: string;
+  /** Tono del estado terminado: verde si resolvió, tinta si espera a alguien. */
+  tono: "listo" | "atencion";
 };
 
 export const DEMOSTRACION = {
@@ -82,18 +91,27 @@ export const DEMOSTRACION = {
       nombre: "Solicitud",
       que: "Entra un pedido por el canal que la empresa ya usa.",
       detalle: "Un mensaje de WhatsApp, a las nueve de la noche.",
+      corriendo: "recibiendo",
+      estado: "recibido",
+      tono: "listo",
     },
     {
       id: "interpretacion",
       nombre: "Interpretación",
       que: "El software identifica qué se está pidiendo.",
       detalle: "Producto, cantidad 20, entrega el jueves, cliente identificado.",
+      corriendo: "procesando",
+      estado: "procesado",
+      tono: "listo",
     },
     {
       id: "consulta",
       nombre: "Consulta",
       que: "Busca en las fuentes que tiene autorizadas.",
       detalle: "Catálogo y stock de la empresa. No responde de memoria.",
+      corriendo: "consultando",
+      estado: "consultado",
+      tono: "listo",
     },
     {
       id: "accion",
@@ -101,12 +119,18 @@ export const DEMOSTRACION = {
       que: "Ejecuta lo que corresponde dentro de sus permisos.",
       detalle: "Deja el pedido preparado, a la espera de confirmación.",
       intervencion: "aprobacion",
+      corriendo: "ejecutando",
+      estado: "espera confirmación",
+      tono: "atencion",
     },
     {
       id: "registro",
       nombre: "Registro",
       que: "Deja escrito qué hizo y con qué datos.",
       detalle: "Mensaje original, consulta al stock y pedido generado.",
+      corriendo: "registrando",
+      estado: "registrado",
+      tono: "listo",
     },
     {
       id: "escalamiento",
@@ -115,6 +139,9 @@ export const DEMOSTRACION = {
       detalle:
         "Si el filtro no estuviera o el cliente no figurara, frena y avisa.",
       intervencion: "persona",
+      corriendo: "evaluando",
+      estado: "requiere intervención",
+      tono: "atencion",
     },
   ] satisfies Etapa[],
 
@@ -154,6 +181,15 @@ export const DEMOSTRACION = {
   cierre:
     "Cuáles de estas etapas quedan automáticas y cuáles esperan a una persona no lo decide el software: se define con la empresa antes de escribir código.",
 } as const;
+
+/**
+ * La etapa de escalamiento es CONDICIONAL: en este ejemplo no se dispara, y el
+ * recorrido termina sin ella. Se muestra igual, marcada como lo que es —una
+ * salida prevista— porque es la parte que baja el riesgo percibido. El sitio
+ * no dice que todos los sistemas la tengan: lo dice la sección de control, que
+ * la presenta como una capacidad que se define por proceso.
+ */
+export const ETAPA_CONDICIONAL = "escalamiento";
 
 /** Etiqueta visible de las etapas que no son automáticas. */
 export const ETIQUETA_INTERVENCION = {

@@ -1187,3 +1187,430 @@ label {
     opacity: 1 !important;
   }
 }
+
+/* ==========================================================================
+   POR QUÉ ESTE BLOQUE VA EN @layer components Y EL RESTO DEL ARCHIVO NO
+
+   Las clases de más arriba —.kicker, .hairline, .titular— viven fuera de las
+   capas a propósito: así una utilidad de color de Tailwind no las pisa, que es
+   justo lo que se quiere para un token tipográfico.
+
+   Con los componentes pasa lo contrario. Un botón tiene que poder esconderse
+   con `md:hidden` o cambiar de ancho con `w-full`, y para eso las utilidades
+   tienen que ganar. Sin la capa, `.boton { display: inline-flex }` le ganaba a
+   `hidden` —Tailwind pone sus utilidades en una capa, y lo que está fuera de
+   toda capa gana siempre— y en la barra superior se veían los dos botones de
+   agendar al mismo tiempo, el de desktop y el de mobile, empujando la barra
+   56px fuera de la pantalla.
+
+   Regla para lo que venga: tokens fuera de capa, componentes en components.
+   ========================================================================== */
+
+@layer components {
+
+/* ==========================================================================
+   SISTEMA DE COMPONENTES
+
+   Hasta acá el sitio tenía tokens (paleta, tipografía, hairlines) pero no
+   componentes: cada botón era una cadena de doce clases de Tailwind copiada a
+   mano en ocho archivos, y tres de esas cadenas ya habían divergido. Un botón
+   que se ve distinto en dos secciones es la diferencia entre un sitio hecho
+   por un estudio y uno hecho por partes.
+
+   Acá viven los cuatro componentes que se repiten: botón, campo, chip y
+   panel. Cada uno con sus estados: reposo, hover, active, foco, deshabilitado
+   y —donde aplique— error y éxito.
+
+   DECISIONES DEL SISTEMA, para que no se rompan sin querer:
+
+   · RADIO 0. Nada tiene esquinas redondeadas salvo el thumb del slider, que
+     es un punto. No es un olvido: la caja recta es la identidad del sitio y
+     lo que lo aleja de la plantilla de SaaS. Un border-radius: 8px en un
+     botón rompe el sistema entero.
+
+   · UNA SOLA SOMBRA, la de .ficha, y existe para que una ficha se lea como un
+     objeto sobre una mesa. Los paneles y los botones no llevan sombra: se
+     separan por hairline y por color de superficie.
+
+   · EL KLEIN ES ESCASO. Un solo botón Klein por pantalla. Cuando hay dos
+     acciones juntas, la segunda es lineal. Si el Klein aparece tres veces en
+     un viewport, deja de dirigir la atención y pasa a ser decoración.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Botón
+   -------------------------------------------------------------------------- */
+
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  /* 52px de alto: el mínimo cómodo para un pulgar, no los 44px del mínimo
+     técnico. Los botones importantes se tocan, no se apuntan. */
+  min-height: 52px;
+  padding-inline: 1.75rem;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1;
+  text-align: center;
+  border: 0.5px solid transparent;
+  cursor: pointer;
+  transition-property: background-color, border-color, color, opacity, transform;
+  transition-duration: 140ms;
+  transition-timing-function: ease-out;
+}
+
+/* Primario: la acción que el sitio quiere que pase. Uno por pantalla. */
+.boton-klein {
+  background-color: var(--color-klein);
+  color: var(--color-superficie);
+}
+.boton-klein:hover {
+  /* Se oscurece en vez de transparentarse: sobre el papel, opacity deja ver
+     el grano a través del botón y lo ensucia. */
+  background-color: color-mix(in srgb, var(--color-klein) 88%, black);
+}
+
+/* Secundario: misma jerarquía de acción, menos peso visual. */
+.boton-tinta {
+  background-color: var(--color-tinta);
+  color: var(--color-superficie);
+}
+.boton-tinta:hover {
+  background-color: color-mix(in srgb, var(--color-tinta) 85%, black);
+}
+
+/* Terciario: acompaña a un primario. Solo línea. */
+.boton-lineal {
+  background-color: transparent;
+  color: var(--color-tinta);
+  border-color: var(--color-linea);
+}
+.boton-lineal:hover {
+  border-color: var(--color-tinta-2);
+  background-color: var(--color-superficie);
+}
+
+/* Cuarto nivel: texto con subrayado, sin caja. Para "rehacer", "volver". */
+.boton-texto {
+  min-height: 44px;
+  padding-inline: 0;
+  font-size: 13px;
+  text-transform: lowercase;
+  color: var(--color-tinta-2);
+  background: transparent;
+}
+.boton-texto:hover {
+  color: var(--color-tinta);
+}
+
+/* Tamaño chico, para barras y lugares apretados. */
+.boton-chico {
+  min-height: 40px;
+  padding-inline: 1rem;
+  font-size: 13px;
+}
+
+/* Un solo estado deshabilitado para todos los botones del sitio. */
+.boton:disabled,
+.boton[aria-disabled="true"] {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+.boton:disabled:hover,
+.boton[aria-disabled="true"]:hover {
+  background-color: inherit;
+}
+
+/* El :active de escala ya es global; acá solo se anula para el deshabilitado. */
+.boton:disabled:active {
+  transform: none;
+}
+
+/* --------------------------------------------------------------------------
+   Campo — estados de validación
+
+   El sitio delegaba toda la validación al navegador: sin foco visible propio,
+   sin error visible y sin confirmación. El anillo Klein global sigue siendo la
+   señal de foco; acá se agregan las dos que faltaban.
+   -------------------------------------------------------------------------- */
+
+.campo {
+  transition-property: border-color, background-color;
+  transition-duration: 140ms;
+  transition-timing-function: ease-out;
+}
+
+/* La línea del campo se marca al enfocar: el anillo está, pero la línea es lo
+   que el ojo sigue mientras se escribe. */
+.campo:focus {
+  border-bottom-color: var(--color-klein);
+}
+
+/* Error. El rojo es el único color fuera de la paleta cerrada y por eso vive
+   acá y en ningún otro lado del sitio: es la excepción que se permite un
+   estado de error, y aun así está desaturado para no gritar. */
+.campo[data-estado="error"] {
+  border-bottom-color: #a33327;
+}
+.campo-error {
+  color: #a33327;
+}
+
+/* Éxito. Usa el verde de la paleta, el mismo de las horas. */
+.campo[data-estado="ok"] {
+  border-bottom-color: var(--color-verde);
+}
+
+/* --------------------------------------------------------------------------
+   Chip — una etiqueta de dato, no un botón
+
+   Se usa para las piezas del proceso manual ("WhatsApp", "planilla") y para
+   las herramientas del agente. Es la unidad más chica del sistema.
+   -------------------------------------------------------------------------- */
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.3rem 0.625rem;
+  font-size: 12px;
+  line-height: 1.3;
+  white-space: nowrap;
+  color: var(--color-tinta-2);
+  background-color: var(--color-papel);
+  border: 0.5px solid var(--color-linea);
+}
+
+/* Sobre superficie clara el chip invierte el fondo, para no desaparecer. */
+.chip-superficie {
+  background-color: var(--color-superficie);
+}
+
+/* El chip del software: tinte Klein, sin borde. */
+.chip-klein {
+  color: var(--color-klein);
+  background-color: var(--color-klein-tinte);
+  border-color: transparent;
+}
+
+/* --------------------------------------------------------------------------
+   Panel — la superficie de "esto es software"
+
+   Un rectángulo con hairline, una barra de título con su punto de estado y
+   contenido adentro. Es lo que hace que la demostración y el fragmento del
+   hero se lean como una interfaz y no como un bloque de texto más.
+
+   Sin blur, sin transparencias, sin sombra: papel sobre papel, separado por
+   una línea de medio pixel. La profundidad sale del contraste entre papel y
+   superficie, no de un efecto.
+   -------------------------------------------------------------------------- */
+
+.panel {
+  background-color: var(--color-superficie);
+  border: 0.5px solid var(--color-linea);
+}
+
+/* Sobre secciones que ya son superficie, el panel se invierte a papel. */
+.panel-papel {
+  background-color: var(--color-papel);
+}
+
+.panel-barra {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.625rem 0.875rem;
+  border-bottom: 0.5px solid var(--color-linea);
+}
+
+.panel-cuerpo {
+  padding: 0.875rem;
+}
+
+/* El punto de estado de la barra del panel. Verde cuando terminó, Klein
+   mientras corre, tinta-2 en reposo. */
+.panel-punto {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--color-tinta-2);
+  flex: none;
+}
+.panel-punto[data-estado="corriendo"] {
+  background-color: var(--color-klein);
+}
+.panel-punto[data-estado="listo"] {
+  background-color: var(--color-verde);
+}
+.panel-punto[data-estado="atencion"] {
+  /* El paso que espera a una persona. Tinta plena: no es un error, es una
+     parada prevista. */
+  background-color: var(--color-tinta);
+}
+
+/* --------------------------------------------------------------------------
+   Traza del agente — la demostración que corre sola
+
+   Las etapas aparecen de a una, 380ms cada una: el recorrido entero dura algo
+   más de dos segundos. La animación existe para que se entienda que hay un
+   ORDEN y que cada paso depende del anterior; no para lucirse. Quien no espera
+   a que termine igual lee todo, porque el estado final es el contenido
+   completo y el HTML del servidor ya viene con todas las etapas puestas.
+
+   El JS solo agrega el atributo data-visible. Sin JavaScript, sin soporte o
+   con prefers-reduced-motion, las etapas están todas visibles desde el
+   principio: la regla de abajo solo esconde cuando el contenedor declara que
+   va a animar.
+   -------------------------------------------------------------------------- */
+
+.traza[data-anima="true"] .traza-etapa {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+.traza-etapa {
+  transition-property: opacity, transform;
+  transition-duration: 320ms;
+  transition-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.traza[data-anima="true"] .traza-etapa[data-visible="true"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* La línea que une las etapas, y que se pinta a medida que avanzan. */
+.traza-eje {
+  position: absolute;
+  left: 0;
+  top: 0.35rem;
+  bottom: 0.35rem;
+  width: 0.5px;
+  background-color: var(--color-linea);
+}
+.traza-eje-avance {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0.5px;
+  background-color: var(--color-klein);
+  transform-origin: top center;
+  transform: scaleY(var(--avance, 0));
+  transition: transform 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* El punto de cada etapa, sobre el eje. */
+.traza-punto {
+  position: absolute;
+  left: -3px;
+  /* El centro de la primera línea de la etapa. Cambia con el cuerpo del
+     texto, así que cada contexto lo ajusta con --punto-top. */
+  top: var(--punto-top, 0.95rem);
+  width: 6.5px;
+  height: 6.5px;
+  border-radius: 50%;
+  background-color: var(--color-papel);
+  border: 0.5px solid var(--color-linea);
+}
+.traza-etapa[data-visible="true"] .traza-punto {
+  background-color: var(--color-klein);
+  border-color: var(--color-klein);
+}
+/* La etapa que espera a una persona no se pinta Klein: se deja hueca y en
+   tinta. Es una parada, no un paso cumplido. */
+.traza-etapa[data-intervencion="true"][data-visible="true"] .traza-punto {
+  background-color: var(--color-papel);
+  border-color: var(--color-tinta);
+  border-width: 1.5px;
+}
+
+/* Etiqueta de estado de cada etapa: procesando, consultando, ejecutando,
+   completado, requiere intervención. Comunica que hay un proceso corriendo y
+   no un texto generándose. */
+.traza-estado {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-tinta-2);
+  font-variant-numeric: tabular-nums;
+}
+.traza-estado[data-tono="corriendo"] {
+  color: var(--color-klein);
+}
+.traza-estado[data-tono="listo"] {
+  color: var(--color-verde);
+}
+.traza-estado[data-tono="atencion"] {
+  color: var(--color-tinta);
+}
+
+/* --------------------------------------------------------------------------
+   Barra de progreso del diagnóstico
+
+   Una hairline que se llena. El contador dice "Pregunta 2 de 6" con todas las
+   letras: el "02 / 06" de expediente se veía bien pero no se leía como
+   progreso, y en el medio de un recorrido de seis pasos saber cuánto falta
+   importa más que la estética del contador.
+   -------------------------------------------------------------------------- */
+
+.progreso {
+  position: relative;
+  height: 2px;
+  background-color: var(--color-linea);
+  overflow: hidden;
+}
+.progreso-avance {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 100%;
+  background-color: var(--color-klein);
+  transform-origin: left center;
+  transform: scaleX(var(--avance, 0));
+  transition: transform 420ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* --------------------------------------------------------------------------
+   Flecha de flujo. Se usa entre los bloques de la transformación y entre las
+   etapas de los ejemplos por industria. Gira 90° cuando el flujo se apila.
+   -------------------------------------------------------------------------- */
+
+.flecha {
+  color: var(--color-tinta-2);
+  font-size: 13px;
+  line-height: 1;
+  user-select: none;
+}
+
+}
+
+/* --------------------------------------------------------------------------
+   Reduced motion para los componentes nuevos.
+
+   Va en su propio bloque, al final, y no dentro del de arriba: así cada
+   sistema declara su propia versión quieta al lado de donde está escrito, en
+   vez de dejar un bloque lejano que hay que acordarse de actualizar.
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  /* La traza no corre: se muestra completa y quieta. El componente además no
+     programa los temporizadores, así que esto es solo la red de seguridad. */
+  .traza[data-anima="true"] .traza-etapa,
+  .traza-etapa {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .traza-eje-avance {
+    transition: none !important;
+    transform: scaleY(1) !important;
+  }
+
+  /* La barra de progreso salta al valor que corresponde, sin recorrerlo. */
+  .progreso-avance {
+    transition: none !important;
+  }
+}

@@ -26,14 +26,7 @@ export default function NoEncontrada() {
             Esta página no existe.
           </h1>
 
-          <a
-            href="/"
-            className="
-              mt-8 inline-flex min-h-[52px] items-center bg-klein px-7
-              text-[15px] text-superficie transition-opacity duration-100
-              hover:opacity-90 active:opacity-75
-            "
-          >
+          <a href="/" className="boton boton-klein mt-8">
             Ir al inicio
           </a>
         </Contenedor>

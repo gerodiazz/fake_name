@@ -20,6 +20,7 @@
  */
 
 import { useEffect, useRef, useState } from "react";
+import Boton from "@/components/ui/Boton";
 import { SECCIONES, SECCIONES_DEL_INDICE } from "@/lib/secciones";
 import { SITIO } from "@/lib/sitio";
 
@@ -32,6 +33,11 @@ import { SITIO } from "@/lib/sitio";
  * El índice de desktop muestra solo las secciones marcadas `enIndice`: a 11px
  * y en mayúsculas, once nombres no entran en un renglón. El panel de mobile
  * las muestra todas, porque ahí hay lugar de sobra.
+ *
+ * EL BOTÓN DE AGENDAR vive siempre a la derecha, en desktop y en mobile. Es la
+ * única acción del sitio que tiene que estar disponible en cualquier punto del
+ * scroll: alguien puede decidir a la mitad de la sección de condiciones, y no
+ * corresponde hacerlo bajar 8000px hasta el formulario para encontrar cómo.
  */
 const DE_DESKTOP = SECCIONES_DEL_INDICE;
 const DE_MOBILE = SECCIONES.filter((seccion) => seccion.id !== "contenido");
@@ -109,7 +115,7 @@ export default function BarraSuperior() {
       // que tiene que poder tapar la pantalla entera.
       className="barra-superior sticky top-0 z-40 hairline hairline-b"
     >
-      <div className="mx-auto flex w-full max-w-[1120px] items-center justify-between gap-6 px-5 sm:px-8">
+      <div className="mx-auto flex w-full max-w-[1120px] items-center gap-4 px-5 sm:gap-6 sm:px-8">
         {/* La marca es el 01: vuelve al hero. */}
         <a
           href="#contenido"
@@ -119,9 +125,9 @@ export default function BarraSuperior() {
           {SITIO.nombre}
         </a>
 
-        {/* Índice completo, de md para arriba. Los números aparecen recién en
-            lg: antes de eso el renglón queda justo. */}
-        <ul className="hidden items-center gap-6 md:flex lg:gap-7">
+        {/* Índice, de md para arriba. Los números aparecen recién en lg:
+            antes de eso el renglón queda justo. */}
+        <ul className="ml-auto hidden items-center gap-6 md:flex lg:gap-7">
           {DE_DESKTOP.map((seccion) => {
             const esActiva = activa === seccion.id;
             return (
@@ -132,15 +138,26 @@ export default function BarraSuperior() {
                   aria-current={esActiva ? "true" : undefined}
                   className="nav-enlace flex h-12 items-center gap-1.5 sm:h-14"
                 >
-                  <span aria-hidden="true" className="nav-numero hidden lg:inline">
-                    {seccion.numero}
-                  </span>
                   {seccion.corto}
                 </a>
               </li>
             );
           })}
         </ul>
+
+        {/* La acción, siempre a la vista. En mobile con la etiqueta corta:
+            "Agendar diagnóstico" no entra al lado del botón de índice. */}
+        <Boton href="#contacto" chico className="hidden shrink-0 md:inline-flex">
+          Agendar diagnóstico
+        </Boton>
+        <Boton
+          href="#contacto"
+          chico
+          className="ml-auto shrink-0 md:hidden"
+          onClick={() => setAbierto(false)}
+        >
+          Agendar
+        </Boton>
 
         {/* Abajo de md el índice se despliega. */}
         <button

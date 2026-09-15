@@ -19,6 +19,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import SelectorRubro from "@/components/diagnostico/SelectorRubro";
+import Progreso from "@/components/diagnostico/Progreso";
 import PreguntaUna from "@/components/diagnostico/PreguntaUna";
 import ListaPreguntas from "@/components/diagnostico/ListaPreguntas";
 import PilaAgentes from "@/components/diagnostico/PilaAgentes";
@@ -195,11 +196,7 @@ export default function Diagnostico() {
       {/* Rubro elegido, siempre a la vista, con salida para cambiarlo. */}
       <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
         <p className="kicker kicker-tinta">{rubro.nombre}</p>
-        <button
-          type="button"
-          onClick={rehacer}
-          className="min-h-[44px] text-[13px] lowercase text-tinta-2 transition-opacity duration-100 hover:text-tinta active:opacity-55"
-        >
+        <button type="button" onClick={rehacer} className="boton boton-texto">
           cambiar de rubro
         </button>
       </div>
@@ -226,11 +223,9 @@ export default function Diagnostico() {
         ) : enPasoDeTextoLibre ? (
           /* Paso extra de "Otro rubro": el visitante escribe su proceso. */
           <div className="anim-entrar">
-            <p className="kicker kicker-tinta">
-              {String(totalPasos).padStart(2, "0")} /{" "}
-              {String(totalPasos).padStart(2, "0")}
-            </p>
-            <h3 className="titular mt-4 max-w-[19ch] text-[clamp(1.6rem,7.2vw,2.75rem)]">
+            {/* Último paso del recorrido: la barra llega al final. */}
+            <Progreso paso={totalPasos} total={totalPasos} unidad="Paso" />
+            <h3 className="titular mt-6 max-w-[19ch] text-[clamp(1.6rem,7.2vw,2.75rem)]">
               ¿Qué proceso consume más tiempo?
             </h3>
             <label htmlFor="proceso-libre" className="sr-only">
@@ -267,7 +262,7 @@ export default function Diagnostico() {
               <button
                 type="button"
                 onClick={terminar}
-                className="mt-1 inline-flex min-h-[44px] items-center text-[13px] lowercase text-tinta-2 transition-opacity duration-100 hover:text-tinta active:opacity-55"
+                className="boton boton-texto mt-1"
               >
                 prefiero no escribirlo
               </button>
@@ -293,7 +288,7 @@ export default function Diagnostico() {
         <button
           type="button"
           onClick={() => setModoLista(true)}
-          className="mt-8 inline-flex min-h-[44px] items-center text-[13px] lowercase text-tinta-2 underline decoration-linea underline-offset-4 transition-opacity duration-100 hover:text-tinta active:opacity-55"
+          className="boton boton-texto mt-8 underline decoration-linea underline-offset-4"
         >
           ver todas las preguntas
         </button>

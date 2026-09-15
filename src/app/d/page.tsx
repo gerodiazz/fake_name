@@ -148,11 +148,7 @@ export default async function DiagnosticoCompartido({
           <div className="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
             <a
               href="/#diagnostico"
-              className="
-                inline-flex min-h-[52px] items-center bg-klein px-7 text-[15px]
-                text-superficie transition-opacity duration-100
-                hover:opacity-90 active:opacity-75
-              "
+              className="boton boton-klein"
             >
               Hacer el diagnóstico
             </a>

@@ -20,8 +20,12 @@ import { COMPARACION, DEFINICION, NO_ES } from "@/lib/agente";
 export default function QueEsUnAgente() {
   return (
     <div>
+      <h3 className="titular max-w-[20ch] text-[clamp(1.5rem,6vw,2.4rem)]">
+        Qué es un agente, sin vueltas
+      </h3>
+
       {/* La definición, sola y en serif: es la frase que hay que entender. */}
-      <p className="max-w-[54ch] font-serif text-[21px] leading-snug sm:text-[24px]">
+      <p className="mt-6 max-w-[54ch] font-serif text-[19px] leading-snug sm:text-[21px]">
         {DEFINICION}
       </p>
 

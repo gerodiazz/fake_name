@@ -40,7 +40,7 @@ export default function ListaPreguntas({
         <button
           type="button"
           onClick={onVolverAlRecorrido}
-          className="min-h-[44px] text-[13px] lowercase text-tinta-2 transition-opacity duration-100 hover:text-tinta active:opacity-55"
+          className="boton boton-texto"
         >
           volver al recorrido
         </button>

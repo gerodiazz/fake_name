@@ -60,18 +60,14 @@ export default function Resultado({
         <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
           <a
             href="#contacto"
-            className="
-              inline-flex min-h-[52px] items-center bg-klein px-7 text-[15px]
-              text-superficie transition-opacity duration-100
-              hover:opacity-90 active:opacity-75
-            "
+            className="boton boton-klein"
           >
             Agendar diagnóstico
           </a>
           <button
             type="button"
             onClick={onRehacer}
-            className="min-h-[44px] text-[13px] lowercase text-tinta-2 transition-opacity duration-100 hover:text-tinta active:opacity-55"
+            className="boton boton-texto"
           >
             rehacer el diagnóstico
           </button>
@@ -142,18 +138,14 @@ export default function Resultado({
       <div className="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
         <a
           href="#contacto"
-          className="
-            inline-flex min-h-[52px] items-center bg-klein px-7 text-[15px]
-            text-superficie transition-opacity duration-100
-            hover:opacity-90 active:opacity-75
-          "
+          className="boton boton-klein"
         >
           Agenda una reunión
         </a>
         <button
           type="button"
           onClick={onRehacer}
-          className="min-h-[44px] text-[13px] lowercase text-tinta-2 transition-opacity duration-100 hover:text-tinta active:opacity-55"
+          className="boton boton-texto"
         >
           rehacer el diagnóstico
         </button>

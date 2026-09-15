@@ -141,11 +141,7 @@ export default function Contacto({
               href={SITIO.agenda}
               target="_blank"
               rel="noopener noreferrer"
-              className="
-                inline-flex min-h-[52px] items-center bg-klein px-7 text-[15px]
-                text-superficie transition-opacity duration-100
-                hover:opacity-90 active:opacity-75
-              "
+              className="boton boton-klein"
             >
               Agendar directo
             </a>
@@ -247,12 +243,7 @@ export default function Contacto({
                 directo arriba, este baja a tinta para no competir con él. */}
             <button
               type="submit"
-              className={`
-                mt-9 inline-flex min-h-[52px] items-center px-7
-                text-[15px] text-superficie transition-opacity duration-100
-                hover:opacity-90 active:opacity-75
-                ${SITIO.agenda ? "bg-tinta" : "bg-klein"}
-              `}
+              className={`boton mt-9 ${SITIO.agenda ? "boton-tinta" : "boton-klein"}`}
             >
               Agendar diagnóstico
             </button>

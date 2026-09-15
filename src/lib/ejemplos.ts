@@ -41,6 +41,11 @@ export type EjemploIndustria = {
   industria: string;
   /** El proceso, en una línea, para quien no quiere leer las seis etapas. */
   proceso: string;
+  /**
+   * Por cuántas manos y aplicaciones pasa hoy ese trabajo. Se dibuja como una
+   * cadena de piezas: la acumulación es el problema, y se ve antes de leerse.
+   */
+  hoy: string[];
   /** Una línea por etapa, en el orden de ETAPAS. */
   flujo: string[];
   /** Los oficios del diagnóstico que aparecen en este rubro. */
@@ -54,6 +59,7 @@ export const EJEMPLOS: EjemploIndustria[] = [
     rubroId: "comercio",
     industria: "Comercio y retail",
     proceso: "Un pedido que llega por mensaje fuera de horario",
+    hoy: ["WhatsApp", "vendedor", "sistema de gestión", "planilla", "vendedor"],
     flujo: [
       "Entra un mensaje pidiendo precio y disponibilidad.",
       "El sistema identifica producto, cantidad y si el cliente ya existe.",
@@ -70,6 +76,7 @@ export const EJEMPLOS: EjemploIndustria[] = [
     rubroId: "servicios",
     industria: "Servicios profesionales",
     proceso: "Un pedido de presupuesto que hoy se arma a mano",
+    hoy: ["email", "planilla de precios", "documento anterior", "revisión", "email"],
     flujo: [
       "Llega una consulta por mail o por formulario.",
       "El sistema identifica qué servicio se pide y con qué alcance.",
@@ -86,6 +93,7 @@ export const EJEMPLOS: EjemploIndustria[] = [
     rubroId: "salud",
     industria: "Salud y consultorios",
     proceso: "Los turnos que hoy ocupan el día de la recepción",
+    hoy: ["teléfono", "WhatsApp", "recepción", "agenda", "llamada de confirmación"],
     flujo: [
       "Un paciente escribe para pedir, mover o cancelar un turno.",
       "El sistema identifica profesional, paciente y qué necesita.",
@@ -102,6 +110,7 @@ export const EJEMPLOS: EjemploIndustria[] = [
     rubroId: "inmobiliaria",
     industria: "Inmobiliaria",
     proceso: "Una consulta por una propiedad, de las veinte que entran por día",
+    hoy: ["portal", "WhatsApp", "planilla de propiedades", "vendedor"],
     flujo: [
       "Entra una consulta por WhatsApp o por un portal.",
       "El sistema identifica qué propiedad busca y con qué condiciones.",
@@ -118,6 +127,7 @@ export const EJEMPLOS: EjemploIndustria[] = [
     rubroId: "industria",
     industria: "Industria y logística",
     proceso: "Órdenes de compra que se transcriben a mano al sistema",
+    hoy: ["email", "PDF", "carga manual", "sistema", "control"],
     flujo: [
       "Llega una orden de compra por correo, en PDF o en el cuerpo del mail.",
       "El sistema identifica ítems, cantidades, precios y condiciones.",
@@ -134,6 +144,7 @@ export const EJEMPLOS: EjemploIndustria[] = [
     rubroId: "gastronomia",
     industria: "Gastronomía y turismo",
     proceso: "Reservas que entran por teléfono y por mensaje a la vez",
+    hoy: ["teléfono", "WhatsApp", "libro de reservas", "mozo"],
     flujo: [
       "Entra una reserva por cualquiera de los dos canales.",
       "El sistema identifica fecha, cantidad de personas y preferencias.",

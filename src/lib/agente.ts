@@ -75,3 +75,32 @@ export const COMPARACION: Columna[] = [
       "Cuando el pedido llega en lenguaje de persona, cambia de forma en cada caso y hay que cruzar datos de más de un sistema para resolverlo.",
   },
 ];
+
+/**
+ * LA TRANSFORMACIÓN — el diagrama de la sección 02.
+ *
+ * Tres bloques: cómo se hace hoy, qué lo reemplaza, con qué queda la empresa.
+ * Es la explicación más corta posible de lo que vendemos, y la única del sitio
+ * que se entiende sin leer una sola oración completa.
+ *
+ * El bloque de la izquierda tiene a propósito más piezas que los otros dos:
+ * esa acumulación —seis saltos entre personas, aplicaciones y planillas— es el
+ * problema, y se ve antes de leerse.
+ */
+export const TRANSFORMACION = {
+  hoy: {
+    titulo: "El proceso hoy",
+    detalle: "Seis saltos entre personas, aplicaciones y planillas.",
+    piezas: ["persona", "WhatsApp", "planilla", "email", "sistema", "persona"],
+  },
+  software: {
+    titulo: "Lo que se construye",
+    detalle: "Un solo recorrido, con lo que necesita para resolverlo.",
+    piezas: ["agente", "herramientas", "datos autorizados", "reglas"],
+  },
+  resultado: {
+    titulo: "Lo que queda",
+    detalle: "El trabajo hecho, y la prueba de cómo se hizo.",
+    piezas: ["proceso ejecutado", "registro", "intervención cuando corresponde"],
+  },
+} as const;
