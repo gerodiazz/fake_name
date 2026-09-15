@@ -1,0 +1,1189 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   SISTEMA VISUAL — fakename
+   Un solo lugar define paleta, tipografía y las tres o cuatro animaciones
+   que el sitio se permite. Todo lo demás es tinta sobre papel.
+   ========================================================================== */
+
+@theme {
+  /* Paleta cerrada. No se agregan colores fuera de esta lista. */
+  --color-papel: #f2f0eb; /* fondo general */
+  --color-superficie: #faf9f6; /* bloques que se despegan del fondo */
+  --color-tinta: #1a1a18; /* texto principal */
+  --color-tinta-2: #56544e; /* texto secundario, siempre AA sobre papel */
+  --color-linea: #dcd9d1; /* hairlines de 0.5px */
+  --color-klein: #002fa7; /* acento: tachado, subrayado del sí, CTA */
+  --color-klein-tinte: #e4e8f5; /* tinte del Klein, solo para estados */
+  --color-verde: #1d5c4a; /* SOLO horas recuperadas y dinero ganado */
+
+  /* Tipografías inyectadas por next/font desde el layout. */
+  --font-sans: var(--fuente-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--fuente-serif), Georgia, "Times New Roman", serif;
+}
+
+/* --------------------------------------------------------------------------
+   Base
+   -------------------------------------------------------------------------- */
+
+html {
+  /* El enganche de referidos ancla a la sección 04: el salto es suave salvo
+     que el sistema pida lo contrario. */
+  scroll-behavior: smooth;
+  /* La barra superior es sticky: sin este margen, cada ancla dejaría el kicker
+     de la sección tapado por la barra. */
+  scroll-padding-top: 3.5rem;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-papel);
+  color: var(--color-tinta);
+  font-family: var(--font-sans);
+  /* 16px de base: nunca menos, para que iOS no haga zoom en los inputs. */
+  font-size: 1rem;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  /* Las bandas Klein miden 100vw, y 100vw incluye el ancho de la barra de
+     scroll: sin esto aparecería un scroll horizontal de ~15px en Windows.
+     `clip` y no `hidden` a propósito: clip no crea un contenedor de scroll, así
+     que la barra superior sigue siendo sticky y el barrido sigue siendo fixed. */
+  overflow-x: clip;
+}
+
+::selection {
+  background-color: var(--color-klein-tinte);
+  color: var(--color-tinta);
+}
+
+/* Foco visible en Klein, uniforme en todo el sitio. Al no haber bordes ni
+   cajas, el anillo de foco es la única señal para quien navega por teclado. */
+:focus-visible {
+  outline: 2px solid var(--color-klein);
+  outline-offset: 4px;
+  border-radius: 1px;
+}
+
+/* --------------------------------------------------------------------------
+   Utilidades tipográficas propias
+   -------------------------------------------------------------------------- */
+
+/* Kicker de sección: 11px, mayúsculas, tracking ancho, Klein. Tipo expediente. */
+.kicker {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  line-height: 1.2;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-klein);
+}
+
+/* Variante apagada del kicker, para cuando el Klein ya se gastó en pantalla. */
+.kicker-tinta {
+  color: var(--color-tinta-2);
+}
+
+/* Titular editorial. Serif, peso regular, nunca bold. */
+.titular {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.06;
+  text-wrap: balance;
+}
+
+/* Número gigante compartido entre horas (sección 02) y dólares (sección 04).
+   La simetría entre los dos bloques depende de que sea literalmente la misma
+   clase. */
+.numero-gigante {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(4.25rem, 23vw, 10.5rem);
+  line-height: 0.82;
+  letter-spacing: -0.035em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Hairline de 0.5px. Tailwind no tiene medio pixel nativo. */
+.hairline {
+  border-color: var(--color-linea);
+  border-style: solid;
+  border-width: 0;
+}
+.hairline-t {
+  border-top-width: 0.5px;
+}
+.hairline-b {
+  border-bottom-width: 0.5px;
+}
+.hairline-l {
+  border-left-width: 0.5px;
+}
+
+/* --------------------------------------------------------------------------
+   Tachado de la pregunta respondida (sección 02)
+   Se pinta como background sobre un elemento inline: así la línea se dibuja
+   sobre cada renglón cuando la pregunta ocupa dos líneas, en vez de cruzar
+   el bloque por el medio.
+   -------------------------------------------------------------------------- */
+
+.tachado {
+  display: inline;
+  background-image: linear-gradient(
+    to right,
+    var(--color-klein),
+    var(--color-klein)
+  );
+  background-repeat: no-repeat;
+  background-position: 0 0.56em;
+  background-size: 0% 1.5px;
+  transition: background-size 400ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.tachado[data-tachado="true"] {
+  background-size: 100% 1.5px;
+}
+
+/* --------------------------------------------------------------------------
+   Animaciones. Cortas, con sentido, y ninguna decorativa.
+   -------------------------------------------------------------------------- */
+
+@keyframes emerger {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes entrar-pregunta {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* El salto del número cuando se cruza un escalón de bonos (sección 04).
+   Es el momento de mayor impacto del sitio. */
+@keyframes saltar {
+  0% {
+    transform: translateY(0);
+  }
+  35% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* La marca del escalón que se enciende. */
+@keyframes encender {
+  0% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.anim-emerger {
+  animation: emerger 320ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+.anim-entrar {
+  animation: entrar-pregunta 380ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+.anim-saltar {
+  animation: saltar 520ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.anim-encender {
+  animation: encender 420ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* ==========================================================================
+   SISTEMA DE MOVIMIENTO
+
+   Jerárquico, no decorativo. Un momento firma, tres apoyos y micro-movimiento
+   constante. Nada dura más de 1.2s y nada se desplaza más de 20px salvo el
+   barrido, que es justamente la excepción que lo vuelve un evento.
+
+   Todo se apaga entero bajo prefers-reduced-motion, al final del archivo.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   MOMENTO FIRMA — el barrido Klein
+
+   Un panel Klein sólido sube, tapa la pantalla entera, y al salir deja el
+   estado nuevo ya puesto. Es el único lugar del sitio donde el Klein ocupa
+   todo, y por eso pega.
+
+   La duración la fija el JS con --barrido-ms (1100ms al elegir rubro, 700ms
+   al pasar al resultado); los porcentajes de los keyframes reparten cubrir,
+   sostener 100ms y destapar.
+   -------------------------------------------------------------------------- */
+
+.barrido {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background-color: var(--color-klein);
+  transform: translateY(100%);
+  /* Fuera de la capa de accesibilidad: es una cortina, no contenido. */
+  pointer-events: none;
+  will-change: transform;
+}
+
+.barrido[data-corriendo="true"] {
+  pointer-events: auto;
+  animation: barrer var(--barrido-ms, 1100ms) cubic-bezier(0.76, 0, 0.24, 1)
+    both;
+}
+
+@keyframes barrer {
+  0% {
+    transform: translateY(100%);
+  }
+  /* Cubierto por completo: acá adentro el JS cambia el estado. */
+  45% {
+    transform: translateY(0);
+  }
+  55% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   APOYO 1 — tipografía cinética del hero
+
+   La palabra variable rota dentro de una máscara de altura fija. La máscara
+   ajusta su ancho a la palabra entrante, si no el resto del titular saltaría
+   de golpe al cambiar de "tu socio" a "alguien a las 9pm".
+   -------------------------------------------------------------------------- */
+
+.palabra-mascara {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  vertical-align: bottom;
+  color: var(--color-klein);
+  /* El alto de línea del titular más aire para las colas de las letras. */
+  height: 1.06em;
+  /* La caja crece con la palabra, sin tirones. */
+  transition: width 300ms cubic-bezier(0.76, 0, 0.24, 1);
+  will-change: width;
+}
+
+.palabra-pieza {
+  display: block;
+  white-space: nowrap;
+  transition: transform 300ms cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+/* La que se va sube y desaparece; la que entra llega desde abajo. */
+.palabra-pieza[data-rol="saliente"] {
+  position: absolute;
+  inset: 0;
+  transform: translateY(-100%);
+}
+.palabra-pieza[data-rol="entrante"] {
+  transform: translateY(0);
+}
+.palabra-pieza[data-rol="esperando"] {
+  transform: translateY(100%);
+}
+
+/* Regla de medición: fuera de flujo, invisible, solo para saber el ancho. */
+.palabra-regla {
+  position: absolute;
+  visibility: hidden;
+  white-space: nowrap;
+  pointer-events: none;
+  left: -9999px;
+  top: 0;
+}
+
+/* --------------------------------------------------------------------------
+   APOYO 2 — dígitos que ruedan (odómetro)
+
+   Cada dígito es una ventana con una columna del 0 al 9 adentro. Cambiar el
+   dígito es mover la columna: los que no cambian no se mueven solos, que es
+   exactamente lo que pide un odómetro.
+
+   La entrada sí lleva stagger de 70ms, de izquierda a derecha.
+   -------------------------------------------------------------------------- */
+
+.odometro {
+  display: inline-flex;
+  align-items: flex-start;
+}
+
+.odo-celda {
+  display: inline-block;
+  overflow: hidden;
+  /* Ventana de un dígito. El alto se define en el componente que lo usa. */
+  height: var(--odo-alto, 1em);
+  line-height: var(--odo-alto, 1em);
+}
+
+/* Capa de entrada: sube desde abajo de la ventana, con su retraso propio. */
+.odo-entrada {
+  display: block;
+  animation: odo-entrar 520ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: calc(var(--odo-i, 0) * 70ms);
+}
+
+@keyframes odo-entrar {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.odo-columna {
+  display: block;
+  transform: translateY(calc(var(--odo-d, 0) * var(--odo-alto, 1em) * -1));
+  transition: transform 520ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform;
+}
+
+/* La celda mide lo que el dígito más ancho del 0 al 9, así que cada cifra se
+   centra en su casilla. Sin esto, un "1" queda pegado a la izquierda y el
+   punto de miles se lee despegado: "1 .344" en vez de "1.344". */
+.odo-columna > span {
+  display: block;
+  height: var(--odo-alto, 1em);
+  line-height: var(--odo-alto, 1em);
+  text-align: center;
+}
+
+/* Separadores de miles y texto fijo: no ruedan, acompañan. */
+.odo-fijo {
+  display: inline-block;
+  height: var(--odo-alto, 1em);
+  line-height: var(--odo-alto, 1em);
+}
+
+/* --------------------------------------------------------------------------
+   APOYO 3 — las fichas caen sobre la mesa
+
+   Overshoot corto, una rotación mínima propia de cada ficha y una sombra que
+   se asienta. Es la única sombra del sitio, y existe para que la ficha se lea
+   como un objeto y no como un div.
+
+   La rotación sale de un hash del id del agente, no de Math.random: así no
+   cambia entre renders ni difiere entre servidor y cliente.
+   -------------------------------------------------------------------------- */
+
+/* La sombra en reposo va en la clase base, no solo al final de la caída: si
+   viviera únicamente en los keyframes, las fichas que no animan quedarían sin
+   sombra y la pila se leería despareja. */
+.ficha {
+  box-shadow: 0 1px 3px rgba(26, 26, 24, 0.05);
+}
+
+.ficha-agente {
+  animation: caer 460ms cubic-bezier(0.2, 0.9, 0.3, 1.25) both;
+  /* Cuando caen varias juntas, entran de a una. */
+  animation-delay: calc(var(--ficha-i, 0) * 40ms);
+}
+
+@keyframes caer {
+  0% {
+    opacity: 0;
+    transform: translateY(-18px) rotate(0deg);
+    box-shadow: 0 0 0 rgba(26, 26, 24, 0);
+  }
+  70% {
+    opacity: 1;
+    box-shadow: 0 6px 18px rgba(26, 26, 24, 0.1);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotate(var(--ficha-rot, 0deg));
+    box-shadow: 0 1px 3px rgba(26, 26, 24, 0.05);
+  }
+}
+
+/* El corrimiento de las que ya estaban en la pila. */
+.ficha-corrida {
+  animation: correr-abajo 320ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: calc(var(--ficha-i, 0) * 40ms);
+}
+
+@keyframes correr-abajo {
+  from {
+    transform: translateY(-14px) rotate(var(--ficha-rot, 0deg));
+  }
+  to {
+    transform: translateY(0) rotate(var(--ficha-rot, 0deg));
+  }
+}
+
+/* --------------------------------------------------------------------------
+   MICRO-MOVIMIENTO
+   -------------------------------------------------------------------------- */
+
+/* Las líneas se dibujan de izquierda a derecha al entrar en viewport, con
+   scroll-driven animations nativas. Donde no haya soporte, la línea está y
+   listo: nunca se queda invisible. */
+.linea-dibujada {
+  position: relative;
+}
+.linea-dibujada::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 0.5px;
+  background-color: var(--color-linea);
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+@supports (animation-timeline: view()) {
+  .linea-dibujada::before {
+    animation: dibujar-linea linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 60%;
+  }
+}
+
+@keyframes dibujar-linea {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Los titulares se revelan por líneas, con máscara de overflow. Nunca por
+   opacidad: el bloque de texto tiene que aparecer, no encenderse. */
+.titular-linea {
+  display: block;
+  overflow: hidden;
+}
+.titular-linea > span {
+  display: block;
+  transform: translateY(102%);
+  transition: transform 620ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition-delay: calc(var(--linea-i, 0) * 70ms);
+}
+.titular-revelado .titular-linea > span {
+  transform: translateY(0);
+}
+
+/* Todo lo tocable cede al tacto. Al no haber cajas ni bordes, la escala es
+   la señal más clara que se puede dar. */
+button:active,
+summary:active,
+a[href]:active,
+label:active {
+  transform: scale(0.97);
+}
+/* Se listan las propiedades en vez de usar el atajo `transition`: el atajo
+   reinicia transition-property y dejaría sin transición a las opacidades que
+   ya venían declaradas en cada componente. */
+button,
+summary,
+a[href],
+label {
+  transition-property: transform, opacity;
+  transition-duration: 90ms;
+  transition-timing-function: ease-out;
+}
+/* El slider se arrastra: escalarlo pelearía con el gesto. */
+.slider-referidos:active,
+.slider-referidos {
+  transform: none;
+}
+
+/* El track late muy suave hasta que alguien lo toca por primera vez. Es la
+   única forma de decir "esto se arrastra" sin escribirlo. */
+.track-latente {
+  animation: latir 2.4s ease-in-out infinite;
+}
+@keyframes latir {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+/* La barra inferior del diagnóstico entra deslizando hacia arriba. */
+.barra-inferior {
+  animation: subir-barra 420ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes subir-barra {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Grillas expuestas
+
+   Primero intentamos dibujar las líneas interiores con un gap de 0.5px sobre
+   un fondo en color línea. Geométricamente funciona, pero al rasterizar los
+   fondos de las celdas tapan la hendija y la línea desaparece — pasaba en la
+   grilla de la sección 03 a 1280px. Un borde de 0.5px, en cambio, Chrome lo
+   pinta siempre. Así que las líneas interiores son bordes.
+
+   Patrón: apiladas llevan línea arriba; a partir del breakpoint pasan a
+   columnas y llevan línea a la izquierda.
+   -------------------------------------------------------------------------- */
+
+.grilla-expuesta > * {
+  border-top: 0.5px solid var(--color-linea);
+}
+.grilla-expuesta > *:first-child {
+  border-top: 0;
+}
+
+@media (min-width: 640px) {
+  .grilla-expuesta-sm > * {
+    border-top: 0;
+    border-left: 0.5px solid var(--color-linea);
+  }
+  .grilla-expuesta-sm > *:first-child {
+    border-left: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .grilla-expuesta-lg > * {
+    border-top: 0;
+    border-left: 0.5px solid var(--color-linea);
+  }
+  .grilla-expuesta-lg > *:first-child {
+    border-left: 0;
+  }
+}
+
+/* Dos columnas en todos los anchos (la grilla de rubros). La celda que ocupa
+   el ancho completo cae en posición impar, así que la regla la contempla. */
+.grilla-dos > * {
+  border-top: 0.5px solid var(--color-linea);
+  border-left: 0.5px solid var(--color-linea);
+}
+.grilla-dos > *:nth-child(odd) {
+  border-left: 0;
+}
+.grilla-dos > *:nth-child(-n + 2) {
+  border-top: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Slider de la calculadora de referidos (sección 04)
+
+   El input nativo queda invisible: track y marcas se dibujan aparte para poder
+   respetar los hairlines. Del input solo se ve el thumb, que es una caja de
+   44px con un punto Klein pintado en el centro por un gradiente radial. Así el
+   área táctil es real sin que el punto se vea gigante.
+   -------------------------------------------------------------------------- */
+
+.slider-referidos {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 44px;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.slider-referidos::-webkit-slider-runnable-track {
+  height: 44px;
+  background: transparent;
+}
+.slider-referidos::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at center,
+    var(--color-klein) 0 7px,
+    transparent 7.5px
+  );
+  cursor: grab;
+}
+.slider-referidos:active::-webkit-slider-thumb {
+  cursor: grabbing;
+  /* Al arrastrar, el punto crece: es el único feedback táctil que tiene. */
+  background: radial-gradient(
+    circle at center,
+    var(--color-klein) 0 9px,
+    var(--color-klein-tinte) 9px 14px,
+    transparent 14.5px
+  );
+}
+
+.slider-referidos::-moz-range-track {
+  height: 44px;
+  background: transparent;
+}
+.slider-referidos::-moz-range-thumb {
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at center,
+    var(--color-klein) 0 7px,
+    transparent 7.5px
+  );
+  cursor: grab;
+}
+.slider-referidos:active::-moz-range-thumb {
+  background: radial-gradient(
+    circle at center,
+    var(--color-klein) 0 9px,
+    var(--color-klein-tinte) 9px 14px,
+    transparent 14.5px
+  );
+}
+
+/* ==========================================================================
+   CAPA GRÁFICA
+
+   Ornamento, no información: todo lo de este bloque va con aria-hidden desde
+   los componentes, y acá se le saca la selección y los eventos de puntero.
+
+   El criterio de contraste es uno solo: si un recurso puede caer debajo de un
+   texto, se recorta o se apaga en los anchos donde no hay margen libre. Por eso
+   las formas Klein y las marcas de imprenta solo existen de 1024px para arriba.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1 · Grano global
+
+   Ruido generado con SVG, en multiply y al 0.3. Multiplica parejo el papel y la
+   tinta, así que el contraste del texto no baja. Tope duro: 0.35.
+   -------------------------------------------------------------------------- */
+
+.grano {
+  position: fixed;
+  inset: 0;
+  /* Por encima del barrido Klein (z-90): el grano cubre el sitio entero,
+     incluida la cortina. */
+  z-index: 100;
+  opacity: 0.3;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* --------------------------------------------------------------------------
+   2 · Bandas Klein a sangre completa (y 5 · su tramado de puntos)
+
+   Dos en todo el sitio: el resultado del diagnóstico y el total de la
+   calculadora. Ancho de viewport, sin márgenes laterales ni radio.
+
+   El cálculo del sangrado: la banda vive dentro del contenedor de lectura, así
+   que se estira a 100vw y se corrige con un margen negativo de la mitad de la
+   diferencia. Funciona igual cuando el contenedor tope su ancho máximo y
+   cuando ocupe todo el viewport.
+   -------------------------------------------------------------------------- */
+
+.banda-klein {
+  position: relative;
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
+  background-color: var(--color-klein);
+  /* El recorte del tramado y de cualquier desborde del número. */
+  overflow: clip;
+  padding-block: 3.5rem;
+}
+
+@media (min-width: 640px) {
+  .banda-klein {
+    padding-block: 4.5rem;
+  }
+}
+
+/* El contenido vuelve al ancho de lectura del sitio: el número queda alineado
+   con la columna de texto de la página, no con el borde de la pantalla. */
+.banda-contenido {
+  position: relative;
+  z-index: 1;
+  margin-inline: auto;
+  width: 100%;
+  max-width: 1120px;
+  padding-inline: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .banda-contenido {
+    padding-inline: 2rem;
+  }
+}
+
+/* Tramado risográfico: puntos de papel cada 9px, al 0.5, que se desvanecen
+   hacia la izquierda. La máscara los deja fuera de la zona del número y del
+   texto de apoyo, que es lo que protege el contraste. */
+.banda-tramado {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: radial-gradient(
+    var(--color-papel) 0.9px,
+    transparent 1px
+  );
+  background-size: 9px 9px;
+  opacity: 0.5;
+  -webkit-mask-image: linear-gradient(
+    to left,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0) 62%
+  );
+  mask-image: linear-gradient(
+    to left,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0) 62%
+  );
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* El número gigante sobre la banda: papel sobre Klein. El apoyo, en el tinte
+   Klein claro, que sobre el azul sigue leyéndose de sobra. */
+.numero-papel {
+  color: var(--color-papel);
+}
+
+/* --------------------------------------------------------------------------
+   3 · El número de sección como marca de agua
+
+   Serif del sitio, sin relleno, contorno de 1px en color línea. Arriba a la
+   derecha y recortado por el borde superior de la sección.
+   -------------------------------------------------------------------------- */
+
+.marca-agua {
+  position: absolute;
+  top: -0.3em;
+  right: 2vw;
+  z-index: 0;
+  font-family: var(--font-serif);
+  font-size: 96px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--color-linea);
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+@media (min-width: 1024px) {
+  .marca-agua {
+    font-size: 150px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   4 · Formas geométricas recortadas
+
+   Cuartos de círculo y rectángulos en Klein sólido que entran por un borde y
+   salen del viewport. Geometría recta: ningún borde orgánico, ninguna sombra.
+   Una por sección y solo en tres secciones.
+
+   Por defecto no se dibujan: aparecen recién a 1024px, donde el contenedor de
+   lectura deja margen libre a los costados y la forma no puede caer debajo de
+   un texto.
+   -------------------------------------------------------------------------- */
+
+.forma {
+  display: none;
+  position: absolute;
+  z-index: 0;
+  background-color: var(--color-klein);
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+@media (min-width: 1024px) {
+  .forma {
+    display: block;
+  }
+
+  /* Hero: cuarto de círculo que entra por el borde derecho, a la altura del
+     titular pero muy por fuera de su caja de texto. */
+  .forma-hero {
+    top: 1.5rem;
+    right: -7rem;
+    height: 22rem;
+    width: 22rem;
+    border-radius: 100% 0 0 0;
+  }
+
+  /* Socios: barra que entra por el borde izquierdo y muere antes del margen
+     del contenedor. */
+  .forma-socios {
+    top: 42%;
+    left: -4rem;
+    height: 3.25rem;
+    width: 7rem;
+  }
+
+  /* FAQ: cuarto de círculo en la esquina inferior derecha, dentro del aire de
+     cierre de la sección: queda por debajo del último renglón del acordeón. */
+  .forma-faq {
+    bottom: -4rem;
+    right: -6rem;
+    height: 10rem;
+    width: 10rem;
+    border-radius: 100% 0 0 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   6 · Marcas de imprenta
+
+   Escuadras de registro en las esquinas superiores y texto girado al margen.
+   Como las formas, viven en el margen exterior del contenedor: existen recién
+   a 1024px.
+   -------------------------------------------------------------------------- */
+
+.marca-registro,
+.texto-vertical {
+  display: none;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+@media (min-width: 1024px) {
+  .marca-registro {
+    display: block;
+    position: absolute;
+    top: 1.5rem;
+    z-index: 0;
+    height: 13px;
+    width: 13px;
+    border: 0 solid var(--color-tinta-2);
+    opacity: 0.55;
+  }
+  /* Dos bordes por esquina: la escuadra, no el cuadro. */
+  .marca-registro-izq {
+    left: 1.5rem;
+    border-top-width: 1px;
+    border-left-width: 1px;
+  }
+  .marca-registro-der {
+    right: 1.5rem;
+    border-top-width: 1px;
+    border-right-width: 1px;
+  }
+
+  .texto-vertical {
+    display: block;
+    position: absolute;
+    top: 7rem;
+    left: 1.5rem;
+    z-index: 0;
+    writing-mode: vertical-rl;
+    font-family: var(--font-sans);
+    font-size: 9px;
+    line-height: 1;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-tinta-2);
+    opacity: 0.7;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   7 · Diagrama de proceso de la sección 03
+
+   Las cuatro etapas dibujadas con las líneas del sistema: eje de 0.5px en color
+   línea, un nodo por etapa y el paso activo en Klein. El SVG escala de forma
+   uniforme, así que los nodos caen siempre en el centro de cada columna de la
+   grilla de texto de abajo.
+
+   Solo de 1024px para arriba: es donde existen las cuatro columnas. En anchos
+   menores las etapas se apilan con sus hairlines, como el resto del sitio.
+   -------------------------------------------------------------------------- */
+
+.diagrama {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.diagrama-eje,
+.diagrama-tic,
+.diagrama-nodo {
+  fill: none;
+  stroke: var(--color-linea);
+  stroke-width: 0.5;
+}
+
+/* El paso activo: relleno Klein, sin contorno. */
+.diagrama-nodo-activo {
+  fill: var(--color-klein);
+  stroke: none;
+}
+
+/* Trazado al entrar en viewport, con scroll-driven animations nativas. Donde no
+   haya soporte, el diagrama ya está dibujado: nunca queda invisible. */
+@supports (animation-timeline: view()) {
+  .diagrama-eje {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: diagrama-trazar linear both;
+    animation-timeline: view();
+    animation-range: entry 10% entry 70%;
+  }
+
+  .diagrama-nodo,
+  .diagrama-nodo-activo,
+  .diagrama-tic {
+    opacity: 0;
+    animation: diagrama-aparecer linear both;
+    animation-timeline: view();
+  }
+}
+
+@keyframes diagrama-trazar {
+  from {
+    stroke-dashoffset: 1000;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes diagrama-aparecer {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Las cuatro etapas de la sección 03. Apiladas llevan hairlines, como toda
+   grilla expuesta del sitio; en desktop cuelgan de los nodos del diagrama y las
+   líneas desaparecen, porque la línea ya la dibuja el eje del SVG.
+
+   Va con reglas propias en vez de .grilla-expuesta porque esas clases viven
+   fuera de las capas de Tailwind y una utilidad `lg:border-0` no las pisaría. */
+.grilla-etapas {
+  border-top: 0.5px solid var(--color-linea);
+  border-bottom: 0.5px solid var(--color-linea);
+}
+.grilla-etapas > * + * {
+  border-top: 0.5px solid var(--color-linea);
+}
+
+@media (min-width: 1024px) {
+  .grilla-etapas,
+  .grilla-etapas > * + * {
+    border: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Barra superior — índice del expediente
+
+   Los enlaces son kickers: 11px, mayúsculas, tracking ancho. En reposo van en
+   tinta secundaria y la sección que se está leyendo es la única en Klein. Los
+   estados se escriben acá y no con utilidades de Tailwind porque `.kicker` y
+   compañía viven fuera de las capas: una utilidad de color no las pisaría.
+   -------------------------------------------------------------------------- */
+
+.barra-superior {
+  /* Papel translúcido: el contenido pasa por debajo y se lee, pero la barra
+     nunca se confunde con él. Donde no haya backdrop-filter queda el papel a
+     88%, que sobre el mismo papel del fondo es indistinguible. */
+  background-color: color-mix(in srgb, var(--color-papel) 88%, transparent);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+.nav-enlace {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  line-height: 1.2;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--color-tinta-2);
+  transition-property: color, transform, opacity;
+  transition-duration: 140ms;
+  transition-timing-function: ease-out;
+}
+
+.nav-enlace:hover {
+  color: var(--color-tinta);
+}
+
+/* El único indicador de sección activa: el color. Sin subrayados ni cajas. */
+.nav-enlace[data-activa="true"],
+.nav-fila[data-activa="true"] {
+  color: var(--color-klein);
+}
+
+/* El número del expediente acompaña al nombre, un paso más atrás. */
+.nav-numero {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.55;
+}
+
+/* Fila del panel de mobile: tinta plena, porque acá el nombre es el titular. */
+.nav-fila {
+  color: var(--color-tinta);
+}
+
+/* El signo del botón de índice gira de + a ×, igual que en la FAQ. */
+.nav-boton[data-abierto="true"] .nav-signo {
+  transform: rotate(45deg);
+}
+
+/* --------------------------------------------------------------------------
+   Acordeón de la FAQ (sección 06). Hairlines, sin cajas.
+   -------------------------------------------------------------------------- */
+
+/* El triángulo nativo de <summary> no entra en el sistema visual. */
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+.faq summary {
+  list-style: none;
+}
+/* El signo gira de + a × al abrirse. */
+.faq[open] .faq-signo {
+  transform: rotate(45deg);
+}
+
+/* --------------------------------------------------------------------------
+   prefers-reduced-motion: el sitio sigue funcionando, deja de moverse.
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  /* El tachado no se anima pero sí queda marcado: es información, no adorno. */
+  .tachado[data-tachado="true"] {
+    background-size: 100% 1.5px;
+  }
+
+  /* El sistema de movimiento se apaga entero. No hay versión suavizada: lo
+     que queda es el estado final de cada cosa, quieto.
+
+     Colapsar la duración no alcanza, porque varios keyframes terminan en un
+     estado transformado (la ficha queda rotada, la cortina queda arriba). Por
+     eso cada uno se neutraliza a mano. */
+
+  /* La cortina Klein no se muestra nunca: el cambio de estado es directo. */
+  .barrido,
+  .barrido[data-corriendo="true"] {
+    animation: none !important;
+    display: none !important;
+  }
+
+  /* La ficha no cae, no rota y no proyecta sombra. */
+  .ficha,
+  .ficha-agente,
+  .ficha-corrida {
+    animation: none !important;
+    transform: none !important;
+    box-shadow: none !important;
+    opacity: 1 !important;
+  }
+
+  /* Las líneas ya están dibujadas. */
+  .linea-dibujada::before {
+    animation: none !important;
+    transform: scaleX(1) !important;
+  }
+
+  /* Los titulares se leen enteros desde el principio. */
+  .titular-linea > span {
+    transform: none !important;
+  }
+
+  /* Nada cede al tacto por escala. */
+  button:active,
+  summary:active,
+  a[href]:active,
+  label:active {
+    transform: none !important;
+  }
+
+  /* El track no late. */
+  .track-latente {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+
+  /* Los dígitos no ruedan: se muestran puestos. */
+  .odo-entrada {
+    animation: none !important;
+    transform: none !important;
+  }
+  .odo-columna {
+    transition: none !important;
+  }
+
+  /* La barra inferior aparece sin deslizarse. */
+  .barra-inferior {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  /* El diagrama de la sección 03 se muestra dibujado y quieto: el eje completo
+     y los nodos visibles, sin trazado. */
+  .diagrama-eje {
+    animation: none !important;
+    stroke-dasharray: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+  .diagrama-nodo,
+  .diagrama-nodo-activo,
+  .diagrama-tic {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+}
