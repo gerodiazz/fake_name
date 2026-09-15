@@ -54,7 +54,7 @@ function Burbuja({ mensaje, visible }: { mensaje: Mensaje; visible: boolean }) {
       <p
         className={`
           max-w-[32ch] px-3.5 py-2.5 text-[13px] leading-relaxed sm:text-[14px]
-          ${esSistema ? "bg-klein-tinte text-tinta" : "bg-papel text-tinta hairline hairline-t hairline-b"}
+          ${esSistema ? "bg-acento-tinte text-tinta" : "bg-papel text-tinta hairline hairline-t hairline-b"}
         `}
       >
         {mensaje.texto}

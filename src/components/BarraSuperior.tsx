@@ -4,7 +4,7 @@
  * BARRA SUPERIOR — el índice del expediente
  *
  * No es un menú de sitio: es el índice de un documento numerado. Cada sección
- * aparece con su número y la que se está leyendo es la única en Klein. Eso reemplaza cualquier subrayado, pastilla o caja: el color hace de
+ * aparece con su número y la que se está leyendo es la única en tinta. Eso reemplaza cualquier subrayado, pastilla o caja: el color hace de
  * indicador y el resto sigue siendo tinta sobre papel.
  *
  * La marca a la izquierda hace de 01: vuelve al hero.
@@ -21,8 +21,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import Boton from "@/components/ui/Boton";
+import Marca from "@/components/marca/Marca";
 import { SECCIONES, SECCIONES_DEL_INDICE } from "@/lib/secciones";
-import { SITIO } from "@/lib/sitio";
 
 /**
  * Las secciones del índice salen de src/lib/secciones.ts, que es el mismo
@@ -111,19 +111,19 @@ export default function BarraSuperior() {
     <nav
       ref={barra}
       aria-label="Secciones"
-      // z-40: por encima del contenido, por debajo del barrido Klein (z-90),
+      // z-40: por encima del contenido, por debajo del barrido (z-90),
       // que tiene que poder tapar la pantalla entera.
       className="barra-superior sticky top-0 z-40 hairline hairline-b"
     >
       <div className="mx-auto flex w-full max-w-[1120px] items-center gap-4 px-5 sm:gap-6 sm:px-8">
-        {/* La marca es el 01: vuelve al hero. */}
-        <a
-          href="#contenido"
+        {/* La marca. Firma completa de sm para arriba; monograma solo abajo
+            de eso, donde el ancho lo necesita el resto de la barra. */}
+        <div
+          className="flex h-12 shrink-0 items-center sm:h-14"
           onClick={() => setAbierto(false)}
-          className="flex h-12 shrink-0 items-center font-serif text-[19px] leading-none sm:h-14"
         >
-          {SITIO.nombre}
-        </a>
+          <Marca href="#contenido" />
+        </div>
 
         {/* Índice, de md para arriba. Los números aparecen recién en lg:
             antes de eso el renglón queda justo. */}

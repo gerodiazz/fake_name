@@ -10,7 +10,7 @@ import { TarjetaOG, TAMANIO_OG, TIPO_OG, cargarFuentes } from "@/lib/imagen-og";
 import { SITIO } from "@/lib/sitio";
 
 export const alt =
-  "fakename · Procesos que hoy hace una persona, hechos por software";
+  "Telesca Justel · Procesos que hoy hace una persona, hechos por software";
 export const size = TAMANIO_OG;
 export const contentType = TIPO_OG;
 

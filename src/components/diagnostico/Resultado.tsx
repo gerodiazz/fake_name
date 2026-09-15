@@ -19,7 +19,7 @@
 
 import NumeroGigante from "@/components/NumeroGigante";
 import { SEMANAS_BASE } from "@/lib/diagnostico";
-import { BandaKlein } from "@/components/Decoracion";
+import { Banda } from "@/components/Decoracion";
 import PilaAgentes from "@/components/diagnostico/PilaAgentes";
 import EngancheReferidos from "@/components/diagnostico/EngancheReferidos";
 import type { Agente } from "@/lib/diagnostico";
@@ -61,7 +61,7 @@ export default function Resultado({
         <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
           <a
             href="#contacto"
-            className="boton boton-klein"
+            className="boton boton-principal"
           >
             Agendar diagnóstico
           </a>
@@ -91,20 +91,20 @@ export default function Resultado({
         reunión.
       </p>
 
-      {/* El número, sobre la primera de las dos bandas Klein del sitio: ancho
+      {/* El número, sobre la primera de las dos bandas del sitio: ancho
           de viewport, papel sobre azul y tramado risográfico al costado. Es uno
           de los dos momentos en que el recorrido aprieta. */}
-      <BandaKlein className="mt-8">
+      <Banda className="mt-8">
         <NumeroGigante
           valor={horasAnuales}
           animado
           tono="papel"
           etiqueta={`${horasAnuales.toLocaleString("es")} horas anuales involucradas en estos procesos`}
         />
-        <p className="mt-6 max-w-[26ch] font-serif text-[19px] leading-snug text-klein-tinte sm:text-[21px]">
+        <p className="mt-6 max-w-[26ch] font-serif text-[19px] leading-snug text-acento-tinte sm:text-[21px]">
           horas anuales involucradas en estos procesos.
         </p>
-      </BandaKlein>
+      </Banda>
 
       {/* Qué mide el número, dicho acá y no al pie: es donde se lo mira. */}
       <p className="mt-6 max-w-[52ch] text-[14px] leading-relaxed text-tinta-2">
@@ -141,11 +141,11 @@ export default function Resultado({
         {SEMANAS_BASE} semanas de base más una por proceso, con tope de ocho.
       </p>
 
-      {/* El botón Klein: agendar la reunión. */}
+      {/* El botón principal: agendar la reunión. */}
       <div className="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
         <a
           href="#contacto"
-          className="boton boton-klein"
+          className="boton boton-principal"
         >
           Agenda una reunión
         </a>

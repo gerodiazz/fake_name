@@ -2,7 +2,7 @@
  * SECCIÓN 03 — CÓMO TRABAJAMOS
  *
  * Las cuatro etapas, dibujadas como diagrama de proceso: un eje de 0.5px en
- * color línea con un nodo por etapa, el primero en Klein, y el texto de cada
+ * color línea con un nodo por etapa, el primero en acento, y el texto de cada
  * etapa colgando de su nodo. El eje se traza de izquierda a derecha al entrar
  * en viewport, con scroll-driven animations nativas.
  *
@@ -103,7 +103,7 @@ function Diagrama() {
 
         return (
           <g key={PASOS[i].numero}>
-            {/* Nodo. El primero es el paso activo: relleno Klein, sin contorno. */}
+            {/* Nodo. El primero es el paso activo: relleno acento, sin contorno. */}
             <circle
               className={i === 0 ? "diagrama-nodo-activo" : "diagrama-nodo"}
               cx={x}
@@ -166,7 +166,7 @@ export default function ComoTrabajamos({
           {PASOS.map((paso, i) => (
             <li key={paso.numero} className="py-6 lg:px-5 lg:pt-0 lg:text-center">
               {/* El número de la primera etapa acompaña al nodo activo: es el
-                  único en Klein, como el nodo. */}
+                  único en acento, como el nodo. */}
               <p className={`kicker ${i === 0 ? "" : "kicker-tinta"}`}>
                 {paso.numero}
               </p>

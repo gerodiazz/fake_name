@@ -18,7 +18,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import NumeroGigante from "@/components/NumeroGigante";
-import { BandaKlein } from "@/components/Decoracion";
+import { Banda } from "@/components/Decoracion";
 import {
   REFERIDOS,
   calcularGanancia,
@@ -99,10 +99,10 @@ export default function Calculadora() {
   return (
     <div>
       {/* ---- el número ----
-          Segunda y última banda Klein del sitio, gemela de la del resultado del
+          Segunda y última banda del sitio, gemela de la del resultado del
           diagnóstico: ancho de viewport, papel sobre azul, tramado al costado.
           Que las dos sean iguales es el argumento visual de la página. */}
-      <BandaKlein>
+      <Banda>
         <NumeroGigante
           valor={ganancia.total}
           prefijo="USD "
@@ -112,11 +112,11 @@ export default function Calculadora() {
             clientes === 1 ? "cliente referido" : "clientes referidos"
           }`}
         />
-        <p className="mt-6 max-w-[28ch] font-serif text-[19px] leading-snug text-klein-tinte sm:text-[21px]">
+        <p className="mt-6 max-w-[28ch] font-serif text-[19px] leading-snug text-acento-tinte sm:text-[21px]">
           total por {clientes}{" "}
           {clientes === 1 ? "cliente referido" : "clientes referidos"}.
         </p>
-      </BandaKlein>
+      </Banda>
 
       {/* ---- el slider ----
           La mecánica va acotada a ancho de lectura: a 1120px, el desglose
@@ -286,7 +286,7 @@ export default function Calculadora() {
 
         <div className="hairline hairline-t flex items-baseline justify-between gap-4 py-3">
           <dt className="font-serif text-[19px]">Total</dt>
-          <dd className="font-serif text-[19px] tabular-nums text-verde">
+          <dd className="font-serif text-[19px] tabular-nums text-acento">
             {enDolares(ganancia.total)}
           </dd>
         </div>

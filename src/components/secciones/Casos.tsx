@@ -125,7 +125,7 @@ export default function Casos({
                   {demo.enlace ? (
                     <a
                       href={demo.enlace}
-                      className="mt-3 inline-flex min-h-[44px] items-center text-[14px] text-klein underline decoration-[1.5px] underline-offset-[7px] transition-opacity duration-100 hover:opacity-80 active:opacity-55"
+                      className="mt-3 inline-flex min-h-[44px] items-center text-[14px] text-acento underline decoration-[1.5px] underline-offset-[7px] transition-opacity duration-100 hover:opacity-80 active:opacity-55"
                     >
                       Abrir la demo
                     </a>

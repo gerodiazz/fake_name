@@ -141,7 +141,7 @@ export default function Contacto({
               href={SITIO.agenda}
               target="_blank"
               rel="noopener noreferrer"
-              className="boton boton-klein"
+              className="boton boton-principal"
             >
               Agendar directo
             </a>
@@ -239,11 +239,11 @@ export default function Contacto({
               </div>
             </details>
 
-            {/* El CTA principal del sitio, en Klein. Cuando hay agendamiento
+            {/* El CTA principal del sitio, en acento. Cuando hay agendamiento
                 directo arriba, este baja a tinta para no competir con él. */}
             <button
               type="submit"
-              className={`boton mt-9 ${SITIO.agenda ? "boton-tinta" : "boton-klein"}`}
+              className={`boton mt-9 ${SITIO.agenda ? "boton-principal" : "boton-principal"}`}
             >
               Agendar diagnóstico
             </button>

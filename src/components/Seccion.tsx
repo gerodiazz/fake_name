@@ -1,8 +1,8 @@
 /**
  * MARCO DE SECCIÓN — estética de expediente.
  *
- * Toda sección del sitio (01 a 07) se abre con una hairline superior y un
- * kicker en Klein con su número. Es el único elemento que se repite de punta
+ * Toda sección del sitio se abre con una hairline superior y un kicker en
+ * tinta con su número. Es el único elemento que se repite de punta
  * a punta y el que da la lectura de documento numerado.
  *
  * La capa gráfica se engancha acá: el número de expediente aparece además como
@@ -13,7 +13,7 @@
 
 import type { ReactNode } from "react";
 import {
-  FormaKlein,
+  Forma,
   MarcaAgua,
   MarcasRegistro,
   TextoVertical,
@@ -22,12 +22,12 @@ import {
 type Props = {
   /** Ancla para la navegación interna. */
   id: string;
-  /** Número de expediente, de "01" a "07". */
+  /** Número de expediente. Lo asigna src/lib/secciones.ts. */
   numero: string;
   /** Nombre corto de la sección, en sentence case. */
   kicker: string;
   children: ReactNode;
-  /** Cuando el Klein ya se gastó en pantalla, el kicker baja a tinta. */
+  /** Baja el kicker a tinta secundaria cuando la sección no necesita peso. */
   kickerApagado?: boolean;
   /** Fondo de superficie en vez de papel, para separar bloques largos. */
   superficie?: boolean;
@@ -41,7 +41,7 @@ type Props = {
   /** Texto girado al margen izquierdo, tipo canto de pliego impreso. */
   textoVertical?: string;
   /**
-   * Forma Klein que sangra por un borde. Una por sección como máximo y solo en
+   * Forma que sangra por un borde. Una por sección como máximo y solo en
    * tres secciones del sitio: el hero la monta por su cuenta.
    */
   forma?: "socios" | "faq";
@@ -89,7 +89,7 @@ export default function Seccion({
     >
       {/* Ornamento. Todo con aria-hidden desde cada componente. */}
       <MarcaAgua numero={numero} />
-      {forma ? <FormaKlein variante={forma} /> : null}
+      {forma ? <Forma variante={forma} /> : null}
       {marcasRegistro ? <MarcasRegistro /> : null}
       {textoVertical ? <TextoVertical>{textoVertical}</TextoVertical> : null}
 

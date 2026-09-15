@@ -1,8 +1,8 @@
 /**
  * DATOS DEL SITIO
  *
- * "fakename" es un nombre provisorio y aparece como tal en todo el sitio.
- * Cuando se defina el nombre real, se cambia aquí y en los textos de marca.
+ * La marca completa es TELESCA JUSTEL y la corta, TJ. El monograma y el
+ * wordmark viven en src/components/marca/Marca.tsx; acá están los datos.
  *
  * CRITERIO PARA LOS DATOS QUE FALTAN
  *
@@ -15,13 +15,16 @@
  */
 
 export const SITIO = {
-  nombre: "fakename",
+  /** El nombre completo, para textos corridos y metadatos. */
+  nombre: "Telesca Justel",
+  /** La marca corta. Es la que se ve en mobile y en los rótulos internos. */
+  marcaCorta: "TJ",
   /**
    * Title de la home. Lleva los dos términos por los que se busca este
    * servicio: agentes de IA y automatización de procesos.
    */
   titulo:
-    "fakename — Agentes de IA y automatización de procesos para empresas",
+    "Telesca Justel — Software para procesos empresariales reales",
   /**
    * Meta description y bajada de Open Graph. 137 caracteres: por debajo del
    * corte de 155 que aplica Google.
@@ -29,7 +32,7 @@ export const SITIO = {
   descripcion:
     "Desarrollo de agentes de IA y automatización de procesos para empresas. Diagnóstico sin costo, alcance y plazo cerrados por escrito.",
   /** Dominio de producción. Cambiar cuando exista el definitivo. */
-  url: process.env.NEXT_PUBLIC_URL_SITIO ?? "https://fakename.com.ar",
+  url: process.env.NEXT_PUBLIC_URL_SITIO ?? "https://telescajustel.com",
 
   /**
    * PLACEHOLDER — BLOQUEANTE PARA PUBLICAR.
@@ -37,7 +40,7 @@ export const SITIO = {
    * sitio no recibe nada. Es el único dato de relleno que queda visible,
    * porque sin una dirección el formulario no tiene a dónde ir.
    */
-  email: "hola@fakename.com.ar",
+  email: "hola@telescajustel.com",
 
   /**
    * Teléfono de contacto. En null mientras no sea real: el bloque de contacto

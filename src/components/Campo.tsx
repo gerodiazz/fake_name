@@ -4,7 +4,7 @@
  * CAMPOS DE FORMULARIO
  *
  * Mismo criterio que las respuestas del diagnóstico: sin cajas. Un campo es
- * una etiqueta chica arriba y una línea abajo. El foco lo marca el anillo Klein
+ * una etiqueta chica arriba y una línea abajo. El foco lo marca el anillo acento
  * global, así que ningún campo apaga el outline.
  *
  * El texto de los inputs es de 16px porque abajo de eso iOS hace zoom al
@@ -263,7 +263,7 @@ export function CampoSelect({
         className={`${CONTROL} appearance-none bg-[length:10px] bg-[right_2px_center] bg-no-repeat pr-6`}
         style={{
           backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%2356544E' stroke-width='1'/%3E%3C/svg%3E\")",
+            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%2359595A' stroke-width='1'/%3E%3C/svg%3E\")",
         }}
       >
         {opciones.map((opcion) => (

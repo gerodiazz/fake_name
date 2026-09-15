@@ -33,13 +33,13 @@ export default function QueEsUnAgente() {
           cantidad de eslabones y no hace falta explicarla. */}
       <div className="grilla-expuesta grilla-expuesta-sm mt-10 grid grid-cols-1 hairline hairline-t hairline-b sm:grid-cols-3">
         {COMPARACION.map((columna, i) => {
-          // La tercera es la que estamos explicando: lleva el Klein.
+          // La tercera es la que estamos explicando: lleva el acento.
           const esAgente = i === COMPARACION.length - 1;
 
           return (
             <div key={columna.titulo} className="py-6 sm:px-5">
               <h4
-                className={`font-serif text-[21px] leading-tight ${esAgente ? "text-klein" : ""}`}
+                className={`font-serif text-[21px] leading-tight ${esAgente ? "text-acento" : ""}`}
               >
                 {columna.titulo}
               </h4>
@@ -51,7 +51,7 @@ export default function QueEsUnAgente() {
                 {columna.cadena.map((eslabon, j) => (
                   <li key={eslabon} className="flex items-center gap-1.5">
                     <span
-                      className={esAgente ? "chip chip-klein" : "chip chip-superficie"}
+                      className={esAgente ? "chip chip-acento" : "chip chip-superficie"}
                     >
                       {eslabon}
                     </span>

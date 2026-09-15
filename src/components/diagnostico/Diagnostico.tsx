@@ -9,7 +9,7 @@
  *   rubro → preguntas (de a una, o todas juntas) → resultado
  *
  * Coreografía al contestar que sí, medida desde el toque:
- *   0 ms    la línea Klein empieza a tachar la pregunta y el texto se apaga
+ *   0 ms    la línea del acento empieza a tachar la pregunta y el texto se apaga
  *   400 ms  termina el tachado y emerge la ficha del agente
  *   700 ms  entra la siguiente pregunta
  *
@@ -25,8 +25,9 @@ import ListaPreguntas from "@/components/diagnostico/ListaPreguntas";
 import PilaAgentes from "@/components/diagnostico/PilaAgentes";
 import BarraInferior from "@/components/diagnostico/BarraInferior";
 import Resultado from "@/components/diagnostico/Resultado";
-import { useBarrido } from "@/components/BarridoKlein";
+import { useBarrido } from "@/components/Barrido";
 import { useDiagnostico } from "@/lib/estado-diagnostico";
+import { SITIO } from "@/lib/sitio";
 import { retardo } from "@/lib/movimiento";
 import type { Pregunta } from "@/lib/diagnostico";
 
@@ -146,7 +147,7 @@ export default function Diagnostico() {
   /* ---- navegación ---- */
 
   /**
-   * Elegir el rubro dispara el momento firma: la cortina Klein sube, tapa
+   * Elegir el rubro dispara el momento firma: la cortina sube, tapa
    * todo, y cuando se va la primera pregunta ya está puesta. El visitante no
    * ve el reemplazo, ve el resultado.
    */
@@ -213,7 +214,9 @@ export default function Diagnostico() {
     <div>
       {/* Rubro elegido, siempre a la vista, con salida para cambiarlo. */}
       <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-        <p className="kicker kicker-tinta">{rubro.nombre}</p>
+        <p className="kicker kicker-tinta">
+          {SITIO.marcaCorta} · {rubro.nombre}
+        </p>
 
         <div className="flex items-center gap-5">
           {/* Atrás. Solo cuando hay a dónde volver, y nunca en el resultado:
@@ -265,7 +268,7 @@ export default function Diagnostico() {
               onChange={(e) => escribirTextoLibre(e.target.value)}
               rows={3}
               placeholder="Una descripción breve, como se contaría en una reunión."
-              // Sin focus:outline-none: el anillo Klein global es la única
+              // Sin focus:outline-none: el anillo de foco global es la única
               // señal de foco que tiene este campo, que no tiene caja.
               className="
                 mt-6 w-full max-w-[42ch] resize-none bg-transparent pb-2
@@ -279,7 +282,7 @@ export default function Diagnostico() {
                 onClick={terminar}
                 className="
                   inline-flex min-h-[44px] items-center font-serif text-[21px]
-                  leading-none text-klein underline decoration-[1.5px]
+                  leading-none text-acento underline decoration-[1.5px]
                   underline-offset-[7px]
                   transition-[opacity,transform] duration-100
                   active:opacity-55

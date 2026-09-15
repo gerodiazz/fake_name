@@ -48,7 +48,7 @@ export default function FragmentoProducto() {
 
       <div className="panel-cuerpo">
         {/* El mensaje, como llega. */}
-        <p className="bg-klein-tinte px-3 py-2.5 text-[13px] leading-relaxed text-tinta">
+        <p className="bg-acento-tinte px-3 py-2.5 text-[13px] leading-relaxed text-tinta">
           {ENTRADA.texto}
         </p>
 

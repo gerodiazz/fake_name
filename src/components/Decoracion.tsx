@@ -6,7 +6,7 @@
  * que no esté escrita en la página.
  *
  * Reglas que se respetan aquí:
- *   · Paleta cerrada: papel, superficie, tinta, tinta-2, línea, Klein, verde.
+ *   · Paleta cerrada: papel, superficie, tinta, tinta-2, línea y acento.
  *   · Contraste AA: cuando una pieza puede caer debajo de un texto, se recorta
  *     o se apaga en los anchos donde no hay margen libre (ver `.forma-*`, que
  *     solo existen de 1024px para arriba).
@@ -63,7 +63,7 @@ export function TextoVertical({ children }: { children: string }) {
    -------------------------------------------------------------------------- */
 
 /**
- * Cuarto de círculo o rectángulo en Klein sólido que entra por un borde de la
+ * Cuarto de círculo o rectángulo en el tinte del acento que entra por un borde de la
  * sección y sale del viewport. Nunca completa, nunca centrada.
  *
  * `variante` elige la geometría y la posición, definidas en globals.css. Solo
@@ -71,7 +71,7 @@ export function TextoVertical({ children }: { children: string }) {
  * 1024px para arriba: en anchos menores no hay margen libre y la forma caería
  * debajo del texto.
  */
-export function FormaKlein({
+export function Forma({
   variante,
 }: {
   variante: "hero" | "socios" | "faq";
@@ -80,11 +80,11 @@ export function FormaKlein({
 }
 
 /* --------------------------------------------------------------------------
-   Banda Klein a sangre completa
+   Banda a sangre completa
    -------------------------------------------------------------------------- */
 
 /**
- * Banda de Klein sólido de ancho de viewport, sin márgenes ni radio. Existen
+ * Banda de tinta sólida de ancho de viewport, sin márgenes ni radio. Existen
  * exactamente dos en el sitio: el resultado del diagnóstico (02) y el total de
  * la calculadora de referidos (04). Son los dos momentos en que el recorrido
  * aprieta; el resto del sitio respira.
@@ -95,7 +95,7 @@ export function FormaKlein({
  * Encima va el tramado de puntos en papel, con máscara lateral: se desvanece
  * hacia la izquierda y deja limpia la zona donde caen el número y su apoyo.
  */
-export function BandaKlein({
+export function Banda({
   children,
   className = "",
 }: {
@@ -103,7 +103,7 @@ export function BandaKlein({
   className?: string;
 }) {
   return (
-    <div className={`banda-klein ${className}`}>
+    <div className={`banda ${className}`}>
       <span className="banda-tramado" aria-hidden="true" />
       <div className="banda-contenido">{children}</div>
     </div>

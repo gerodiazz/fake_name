@@ -8,8 +8,7 @@
  *
  * El botón de compartir arma un mensaje de WhatsApp con el resultado y el
  * código de referido. El enlace incluido apunta a /d, una página que genera
- * su propia imagen de preview con el número grande, el rubro y el nombre de
- * fakename.
+ * su propia imagen de preview con el número grande, el rubro y la marca.
  */
 
 import { useState } from "react";

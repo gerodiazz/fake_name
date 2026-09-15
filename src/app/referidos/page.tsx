@@ -22,6 +22,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Seccion, { Contenedor } from "@/components/Seccion";
+import Marca from "@/components/marca/Marca";
 import TitularRevelado from "@/components/TitularRevelado";
 import PieDePagina from "@/components/PieDePagina";
 import Calculadora from "@/components/referidos/Calculadora";
@@ -75,14 +76,9 @@ export default function ProgramaDeReferidos() {
       <div className="hairline hairline-b">
         <Contenedor>
           <div className="flex h-12 items-center justify-between gap-6 sm:h-14">
-            {/* El alto completo de la barra, no el de la línea de texto: es
-                un blanco de 48px para el pulgar, no de 19. */}
-            <Link
-              href="/"
-              className="flex h-12 items-center font-serif text-[19px] leading-none sm:h-14"
-            >
-              {SITIO.nombre}
-            </Link>
+            <div className="flex h-12 items-center sm:h-14">
+              <Marca />
+            </div>
             <Link
               href="/"
               className="nav-enlace flex h-12 items-center sm:h-14"
@@ -109,7 +105,7 @@ export default function ProgramaDeReferidos() {
             <div className="mt-10">
               <a
                 href="#alta"
-                className="boton boton-klein"
+                className="boton boton-principal"
               >
                 Quiero referir
               </a>

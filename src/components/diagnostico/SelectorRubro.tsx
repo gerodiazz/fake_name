@@ -14,6 +14,7 @@
  */
 
 import { RUBROS } from "@/lib/diagnostico";
+import { SITIO } from "@/lib/sitio";
 
 type Props = {
   /** Se dispara con el id del rubro elegido. */
@@ -23,7 +24,12 @@ type Props = {
 export default function SelectorRubro({ onElegir }: Props) {
   return (
     <div>
-      <h3 className="titular text-[clamp(1.4rem,6vw,2.2rem)]">
+      {/* El rótulo de la herramienta. El diagnóstico es un producto de la
+          casa, no un formulario prestado, y dice de quién es. */}
+      <p className="kicker kicker-tinta">
+        {SITIO.marcaCorta} · Diagnóstico de procesos
+      </p>
+      <h3 className="titular mt-5 text-[clamp(1.4rem,6vw,2.2rem)]">
         ¿A qué se dedica la empresa?
       </h3>
       <p className="mt-3 max-w-[48ch] text-[15px] text-tinta-2">
@@ -50,7 +56,7 @@ export default function SelectorRubro({ onElegir }: Props) {
                 group flex min-h-[76px] w-full items-center justify-between
                 gap-3 px-4 py-4 text-left text-[15px] leading-snug text-tinta
                 transition-colors duration-150
-                hover:bg-klein-tinte active:bg-klein-tinte
+                hover:bg-acento-tinte active:bg-acento-tinte
                 sm:min-h-[88px] sm:px-6 sm:text-[17px]
               "
             >
@@ -58,7 +64,7 @@ export default function SelectorRubro({ onElegir }: Props) {
               {/* Punta de flecha discreta: aparece al enfocar o apuntar. */}
               <span
                 aria-hidden="true"
-                className="text-klein opacity-0 transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100"
+                className="text-acento opacity-0 transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100"
               >
                 →
               </span>

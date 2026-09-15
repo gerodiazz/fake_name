@@ -4,7 +4,7 @@
  * UNA PREGUNTA DEL RECORRIDO.
  *
  * Sin botones convencionales: las dos respuestas son texto.
- *   · el sí  → serif 21px, Klein, subrayado de 1.5px. Es el evento.
+ *   · el sí  → serif 21px, en el acento, subrayado de 1.5px. Es el evento.
  *   · el no  → sans 13px, minúscula, tinta secundaria. Es pasar.
  *
  * La asimetría es deliberada. Al no haber caja ni borde, el estado :active
@@ -66,7 +66,7 @@ export default function PreguntaUna({
           disabled={apagada}
           className="
             inline-flex min-h-[52px] items-center pr-4 font-serif
-            text-[22px] leading-none text-klein underline decoration-[1.5px]
+            text-[22px] leading-none text-acento underline decoration-[1.5px]
             underline-offset-[7px] sm:text-[24px]
             transition-[opacity,transform] duration-100
             active:opacity-55

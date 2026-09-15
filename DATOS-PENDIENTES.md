@@ -10,12 +10,15 @@ la página, aunque falten datos.
 
 ---
 
+> La marca es **TELESCA JUSTEL**, con monograma **TJ**. El wordmark, el
+> monograma y el favicon viven en `src/components/marca/Marca.tsx` y
+> `src/app/icon.svg`; los datos, en `src/lib/sitio.ts`.
+
 ## Bloqueante para publicar
 
 | Qué falta | Dónde se carga | Qué pasa mientras tanto |
 |---|---|---|
-| **Nombre real de la marca** | `src/lib/sitio.ts:18` | Aparece "fakename" en la barra, el hero, el pie, los metadatos y la imagen de Open Graph. Se cambia en un solo lugar. |
-| **Email de contacto** | `src/lib/sitio.ts:40` | **Es el único dato de relleno que sigue a la vista**, porque es a donde el formulario manda el mensaje. Con `hola@fakename.com.ar` el sitio no recibe nada. |
+| **Dominio y email reales** | `src/lib/sitio.ts` (`url` y `email`) | La marca ya es Telesca Justel, pero `telescajustel.com` es un supuesto: hay que registrar el dominio real y crear la casilla. **Es el único dato de relleno que sigue a la vista**, porque es a donde el formulario manda el mensaje: hasta que exista, el sitio no recibe nada. |
 | **Nombres, trayectoria y fotos de los socios** | `src/lib/sitio.ts:91` | La sección "Quiénes estamos detrás" muestra solo lo que sí es cierto: que son dos y que el desarrollo no se terceriza. Al cargar los dos objetos aparecen las fichas y se completan los `founders` de los datos estructurados. Las fotos van en `/public/socios/`. |
 
 ## No bloquea, pero el sitio dice menos de lo que podría

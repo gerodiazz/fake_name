@@ -74,7 +74,7 @@ export default function ListaPreguntas({
                   aria-pressed={dijoQueSi}
                   className={`
                     inline-flex min-h-[44px] items-center font-serif text-[21px]
-                    leading-none text-klein underline decoration-[1.5px]
+                    leading-none text-acento underline decoration-[1.5px]
                     underline-offset-[7px]
                     transition-[opacity,transform] duration-100
                     active:opacity-55
@@ -117,7 +117,7 @@ export default function ListaPreguntas({
           onClick={onTerminar}
           className="
             inline-flex min-h-[44px] items-center font-serif text-[21px]
-            leading-none text-klein underline decoration-[1.5px]
+            leading-none text-acento underline decoration-[1.5px]
             underline-offset-[7px]
             transition-[opacity,transform] duration-100
             active:opacity-55

@@ -1,21 +1,40 @@
 @import "tailwindcss";
 
 /* ==========================================================================
-   SISTEMA VISUAL — fakename
+   SISTEMA VISUAL — TELESCA JUSTEL
    Un solo lugar define paleta, tipografía y las tres o cuatro animaciones
    que el sitio se permite. Todo lo demás es tinta sobre papel.
    ========================================================================== */
 
 @theme {
-  /* Paleta cerrada. No se agregan colores fuera de esta lista. */
-  --color-papel: #f2f0eb; /* fondo general */
-  --color-superficie: #faf9f6; /* bloques que se despegan del fondo */
-  --color-tinta: #1a1a18; /* texto principal */
-  --color-tinta-2: #56544e; /* texto secundario, siempre AA sobre papel */
-  --color-linea: #dcd9d1; /* hairlines de 0.5px */
-  --color-klein: #002fa7; /* acento: tachado, subrayado del sí, CTA */
-  --color-klein-tinte: #e4e8f5; /* tinte del Klein, solo para estados */
-  --color-verde: #1d5c4a; /* SOLO horas recuperadas y dinero ganado */
+  /* --------------------------------------------------------------------
+     PALETA — seis valores y ni uno más.
+
+     Cinco son neutros: papel, superficie, tinta, tinta secundaria y línea.
+     El sexto es el ÚNICO tono cromático del sitio, y aparece contadas veces.
+
+     El criterio es el de la marca: premium no es agregar, es sacar todo lo
+     que sobra y ejecutar bien lo que queda. Un sitio de seis colores donde
+     uno solo tiene color se lee caro; uno de doce, no.
+
+     Dónde aparece el acento, y en ningún otro lado:
+       · el número del diagnóstico sobre papel
+       · el "sí" del recorrido y la línea que tacha la pregunta
+       · la barra de progreso
+       · los estados que esperan a una persona
+       · la marca activa en el índice
+
+     El CTA NO usa el acento: usa tinta. Un botón negro sobre papel es más
+     rotundo que cualquier color, y deja el acento libre para señalar
+     información en vez de competir con ella.
+     -------------------------------------------------------------------- */
+  --color-papel: #f3f2ef; /* fondo general */
+  --color-superficie: #fafaf8; /* bloques que se despegan del fondo */
+  --color-tinta: #121213; /* texto principal y acciones */
+  --color-tinta-2: #59595a; /* texto secundario, 6.2:1 sobre papel */
+  --color-linea: #dcdbd6; /* hairlines de 0.5px */
+  --color-acento: #6f5930; /* bronce apagado, 5.9:1 sobre papel */
+  --color-acento-tinte: #efe9dc; /* el mismo bronce, al 8% */
 
   /* Tipografías inyectadas por next/font desde el layout. */
   --font-sans: var(--fuente-sans), ui-sans-serif, system-ui, sans-serif;
@@ -45,7 +64,7 @@ body {
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  /* Las bandas Klein miden 100vw, y 100vw incluye el ancho de la barra de
+  /* Las bandas a sangre miden 100vw, y 100vw incluye el ancho de la barra de
      scroll: sin esto aparecería un scroll horizontal de ~15px en Windows.
      `clip` y no `hidden` a propósito: clip no crea un contenedor de scroll, así
      que la barra superior sigue siendo sticky y el barrido sigue siendo fixed. */
@@ -53,14 +72,14 @@ body {
 }
 
 ::selection {
-  background-color: var(--color-klein-tinte);
+  background-color: var(--color-acento-tinte);
   color: var(--color-tinta);
 }
 
-/* Foco visible en Klein, uniforme en todo el sitio. Al no haber bordes ni
-   cajas, el anillo de foco es la única señal para quien navega por teclado. */
+/* Foco visible, uniforme en todo el sitio. Al no haber bordes ni cajas, el
+   anillo de foco es la única señal para quien navega por teclado. */
 :focus-visible {
-  outline: 2px solid var(--color-klein);
+  outline: 2px solid var(--color-tinta);
   outline-offset: 4px;
   border-radius: 1px;
 }
@@ -69,25 +88,28 @@ body {
    Utilidades tipográficas propias
    -------------------------------------------------------------------------- */
 
-/* Kicker de sección: 11px, mayúsculas, tracking ancho, Klein. Tipo expediente. */
+/* Kicker de sección: 11px, mayúsculas, tracking ancho. Tipo expediente.
+   Va en tinta plena: a este cuerpo, el negro es una etiqueta nítida y el
+   acento queda libre para señalar información. */
 .kicker {
   font-family: var(--font-sans);
   font-size: 11px;
   line-height: 1.2;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--color-klein);
+  color: var(--color-tinta);
 }
 
-/* Variante apagada del kicker, para cuando el Klein ya se gastó en pantalla. */
+/* Variante secundaria del kicker, para etiquetas de apoyo. */
 .kicker-tinta {
   color: var(--color-tinta-2);
 }
 
-/* Titular editorial. Serif, peso regular, nunca bold. */
+/* Titular editorial. Serif en peso liviano, nunca bold: a los cuerpos de
+   display de esta página, 300 se lee refinado y 400 se lee pesado. */
 .titular {
   font-family: var(--font-serif);
-  font-weight: 400;
+  font-weight: 300;
   letter-spacing: -0.015em;
   line-height: 1.06;
   text-wrap: balance;
@@ -98,7 +120,7 @@ body {
    clase. */
 .numero-gigante {
   font-family: var(--font-serif);
-  font-weight: 400;
+  font-weight: 300;
   font-size: clamp(4.25rem, 23vw, 10.5rem);
   line-height: 0.82;
   letter-spacing: -0.035em;
@@ -132,8 +154,8 @@ body {
   display: inline;
   background-image: linear-gradient(
     to right,
-    var(--color-klein),
-    var(--color-klein)
+    var(--color-acento),
+    var(--color-acento)
   );
   background-repeat: no-repeat;
   background-position: 0 0.56em;
@@ -221,10 +243,10 @@ body {
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   MOMENTO FIRMA — el barrido Klein
+   MOMENTO FIRMA — el barrido
 
-   Un panel Klein sólido sube, tapa la pantalla entera, y al salir deja el
-   estado nuevo ya puesto. Es el único lugar del sitio donde el Klein ocupa
+   Un panel de tinta sólida sube, tapa la pantalla entera, y al salir deja el
+   estado nuevo ya puesto. Es el único lugar del sitio donde la tinta ocupa
    todo, y por eso pega.
 
    La duración la fija el JS con --barrido-ms (1100ms al elegir rubro, 700ms
@@ -236,7 +258,7 @@ body {
   position: fixed;
   inset: 0;
   z-index: 90;
-  background-color: var(--color-klein);
+  background-color: var(--color-tinta);
   transform: translateY(100%);
   /* Fuera de la capa de accesibilidad: es una cortina, no contenido. */
   pointer-events: none;
@@ -278,7 +300,7 @@ body {
   position: relative;
   overflow: hidden;
   vertical-align: bottom;
-  color: var(--color-klein);
+  color: var(--color-acento);
   /* El alto de línea del titular más aire para las colas de las letras. */
   height: 1.06em;
   /* La caja crece con la palabra, sin tirones. */
@@ -606,7 +628,7 @@ label {
 
    El input nativo queda invisible: track y marcas se dibujan aparte para poder
    respetar los hairlines. Del input solo se ve el thumb, que es una caja de
-   44px con un punto Klein pintado en el centro por un gradiente radial. Así el
+   44px con un punto de tinta pintado en el centro por un gradiente radial. Así el
    área táctil es real sin que el punto se vea gigante.
    -------------------------------------------------------------------------- */
 
@@ -632,7 +654,7 @@ label {
   border-radius: 50%;
   background: radial-gradient(
     circle at center,
-    var(--color-klein) 0 7px,
+    var(--color-tinta) 0 7px,
     transparent 7.5px
   );
   cursor: grab;
@@ -642,8 +664,8 @@ label {
   /* Al arrastrar, el punto crece: es el único feedback táctil que tiene. */
   background: radial-gradient(
     circle at center,
-    var(--color-klein) 0 9px,
-    var(--color-klein-tinte) 9px 14px,
+    var(--color-tinta) 0 9px,
+    var(--color-acento-tinte) 9px 14px,
     transparent 14.5px
   );
 }
@@ -659,7 +681,7 @@ label {
   border-radius: 50%;
   background: radial-gradient(
     circle at center,
-    var(--color-klein) 0 7px,
+    var(--color-tinta) 0 7px,
     transparent 7.5px
   );
   cursor: grab;
@@ -667,8 +689,8 @@ label {
 .slider-referidos:active::-moz-range-thumb {
   background: radial-gradient(
     circle at center,
-    var(--color-klein) 0 9px,
-    var(--color-klein-tinte) 9px 14px,
+    var(--color-tinta) 0 9px,
+    var(--color-acento-tinte) 9px 14px,
     transparent 14.5px
   );
 }
@@ -681,7 +703,7 @@ label {
 
    El criterio de contraste es uno solo: si un recurso puede caer debajo de un
    texto, se recorta o se apaga en los anchos donde no hay margen libre. Por eso
-   las formas Klein y las marcas de imprenta solo existen de 1024px para arriba.
+   las formas y las marcas de imprenta solo existen de 1024px para arriba.
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -694,7 +716,7 @@ label {
 .grano {
   position: fixed;
   inset: 0;
-  /* Por encima del barrido Klein (z-90): el grano cubre el sitio entero,
+  /* Por encima del barrido (z-90): el grano cubre el sitio entero,
      incluida la cortina. */
   z-index: 100;
   opacity: 0.3;
@@ -705,7 +727,7 @@ label {
 }
 
 /* --------------------------------------------------------------------------
-   2 · Bandas Klein a sangre completa (y 5 · su tramado de puntos)
+   2 · Bandas a sangre completa (y 5 · su tramado de puntos)
 
    Dos en todo el sitio: el resultado del diagnóstico y el total de la
    calculadora. Ancho de viewport, sin márgenes laterales ni radio.
@@ -716,18 +738,18 @@ label {
    cuando ocupe todo el viewport.
    -------------------------------------------------------------------------- */
 
-.banda-klein {
+.banda {
   position: relative;
   width: 100vw;
   margin-inline: calc(50% - 50vw);
-  background-color: var(--color-klein);
+  background-color: var(--color-tinta);
   /* El recorte del tramado y de cualquier desborde del número. */
   overflow: clip;
   padding-block: 3.5rem;
 }
 
 @media (min-width: 640px) {
-  .banda-klein {
+  .banda {
     padding-block: 4.5rem;
   }
 }
@@ -777,8 +799,8 @@ label {
   -webkit-user-select: none;
 }
 
-/* El número gigante sobre la banda: papel sobre Klein. El apoyo, en el tinte
-   Klein claro, que sobre el azul sigue leyéndose de sobra. */
+/* El número gigante sobre la banda: papel sobre tinta. El apoyo, en el tinte
+   del acento, que sobre el negro sigue leyéndose de sobra. */
 .numero-papel {
   color: var(--color-papel);
 }
@@ -816,7 +838,7 @@ label {
 /* --------------------------------------------------------------------------
    4 · Formas geométricas recortadas
 
-   Cuartos de círculo y rectángulos en Klein sólido que entran por un borde y
+   Cuartos de círculo y rectángulos en el tinte del acento que entran por un borde y
    salen del viewport. Geometría recta: ningún borde orgánico, ninguna sombra.
    Una por sección y solo en tres secciones.
 
@@ -829,7 +851,7 @@ label {
   display: none;
   position: absolute;
   z-index: 0;
-  background-color: var(--color-klein);
+  background-color: var(--color-acento-tinte);
   pointer-events: none;
   user-select: none;
   -webkit-user-select: none;
@@ -930,7 +952,7 @@ label {
    7 · Diagrama de proceso de la sección 03
 
    Las cuatro etapas dibujadas con las líneas del sistema: eje de 0.5px en color
-   línea, un nodo por etapa y el paso activo en Klein. El SVG escala de forma
+   línea, un nodo por etapa y el paso activo en tinta. El SVG escala de forma
    uniforme, así que los nodos caen siempre en el centro de cada columna de la
    grilla de texto de abajo.
 
@@ -953,9 +975,9 @@ label {
   stroke-width: 0.5;
 }
 
-/* El paso activo: relleno Klein, sin contorno. */
+/* El paso activo: relleno de tinta, sin contorno. */
 .diagrama-nodo-activo {
-  fill: var(--color-klein);
+  fill: var(--color-tinta);
   stroke: none;
 }
 
@@ -1022,7 +1044,7 @@ label {
    Barra superior — índice del expediente
 
    Los enlaces son kickers: 11px, mayúsculas, tracking ancho. En reposo van en
-   tinta secundaria y la sección que se está leyendo es la única en Klein. Los
+   tinta secundaria y la sección que se está leyendo es la única en tinta. Los
    estados se escriben acá y no con utilidades de Tailwind porque `.kicker` y
    compañía viven fuera de las capas: una utilidad de color no las pisaría.
    -------------------------------------------------------------------------- */
@@ -1056,7 +1078,7 @@ label {
 /* El único indicador de sección activa: el color. Sin subrayados ni cajas. */
 .nav-enlace[data-activa="true"],
 .nav-fila[data-activa="true"] {
-  color: var(--color-klein);
+  color: var(--color-tinta);
 }
 
 /* El número del expediente acompaña al nombre, un paso más atrás. */
@@ -1122,7 +1144,7 @@ label {
      estado transformado (la ficha queda rotada, la cortina queda arriba). Por
      eso cada uno se neutraliza a mano. */
 
-  /* La cortina Klein no se muestra nunca: el cambio de estado es directo. */
+  /* La cortina no se muestra nunca: el cambio de estado es directo. */
   .barrido,
   .barrido[data-corriendo="true"] {
     animation: none !important;
@@ -1238,9 +1260,9 @@ label {
      objeto sobre una mesa. Los paneles y los botones no llevan sombra: se
      separan por hairline y por color de superficie.
 
-   · EL KLEIN ES ESCASO. Un solo botón Klein por pantalla. Cuando hay dos
-     acciones juntas, la segunda es lineal. Si el Klein aparece tres veces en
-     un viewport, deja de dirigir la atención y pasa a ser decoración.
+   · EL ACENTO ES ESCASO. Un solo botón principal por pantalla. Cuando hay
+     dos acciones juntas, la segunda es lineal. El acento no se usa en
+     botones: señala información, no compite con ella.
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -1267,24 +1289,18 @@ label {
   transition-timing-function: ease-out;
 }
 
-/* Primario: la acción que el sitio quiere que pase. Uno por pantalla. */
-.boton-klein {
-  background-color: var(--color-klein);
-  color: var(--color-superficie);
-}
-.boton-klein:hover {
-  /* Se oscurece en vez de transparentarse: sobre el papel, opacity deja ver
-     el grano a través del botón y lo ensucia. */
-  background-color: color-mix(in srgb, var(--color-klein) 88%, black);
-}
-
-/* Secundario: misma jerarquía de acción, menos peso visual. */
-.boton-tinta {
+/* Primario: la acción que el sitio quiere que pase. Uno por pantalla.
+   Va en tinta y no en el color de acento: sobre papel, un botón negro es más
+   rotundo que cualquier color, y deja el acento libre para señalar
+   información en vez de competir con ella. */
+.boton-principal {
   background-color: var(--color-tinta);
-  color: var(--color-superficie);
+  color: var(--color-papel);
 }
-.boton-tinta:hover {
-  background-color: color-mix(in srgb, var(--color-tinta) 85%, black);
+.boton-principal:hover {
+  /* Se aclara en vez de transparentarse: sobre el papel, opacity deja ver el
+     grano a través del botón y lo ensucia. */
+  background-color: #2b2b2d;
 }
 
 /* Terciario: acompaña a un primario. Solo línea. */
@@ -1339,7 +1355,7 @@ label {
    Campo — estados de validación
 
    El sitio delegaba toda la validación al navegador: sin foco visible propio,
-   sin error visible y sin confirmación. El anillo Klein global sigue siendo la
+   sin error visible y sin confirmación. El anillo de foco global sigue siendo la
    señal de foco; acá se agregan las dos que faltaban.
    -------------------------------------------------------------------------- */
 
@@ -1352,7 +1368,7 @@ label {
 /* La línea del campo se marca al enfocar: el anillo está, pero la línea es lo
    que el ojo sigue mientras se escribe. */
 .campo:focus {
-  border-bottom-color: var(--color-klein);
+  border-bottom-color: var(--color-tinta);
 }
 
 /* Error. El rojo es el único color fuera de la paleta cerrada y por eso vive
@@ -1390,10 +1406,10 @@ label {
   background-color: var(--color-superficie);
 }
 
-/* El chip del software: tinte Klein, sin borde. */
-.chip-klein {
-  color: var(--color-klein);
-  background-color: var(--color-klein-tinte);
+/* El chip del software: tinte del acento, sin borde. */
+.chip-acento {
+  color: var(--color-acento);
+  background-color: var(--color-acento-tinte);
   border-color: transparent;
 }
 
@@ -1432,8 +1448,8 @@ label {
   padding: 0.875rem;
 }
 
-/* El punto de estado de la barra del panel. Verde cuando terminó, Klein
-   mientras corre, tinta-2 en reposo. */
+/* El punto de estado del panel. Tinta mientras corre, tinta-2 cuando terminó,
+   acento cuando espera a una persona: el único estado que pide algo. */
 .panel-punto {
   width: 6px;
   height: 6px;
@@ -1442,15 +1458,15 @@ label {
   flex: none;
 }
 .panel-punto[data-estado="corriendo"] {
-  background-color: var(--color-klein);
+  background-color: var(--color-tinta);
 }
 .panel-punto[data-estado="listo"] {
-  background-color: var(--color-verde);
+  background-color: var(--color-tinta-2);
 }
 .panel-punto[data-estado="atencion"] {
-  /* El paso que espera a una persona. Tinta plena: no es un error, es una
-     parada prevista. */
-  background-color: var(--color-tinta);
+  /* El paso que espera a una persona. No es un error: es una parada prevista,
+     y es lo único de la pieza que lleva color. */
+  background-color: var(--color-acento);
 }
 
 /* --------------------------------------------------------------------------
@@ -1497,7 +1513,7 @@ label {
   position: absolute;
   inset: 0 auto 0 0;
   width: 0.5px;
-  background-color: var(--color-klein);
+  background-color: var(--color-tinta);
   transform-origin: top center;
   transform: scaleY(var(--avance, 0));
   transition: transform 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -1517,10 +1533,10 @@ label {
   border: 0.5px solid var(--color-linea);
 }
 .traza-etapa[data-visible="true"] .traza-punto {
-  background-color: var(--color-klein);
-  border-color: var(--color-klein);
+  background-color: var(--color-tinta);
+  border-color: var(--color-acento);
 }
-/* La etapa que espera a una persona no se pinta Klein: se deja hueca y en
+/* La etapa que espera a una persona no se pinta llena: se deja hueca y en
    tinta. Es una parada, no un paso cumplido. */
 .traza-etapa[data-intervencion="true"][data-visible="true"] .traza-punto {
   background-color: var(--color-papel);
@@ -1540,13 +1556,13 @@ label {
   font-variant-numeric: tabular-nums;
 }
 .traza-estado[data-tono="corriendo"] {
-  color: var(--color-klein);
+  color: var(--color-tinta);
 }
 .traza-estado[data-tono="listo"] {
-  color: var(--color-verde);
+  color: var(--color-tinta-2);
 }
 .traza-estado[data-tono="atencion"] {
-  color: var(--color-tinta);
+  color: var(--color-acento);
 }
 
 /* --------------------------------------------------------------------------
@@ -1568,7 +1584,7 @@ label {
   position: absolute;
   inset: 0 auto 0 0;
   width: 100%;
-  background-color: var(--color-klein);
+  background-color: var(--color-acento);
   transform-origin: left center;
   transform: scaleX(var(--avance, 0));
   transition: transform 420ms cubic-bezier(0.2, 0.8, 0.2, 1);

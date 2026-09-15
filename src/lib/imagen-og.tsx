@@ -2,8 +2,8 @@
  * IMÁGENES DE OPEN GRAPH
  *
  * Se dibujan con next/og (Satori), no con una imagen estática, porque la del
- * diagnóstico compartido tiene que llevar el número, el rubro y el nombre de
- * fakename de cada visitante.
+ * diagnóstico compartido tiene que llevar el número y el rubro de cada
+ * visitante, más la marca.
  *
  * Satori no entiende clases de Tailwind ni woff2: por eso todo va con estilos
  * inline y las dos tipografías se leen en TTF desde src/fuentes.
@@ -17,12 +17,11 @@ import { join } from "node:path";
 
 /** Misma paleta del sitio, repetida acá porque Satori no lee el CSS. */
 const PALETA = {
-  papel: "#F2F0EB",
-  tinta: "#1A1A18",
-  tinta2: "#56544E",
-  linea: "#DCD9D1",
-  klein: "#002FA7",
-  verde: "#1D5C4A",
+  papel: "#F3F2EF",
+  tinta: "#121213",
+  tinta2: "#59595A",
+  linea: "#DCDBD6",
+  acento: "#6F5930",
 };
 
 export const TAMANIO_OG = { width: 1200, height: 630 };
@@ -39,13 +38,13 @@ export const TIPO_OG = "image/png";
 export async function cargarFuentes() {
   const carpeta = join(process.cwd(), "src", "fuentes");
   const [serif, sans] = await Promise.all([
-    readFile(join(carpeta, "InstrumentSerif-Regular.ttf")),
+    readFile(join(carpeta, "Newsreader-Regular.ttf")),
     readFile(join(carpeta, "Inter-Regular.woff")),
   ]);
 
   return [
     {
-      name: "Instrument Serif",
+      name: "Newsreader",
       data: serif,
       style: "normal" as const,
       weight: 400 as const,
@@ -60,7 +59,7 @@ export async function cargarFuentes() {
 }
 
 type Props = {
-  /** Línea chica de arriba, en Klein. */
+  /** Línea chica de arriba, en acento. */
   kicker: string;
   /** El número grande, ya formateado. Vacío para la tarjeta genérica. */
   numero?: string;
@@ -74,8 +73,58 @@ type Props = {
 
 /**
  * La tarjeta. Misma gramática que el sitio: papel, hairlines, serif editorial
- * y el verde reservado para el número.
+ * y el acento reservado para el número.
+ *
+ * Arriba a la derecha va el monograma TJ, dibujado con divs porque Satori no
+ * renderiza SVG con paths: la barra y el asta son dos rectángulos, y el gancho
+ * de la J es un borde con radio en una sola esquina. Es la misma geometría del
+ * monograma de la web.
  */
+function MonogramaOG() {
+  return (
+    <div style={{ display: "flex", position: "relative", width: 56, height: 56 }}>
+      {/* La barra compartida. */}
+      <div
+        style={{
+          position: "absolute",
+          left: 4,
+          top: 12,
+          width: 48,
+          height: 5,
+          backgroundColor: PALETA.tinta,
+        }}
+      />
+      {/* El asta de la T. */}
+      <div
+        style={{
+          position: "absolute",
+          left: 15,
+          top: 12,
+          width: 5,
+          height: 32,
+          backgroundColor: PALETA.tinta,
+        }}
+      />
+      {/* El asta de la J y su gancho.
+          La curva es la esquina donde se encuentran el borde derecho —el
+          asta— y el borde inferior —el gancho—, o sea la de abajo a la
+          derecha. Redondear la de abajo a la izquierda, que fue el primer
+          intento, dibuja una L al revés y el monograma se lee "TT". */}
+      <div
+        style={{
+          position: "absolute",
+          left: 22,
+          top: 12,
+          width: 20,
+          height: 30,
+          borderRight: `5px solid ${PALETA.tinta}`,
+          borderBottom: `5px solid ${PALETA.tinta}`,
+          borderBottomRightRadius: 15,
+        }}
+      />
+    </div>
+  );
+}
 export function TarjetaOG({ kicker, numero, epigrafe, titular, pie }: Props) {
   return (
     <div
@@ -90,18 +139,25 @@ export function TarjetaOG({ kicker, numero, epigrafe, titular, pie }: Props) {
         fontFamily: "Inter",
       }}
     >
-      {/* Kicker, con la misma caja alta y el mismo tracking del sitio. */}
-      <div style={{ display: "flex" }}>
+      {/* Kicker a la izquierda, monograma a la derecha. */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-start",
+        }}
+      >
         <div
           style={{
             fontSize: 22,
             letterSpacing: "0.14em",
             textTransform: "uppercase",
-            color: PALETA.klein,
+            color: PALETA.tinta,
           }}
         >
           {kicker}
         </div>
+        <MonogramaOG />
       </div>
 
       {/* Cuerpo: o el número gigante, o un titular serif. */}
@@ -109,11 +165,11 @@ export function TarjetaOG({ kicker, numero, epigrafe, titular, pie }: Props) {
         {numero ? (
           <div
             style={{
-              fontFamily: "Instrument Serif",
+              fontFamily: "Newsreader",
               fontSize: 210,
               lineHeight: 0.85,
               letterSpacing: "-0.035em",
-              color: PALETA.verde,
+              color: PALETA.acento,
             }}
           >
             {numero}
@@ -121,7 +177,7 @@ export function TarjetaOG({ kicker, numero, epigrafe, titular, pie }: Props) {
         ) : (
           <div
             style={{
-              fontFamily: "Instrument Serif",
+              fontFamily: "Newsreader",
               fontSize: 82,
               lineHeight: 1.05,
               letterSpacing: "-0.015em",
@@ -136,7 +192,7 @@ export function TarjetaOG({ kicker, numero, epigrafe, titular, pie }: Props) {
         <div
           style={{
             marginTop: 28,
-            fontFamily: "Instrument Serif",
+            fontFamily: "Newsreader",
             fontSize: 38,
             color: PALETA.tinta,
           }}
@@ -156,8 +212,15 @@ export function TarjetaOG({ kicker, numero, epigrafe, titular, pie }: Props) {
         }}
       >
         <div style={{ fontSize: 24, color: PALETA.tinta2 }}>{pie}</div>
-        <div style={{ fontSize: 24, color: PALETA.tinta2 }}>
-          Alcance y plazo por escrito
+        <div
+          style={{
+            fontSize: 22,
+            letterSpacing: "0.2em",
+            textTransform: "uppercase",
+            color: PALETA.tinta2,
+          }}
+        >
+          Telesca Justel
         </div>
       </div>
     </div>

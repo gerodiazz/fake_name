@@ -34,7 +34,7 @@ type Props = {
   /** Etiqueta leída por lectores de pantalla en lugar del número animado. */
   etiqueta: string;
   /**
-   * Color del número. En papel cuando el número vive sobre una banda Klein a
+   * Color del número. En papel cuando el número vive sobre una banda acento a
    * sangre completa; en verde cuando va sobre el papel del sitio.
    */
   tono?: "verde" | "papel";
@@ -81,7 +81,7 @@ export default function NumeroGigante({
       <span
         aria-hidden="true"
         className={`numero-gigante block ${
-          tono === "papel" ? "numero-papel" : "text-verde"
+          tono === "papel" ? "numero-papel" : "text-acento"
         } ${saltando ? "anim-saltar" : ""}`}
         style={{
           ["--odo-alto" as string]: ALTO_DIGITO,

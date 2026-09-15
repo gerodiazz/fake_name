@@ -26,7 +26,7 @@ export default function NoEncontrada() {
             Esta página no existe.
           </h1>
 
-          <a href="/" className="boton boton-klein mt-8">
+          <a href="/" className="boton boton-principal mt-8">
             Ir al inicio
           </a>
         </Contenedor>

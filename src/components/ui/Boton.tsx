@@ -12,15 +12,15 @@
  * Los estilos están en globals.css, en el bloque SISTEMA DE COMPONENTES, junto
  * al resto de los componentes y sus estados.
  *
- * JERARQUÍA — el Klein es escaso: un botón Klein por pantalla. Cuando hay dos
- * acciones juntas, la segunda es `lineal`. El `tinta` es para acciones de la
- * misma importancia que no compiten con el CTA principal del sitio.
+ * JERARQUÍA — un botón principal por pantalla. Cuando hay dos acciones juntas,
+ * la segunda es `lineal`, que es la misma acción con menos peso visual. El
+ * `texto` es para salidas menores: rehacer, volver, cambiar de rubro.
  */
 
 import Link from "next/link";
 import type { ComponentProps, ReactNode } from "react";
 
-type Tono = "klein" | "tinta" | "lineal" | "texto";
+type Tono = "principal" | "lineal" | "texto";
 
 type Comunes = {
   children: ReactNode;
@@ -49,7 +49,7 @@ function clases(tono: Tono, chico: boolean, extra: string): string {
 }
 
 export default function Boton(props: Props) {
-  const { children, tono = "klein", chico = false, className = "" } = props;
+  const { children, tono = "principal", chico = false, className = "" } = props;
   const clase = clases(tono, chico, className);
 
   if (props.href !== undefined) {

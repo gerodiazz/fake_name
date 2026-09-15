@@ -3,7 +3,7 @@
  *
  * Es la que arma el enganche de referidos: cuando alguien manda su resultado
  * por WhatsApp, esto es lo que se ve en la burbuja del mensaje. Lleva el
- * número grande, el rubro y el nombre de fakename.
+ * número grande, el rubro y la marca.
  *
  * Parámetros: ?h=horas&r=idDeRubro&p=procesos
  */

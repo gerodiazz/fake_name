@@ -9,7 +9,7 @@
  * visual entra después de los botones, para que en un teléfono la primera
  * pantalla siga siendo titular + acción.
  *
- * El cuarto de círculo Klein que entraba por el borde derecho se fue: ese era
+ * El cuarto de círculo que entraba por el borde derecho se fue: ese era
  * el lugar del fragmento de producto. Cambiar un adorno por un pedazo de la
  * cosa que vendemos es exactamente el criterio del sitio, y además el hero
  * pasa a anticipar la sección 02 en vez de solo anunciarla.
@@ -52,9 +52,16 @@ export default function Hero({ numero }: { numero: string }) {
               Desarrollo de software · automatización de procesos para empresas
             </p>
 
-            <h1 className="titular mt-7 max-w-[15ch] text-[clamp(2.25rem,9.5vw,4.5rem)]">
+            {/* La coma va pegada a la palabra que rota, dentro del mismo
+                nowrap: la máscara es inline-block y de ancho variable, así que
+                sin esto la coma se cae sola al renglón siguiente cuando entra
+                una palabra larga. */}
+            <h1 className="titular mt-7 max-w-[16ch] text-[clamp(2.25rem,9.5vw,4.5rem)]">
               Procesos que hoy hace{" "}
-              <PalabraCinetica palabras={QUIEN_LO_HACE} />, hechos por software.
+              <span className="whitespace-nowrap">
+                <PalabraCinetica palabras={QUIEN_LO_HACE} />,
+              </span>{" "}
+              hechos por software.
             </h1>
 
             <p className="mt-8 max-w-[46ch] text-[16px] leading-relaxed text-tinta-2 sm:text-[17px]">
@@ -63,7 +70,7 @@ export default function Hero({ numero }: { numero: string }) {
               encarga de ese trabajo.
             </p>
 
-            {/* Las dos salidas del hero. El Klein es para la principal. */}
+            {/* Las dos salidas del hero. La tinta es para la principal. */}
             <div className="mt-9 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:gap-4">
               <Boton href="#diagnostico">Analizar mi proceso</Boton>
               <Boton href="#como-funciona" tono="lineal">

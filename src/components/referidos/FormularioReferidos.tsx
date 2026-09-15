@@ -77,9 +77,9 @@ export default function FormularioReferidos() {
         />
       </div>
 
-      {/* Botón en tinta, no en Klein: el Klein está reservado para agendar el
+      {/* Botón en tinta, no en acento: el acento está reservado para agendar el
           diagnóstico, que es el CTA principal del sitio. */}
-      <button type="submit" className="boton boton-tinta mt-9">
+      <button type="submit" className="boton boton-principal mt-9">
         Quiero referir
       </button>
 

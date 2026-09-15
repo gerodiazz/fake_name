@@ -41,7 +41,7 @@ export default function BarraInferior({ agentes }: Props) {
               que se marca un proceso, ruedan solo los dígitos que cambian. */}
           <span
             aria-hidden="true"
-            className="font-serif text-[21px] leading-none text-verde"
+            className="font-serif text-[21px] leading-none text-acento"
             style={{ ["--odo-alto" as string]: "1em" }}
           >
             <Odometro texto={horasAnuales.toLocaleString("es")} />
@@ -54,7 +54,7 @@ export default function BarraInferior({ agentes }: Props) {
         {/* La salida a la sección 07, siempre a mano mientras se contesta. */}
         <a
           href="#contacto"
-          className="shrink-0 inline-flex min-h-[44px] items-center text-[13px] text-klein transition-opacity duration-100 hover:opacity-80 active:opacity-55"
+          className="shrink-0 inline-flex min-h-[44px] items-center text-[13px] text-acento transition-opacity duration-100 hover:opacity-80 active:opacity-55"
         >
           Agenda
         </a>

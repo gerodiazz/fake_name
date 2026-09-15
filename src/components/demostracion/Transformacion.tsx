@@ -39,7 +39,7 @@ function Columna({
       <ul className="mt-4 flex flex-wrap gap-1.5">
         {bloque.piezas.map((pieza) => (
           <li key={pieza}>
-            <span className={destacado ? "chip chip-klein" : "chip"}>
+            <span className={destacado ? "chip chip-acento" : "chip"}>
               {pieza}
             </span>
           </li>

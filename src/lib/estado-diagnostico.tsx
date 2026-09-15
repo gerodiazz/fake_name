@@ -68,16 +68,16 @@ type ContextoDiagnostico = {
 const Contexto = createContext<ContextoDiagnostico | null>(null);
 
 /** Clave de localStorage donde persiste el código de referido de la visita. */
-const CLAVE_CODIGO = "fakename:codigo-referido";
+const CLAVE_CODIGO = "tj:codigo-referido";
 
-/** Arma un código corto y legible en voz alta: FN-7K2Q. */
+/** Arma un código corto y legible en voz alta: TJ-7K2Q. */
 function generarCodigo(): string {
   const alfabeto = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // sin I, O, 0, 1
   let salida = "";
   for (let i = 0; i < 4; i += 1) {
     salida += alfabeto[Math.floor(Math.random() * alfabeto.length)];
   }
-  return `FN-${salida}`;
+  return `TJ-${salida}`;
 }
 
 export function ProveedorDiagnostico({ children }: { children: ReactNode }) {

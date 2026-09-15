@@ -89,7 +89,9 @@ export default async function DiagnosticoCompartido({
     <>
       <main className="pb-20 pt-10 sm:pt-16">
         <Contenedor>
-          <p className="kicker">{SITIO.nombre} · diagnóstico compartido</p>
+          <p className="kicker">
+            {SITIO.marcaCorta} · Diagnóstico compartido
+          </p>
 
           {horas > 0 ? (
             <div className="mt-8">
@@ -148,7 +150,7 @@ export default async function DiagnosticoCompartido({
           <div className="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
             <a
               href="/#diagnostico"
-              className="boton boton-klein"
+              className="boton boton-principal"
             >
               Hacer el diagnóstico
             </a>

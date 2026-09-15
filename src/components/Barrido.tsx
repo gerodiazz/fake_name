@@ -1,9 +1,9 @@
 "use client";
 
 /**
- * MOMENTO FIRMA — el barrido Klein
+ * MOMENTO FIRMA — el barrido
  *
- * Un panel Klein sólido sube desde abajo, tapa la pantalla entera, sostiene
+ * Un panel de tinta sólida sube desde abajo, tapa la pantalla entera, sostiene
  * cien milisegundos y sale por arriba. El cambio de estado ocurre mientras
  * está todo tapado: cuando el panel se va, lo nuevo ya está puesto.
  *
@@ -11,7 +11,7 @@
  *   · al elegir el rubro      → 1100 ms
  *   · al pasar al resultado   → 700 ms
  *
- * Es el único lugar del sitio donde el Klein ocupa toda la pantalla. Si se
+ * Es el único lugar del sitio donde la tinta ocupa toda la pantalla. Si se
  * usara en un tercer lugar dejaría de ser un evento.
  *
  * Bajo prefers-reduced-motion el barrido no existe: el cambio de estado se

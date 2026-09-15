@@ -8,10 +8,10 @@
  */
 
 import type { Metadata, Viewport } from "next";
-import { Inter, Instrument_Serif } from "next/font/google";
+import { Inter, Newsreader } from "next/font/google";
 import "./globals.css";
 import { ProveedorDiagnostico } from "@/lib/estado-diagnostico";
-import { ProveedorBarrido } from "@/components/BarridoKlein";
+import { ProveedorBarrido } from "@/components/Barrido";
 import Grain from "@/components/Grain";
 import { SITIO, SOCIOS } from "@/lib/sitio";
 
@@ -22,10 +22,16 @@ const sans = Inter({
   display: "swap",
 });
 
-/** Serif editorial para titulares y números grandes. Solo peso regular. */
-const serif = Instrument_Serif({
+/**
+ * Serif editorial para titulares y números grandes.
+ *
+ * Newsreader, en 300 y 400. El 300 es el de los titulares grandes: a 70px, un
+ * peso normal se lee pesado y un peso liviano se lee caro. El 400 queda para
+ * el cuerpo serif, donde 300 se afinaría demasiado.
+ */
+const serif = Newsreader({
   subsets: ["latin"],
-  weight: "400",
+  weight: ["300", "400"],
   variable: "--fuente-serif",
   display: "swap",
 });
@@ -39,8 +45,8 @@ export const metadata: Metadata = {
   description: SITIO.descripcion,
   keywords: [
     "automatización de procesos",
+    "software a medida para empresas",
     "agentes de IA para empresas",
-    "automatización para PyMEs",
     "integración con sistemas existentes",
   ],
   authors: [{ name: SITIO.nombre }],
@@ -64,7 +70,7 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   // El color de la barra del navegador acompaña al papel del sitio.
-  themeColor: "#F2F0EB",
+  themeColor: "#F3F2EF",
 };
 
 /**
@@ -106,12 +112,12 @@ export default function RootLayout({
         {/* Salto directo al contenido, para navegación por teclado. */}
         <a
           href="#contenido"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-klein focus:px-4 focus:py-3 focus:text-superficie"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-acento focus:px-4 focus:py-3 focus:text-superficie"
         >
           Ir al contenido
         </a>
 
-        {/* El barrido Klein envuelve todo: la cortina tiene que poder tapar
+        {/* El barrido envuelve todo: la cortina tiene que poder tapar
             la pantalla entera, no solo una sección. */}
         <ProveedorBarrido>
           <ProveedorDiagnostico>{children}</ProveedorDiagnostico>
