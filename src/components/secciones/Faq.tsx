@@ -52,9 +52,9 @@ const PREGUNTAS = [
       "El código es de la empresa y queda documentado para poder modificarse. Los cambios chicos los hace el equipo interno; los grandes se cotizan como un trabajo nuevo. No hay un plan que haya que escalar por crecer.",
   },
   {
-    pregunta: "¿Qué ocurre después de los 90 días?",
+    pregunta: "¿Qué cubren los 90 días y qué no?",
     respuesta:
-      "El sistema sigue funcionando igual: no se apaga nada ni hay que renovar ninguna licencia. A partir de ahí hay soporte mensual opcional, o atención por hora cuando haga falta. También se puede no contratar nada.",
+      "Cubren los errores de lo que construimos, dentro del alcance que quedó escrito en la propuesta: si algo que entregamos andando deja de andar por algo nuestro, se corrige sin costo. No cubren cambios que haga un tercero o la propia empresa sobre el sistema, requerimientos nuevos ni cambios de alcance. Cuando un pedido cae de ese lado, lo decimos y se cotiza aparte antes de hacerlo. Pasados los 90 días el sistema sigue funcionando igual: no se apaga nada ni hay licencias que renovar, y el soporte es opcional.",
   },
   {
     pregunta: "¿Puedo seguir con otro proveedor?",

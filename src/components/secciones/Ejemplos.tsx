@@ -6,15 +6,13 @@
  *
  * NO ES UNA GRILLA DE CARDS. Era una: seis recuadros iguales en dos columnas,
  * que es la solución por defecto y la que hace que un sitio se parezca a
- * cualquier otro. Ahora cada rubro es una fila editorial de ancho completo,
- * con tres tiempos leídos de izquierda a derecha:
+ * cualquier otro. Cada rubro es una fila editorial de ancho completo, con el
+ * proceso a la izquierda, las dos cadenas enfrentadas en el medio y el
+ * resultado a la derecha.
  *
- *   EL PROCESO HOY  →  QUÉ HACE EL SOFTWARE  →  LO QUE QUEDA
- *
- * La primera columna dibuja la cadena manual como piezas encadenadas —
- * WhatsApp, vendedor, planilla, vendedor— y esa acumulación es el argumento:
- * se ve el problema antes de leerlo. La del medio son las seis etapas del
- * recorrido, las mismas de la sección 02.
+ * Las dos cadenas son el argumento entero de la sección: de un lado cinco
+ * saltos entre personas y aplicaciones, del otro cuatro pasos seguidos. Se lee
+ * en dos segundos y dice más que el párrafo que había antes.
  *
  * Los oficios —"el que atiende", "el que cotiza"— son los mismos que nombra el
  * diagnóstico. Esa continuidad hace que, al llegar a las preguntas, el
@@ -26,65 +24,66 @@
 import Seccion from "@/components/Seccion";
 import TitularRevelado from "@/components/TitularRevelado";
 import Boton from "@/components/ui/Boton";
-import { EJEMPLOS, ETAPAS, type EjemploIndustria } from "@/lib/ejemplos";
+import { EJEMPLOS, type EjemploProceso } from "@/lib/ejemplos";
 
-function Fila({ ejemplo }: { ejemplo: EjemploIndustria }) {
+/** Una cadena de piezas encadenadas por flechas. */
+function Cadena({
+  piezas,
+  tono = "papel",
+}: {
+  piezas: string[];
+  tono?: "papel" | "klein";
+}) {
   return (
-    <article className="hairline hairline-t py-10 sm:py-12">
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,15rem)_minmax(0,1fr)_minmax(0,15rem)] lg:gap-12">
-        {/* ---- tiempo 1: el proceso hoy ---- */}
+    <ul className="mt-3 flex flex-wrap items-center gap-x-1.5 gap-y-2">
+      {piezas.map((pieza, i) => (
+        <li key={`${pieza}-${i}`} className="flex items-center gap-1.5">
+          <span className={tono === "klein" ? "chip chip-klein" : "chip"}>
+            {pieza}
+          </span>
+          {/* La flecha va DESPUÉS de cada pieza: cuando la cadena envuelve, un
+              renglón que empieza con flecha se lee como un error. */}
+          {i < piezas.length - 1 ? (
+            <span className="flecha" aria-hidden="true">
+              →
+            </span>
+          ) : null}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function Fila({ ejemplo }: { ejemplo: EjemploProceso }) {
+  return (
+    <article className="hairline hairline-t py-9 sm:py-10">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,16rem)_minmax(0,1fr)_minmax(0,15rem)] lg:gap-12">
+        {/* ---- el proceso ---- */}
         <div>
-          <h3 className="font-serif text-[23px] leading-tight sm:text-[26px]">
+          <h3 className="font-serif text-[22px] leading-tight sm:text-[24px]">
             {ejemplo.industria}
           </h3>
           <p className="mt-2 max-w-[34ch] text-[14px] leading-relaxed text-tinta">
             {ejemplo.proceso}
           </p>
-
-          <p className="kicker kicker-tinta mt-6">El proceso hoy</p>
-          {/* La cadena manual. Las piezas van separadas por flechas: el salto
-              entre una y otra es exactamente lo que cuesta tiempo. */}
-          <ul className="mt-3 flex flex-wrap items-center gap-x-1.5 gap-y-2">
-            {ejemplo.hoy.map((pieza, i) => (
-              <li key={`${pieza}-${i}`} className="flex items-center gap-1.5">
-                <span className="chip">{pieza}</span>
-                {i < ejemplo.hoy.length - 1 ? (
-                  <span className="flecha" aria-hidden="true">
-                    →
-                  </span>
-                ) : null}
-              </li>
-            ))}
-          </ul>
         </div>
 
-        {/* ---- tiempo 2: qué hace el software ---- */}
+        {/* ---- las dos cadenas, enfrentadas ---- */}
         <div className="border-t-[0.5px] border-linea pt-6 lg:border-l-[0.5px] lg:border-t-0 lg:pl-12 lg:pt-0">
-          <p className="kicker">Qué hace el software</p>
-          <ol className="mt-3">
-            {ejemplo.flujo.map((linea, i) => (
-              <li key={linea} className="flex gap-4 py-1.5">
-                <span
-                  aria-hidden="true"
-                  className="w-[6.5rem] shrink-0 text-[11px] uppercase leading-[1.7] tracking-[0.12em] text-tinta-2"
-                >
-                  {ETAPAS[i]}
-                </span>
-                <span className="text-[14px] leading-relaxed text-tinta-2">
-                  {linea}
-                </span>
-              </li>
-            ))}
-          </ol>
+          <p className="kicker kicker-tinta">Qué hace hoy una persona</p>
+          <Cadena piezas={ejemplo.hoy} />
+
+          <p className="kicker mt-6">Qué hace el software</p>
+          <Cadena piezas={ejemplo.conSoftware} tono="klein" />
         </div>
 
-        {/* ---- tiempo 3: lo que queda ---- */}
+        {/* ---- lo que queda ---- */}
         <div className="border-t-[0.5px] border-linea pt-6 lg:border-l-[0.5px] lg:border-t-0 lg:pl-12 lg:pt-0">
           <p className="kicker kicker-tinta">Lo que queda</p>
           <p className="mt-3 max-w-[34ch] font-serif text-[17px] leading-snug sm:text-[18px]">
             {ejemplo.queda}
           </p>
-          <p className="mt-5 text-[13px] leading-relaxed text-tinta-2">
+          <p className="mt-4 text-[13px] leading-relaxed text-tinta-2">
             {ejemplo.oficios.join(" · ")}
           </p>
         </div>
@@ -110,15 +109,40 @@ export default function Ejemplos({
           Qué se puede automatizar en una empresa como la tuya
         </TitularRevelado>
         <p className="mt-6 max-w-[52ch] text-[15px] leading-relaxed text-tinta-2 sm:text-[16px]">
-          Un proceso por rubro, contado con las mismas seis etapas de arriba.
-          Son procesos que existen en casi cualquier empresa del rubro, no
-          trabajos que hayamos hecho.
+          Un proceso por rubro, con lo que hoy hace una persona a un lado y lo
+          que hace el software al otro. Son procesos que existen en casi
+          cualquier empresa del rubro, no trabajos que hayamos hecho.
         </p>
 
         <div className="mt-10">
-          {EJEMPLOS.map((ejemplo) => (
+          {EJEMPLOS.slice(0, 3).map((ejemplo) => (
             <Fila key={ejemplo.rubroId} ejemplo={ejemplo} />
           ))}
+
+          {/* Los otros tres, plegados. Con <details> nativo: el contenido está
+              en el HTML desde el servidor —un buscador lo ve igual— y el
+              teclado y el lector de pantalla funcionan sin una línea de JS.
+              Seis rubros abiertos eran cinco pantallas de scroll en un
+              teléfono, y el cuarto ya no agrega nada que no haya dicho el
+              primero. */}
+          <details className="faq hairline hairline-t">
+            <summary className="flex min-h-[64px] cursor-pointer items-center justify-between gap-6 py-4 transition-opacity duration-100 active:opacity-55">
+              <span className="text-[15px] text-tinta-2">
+                Ver los otros tres rubros
+              </span>
+              <span
+                aria-hidden="true"
+                className="faq-signo shrink-0 text-[20px] leading-none text-tinta-2 transition-transform duration-200"
+              >
+                +
+              </span>
+            </summary>
+            <div className="anim-emerger">
+              {EJEMPLOS.slice(3).map((ejemplo) => (
+                <Fila key={ejemplo.rubroId} ejemplo={ejemplo} />
+              ))}
+            </div>
+          </details>
         </div>
 
         <div className="hairline hairline-t pt-8">

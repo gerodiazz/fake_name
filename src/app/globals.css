@@ -286,10 +286,16 @@ body {
   will-change: width;
 }
 
+/* La palabra se pinta con el pseudo-elemento y no como nodo de texto: así no
+   entra en el textContent del H1. El motivo largo está en el componente. */
 .palabra-pieza {
   display: block;
   white-space: nowrap;
   transition: transform 300ms cubic-bezier(0.76, 0, 0.24, 1);
+}
+.palabra-pieza::before,
+.palabra-regla::before {
+  content: attr(data-texto);
 }
 
 /* La que se va sube y desaparece; la que entra llega desde abajo. */

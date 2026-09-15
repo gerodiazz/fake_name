@@ -42,8 +42,8 @@ export default function Control({
         </p>
         <p className="mt-5 max-w-[52ch] text-[15px] leading-relaxed text-tinta-2 sm:text-[16px]">
           Según el proceso, el sistema puede hacer estas seis cosas. Cuáles
-          entran en cada implementación se decide con la empresa antes de
-          escribir código, y queda escrito en la propuesta.
+          entran se decide con la empresa antes de escribir código, y queda en
+          la propuesta.
         </p>
 
         <ul className="grilla-expuesta grilla-expuesta-sm mt-12 grid grid-cols-1 hairline hairline-t hairline-b sm:grid-cols-2 lg:grid-cols-3">
@@ -52,19 +52,15 @@ export default function Control({
               <h3 className="font-serif text-[21px] leading-tight sm:text-[23px]">
                 {capacidad.titulo}
               </h3>
-              <p className="mt-3 max-w-[40ch] text-[14px] leading-relaxed text-tinta">
+              <p className="mt-3 max-w-[40ch] text-[14px] leading-relaxed text-tinta-2">
                 {capacidad.detalle}
-              </p>
-              <p className="mt-3 max-w-[40ch] text-[13px] leading-relaxed text-tinta-2">
-                <span className="kicker kicker-tinta">Cuándo · </span>
-                {capacidad.cuando}
               </p>
             </li>
           ))}
         </ul>
 
         {/* Lo que no depende del proyecto. */}
-        <div className="mt-14 grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-14">
+        <div className="mt-14">
           {POSICION.map((punto) => (
             <div key={punto.titulo}>
               <h3 className="font-serif text-[21px] leading-tight sm:text-[23px]">

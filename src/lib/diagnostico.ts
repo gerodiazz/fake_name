@@ -419,15 +419,6 @@ export function preguntasDeRubro(rubro: Rubro): Pregunta[] {
   return [...rubro.preguntas, ...PREGUNTAS_UNIVERSALES];
 }
 
-/** Todas las preguntas del sitio, por si hay que buscar una por id. */
-export function buscarPregunta(id: string): Pregunta | undefined {
-  for (const rubro of RUBROS) {
-    const encontrada = rubro.preguntas.find((p) => p.id === id);
-    if (encontrada) return encontrada;
-  }
-  return PREGUNTAS_UNIVERSALES.find((p) => p.id === id);
-}
-
 /** Semanas de trabajo al año que se usan para anualizar las horas. */
 export const SEMANAS_POR_ANIO = 48;
 

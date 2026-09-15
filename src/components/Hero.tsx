@@ -28,7 +28,6 @@ import PalabraCinetica from "@/components/PalabraCinetica";
 import { MarcaAgua } from "@/components/Decoracion";
 import FragmentoProducto from "@/components/demostracion/FragmentoProducto";
 import Boton from "@/components/ui/Boton";
-import { SITIO } from "@/lib/sitio";
 
 /**
  * Las cuatro figuras que hoy hacen el trabajo. Van de lo genérico a lo
@@ -55,7 +54,7 @@ export default function Hero({ numero }: { numero: string }) {
           <div>
             {/* Para quién es esto, en el primer renglón de la página. */}
             <p className="kicker [text-wrap:balance]">
-              {SITIO.nombre} · software a medida y agentes de IA para empresas
+              Desarrollo de software · automatización de procesos para empresas
             </p>
 
             <h1 className="titular mt-7 max-w-[15ch] text-[clamp(2.25rem,9.5vw,4.5rem)]">
@@ -64,10 +63,9 @@ export default function Hero({ numero }: { numero: string }) {
             </h1>
 
             <p className="mt-8 max-w-[46ch] text-[16px] leading-relaxed text-tinta-2 sm:text-[17px]">
-              Tomamos un trabajo que hoy depende de una persona —mensajes,
-              planillas, sistemas que no se hablan entre sí— y construimos el
-              software que se encarga de esa parte. Qué se construye, cuánto
-              cuesta y cuánto demora quedan por escrito antes de empezar.
+              Analizamos procesos que hoy dependen de personas, mensajes,
+              planillas o sistemas separados, y construimos el software que se
+              encarga de ese trabajo.
             </p>
 
             {/* Las dos salidas del hero. El Klein es para la principal. */}

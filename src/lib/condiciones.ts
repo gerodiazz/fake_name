@@ -55,8 +55,9 @@ export const CONDICIONES: Condicion[] = [
     id: "noventa-dias",
     titulo: "90 días de corrección",
     detalle:
-      "Desde la entrega hay 90 días para corregir problemas de la implementación entregada, sin costo. Da igual si el error es propio o si cambió el sistema con el que el software se integra.",
-    implicancia: "Los primeros meses de uso real no los paga el cliente.",
+      "Desde la entrega, corregimos sin costo los errores de lo que construimos, dentro del alcance acordado. No cubre cambios que haga un tercero o la propia empresa, ni requerimientos nuevos: eso se cotiza como trabajo aparte y se dice antes de hacerlo.",
+    implicancia:
+      "Lo que entregamos funcionando, sigue funcionando. Sin discutir de quién es la culpa.",
   },
   {
     id: "sin-lock-in",

@@ -29,60 +29,54 @@ export type Capacidad = {
   id: string;
   /** Qué puede hacer el sistema. En infinitivo: es una capacidad, no una promesa. */
   titulo: string;
-  /** En qué consiste. */
+  /** En qué consiste y en qué casos entra, en una sola línea. */
   detalle: string;
-  /** En qué casos entra en una implementación. */
-  cuando: string;
 };
 
+/**
+ * Seis capacidades, una línea cada una.
+ *
+ * Antes cada una tenía un párrafo de detalle más otro de "cuándo entra": doce
+ * párrafos para decir seis cosas. Quien lee esta sección está resolviendo una
+ * duda concreta —qué pasa si se equivoca— y no necesita doce párrafos, necesita
+ * ver que hay frenos y que los decide él.
+ */
 export const CAPACIDADES: Capacidad[] = [
   {
     id: "aprobacion",
     titulo: "Pedir aprobación",
     detalle:
-      "El sistema prepara la acción y la deja esperando: no queda firme hasta que alguien la confirma.",
-    cuando:
-      "En acciones con consecuencia hacia afuera o sobre el dinero: enviar un presupuesto, confirmar un precio, cerrar una operación.",
+      "Prepara la acción y la deja esperando: no queda firme hasta que alguien la confirma. Para lo que tiene consecuencia hacia afuera o sobre el dinero.",
   },
   {
     id: "derivar",
     titulo: "Derivar a una persona",
     detalle:
-      "Cuando el caso se sale de lo previsto, el sistema frena y se lo pasa a alguien del equipo con todo el contexto.",
-    cuando:
-      "En cualquier proceso que atienda clientes: siempre hay un caso que no entra en el molde.",
+      "Cuando el caso se sale de lo previsto, frena y se lo pasa a alguien del equipo con todo el contexto.",
   },
   {
     id: "registrar",
     titulo: "Registrar cada acción",
     detalle:
-      "Qué hizo, cuándo, con qué datos y qué devolvió el sistema con el que se integró. El registro es de la empresa y se revisa sin pedirnos nada.",
-    cuando:
-      "Cuando hace falta poder reconstruir después qué pasó, que es casi siempre.",
+      "Qué hizo, cuándo y con qué datos. El registro es de la empresa y se revisa sin pedirnos nada.",
   },
   {
     id: "reglas",
     titulo: "Aplicar reglas",
     detalle:
-      "Condiciones duras que el sistema no puede saltear: montos máximos, clientes que tienen que existir en el sistema, horarios, excepciones.",
-    cuando:
-      "Cuando la empresa ya tiene criterios claros sobre qué se puede y qué no.",
+      "Condiciones que no puede saltear: montos máximos, clientes que tienen que existir en el sistema, horarios, excepciones.",
   },
   {
     id: "permisos",
     titulo: "Limitar permisos",
     detalle:
       "Credenciales propias, separadas de las de las personas, con lo mínimo que el proceso necesita. Si solo necesita leer, solo lee.",
-    cuando:
-      "Siempre que el software toque un sistema de la empresa. Los permisos los da la empresa y los puede revocar cuando quiera.",
   },
   {
     id: "detenerse",
     titulo: "Detenerse ante lo inesperado",
     detalle:
-      "Si el dato no aparece, si el otro sistema no responde o si el pedido no se entiende, el sistema no improvisa una respuesta: se detiene y avisa.",
-    cuando:
-      "Cuando una respuesta equivocada cuesta más que una respuesta demorada.",
+      "Si el dato no aparece o el otro sistema no responde, no improvisa una respuesta: se detiene y avisa.",
   },
 ];
 
@@ -91,11 +85,6 @@ export const CAPACIDADES: Capacidad[] = [
  * dos que un cliente necesita escuchar antes de dar acceso a sus sistemas.
  */
 export const POSICION = [
-  {
-    titulo: "Qué se decide antes de construir",
-    detalle:
-      "Qué acciones quedan automáticas, cuáles esperan aprobación y qué se considera un caso dudoso. Esa lista sale del diagnóstico y va escrita en la propuesta: no se descubre después del primer error.",
-  },
   {
     titulo: "Qué pasa con los datos",
     detalle:

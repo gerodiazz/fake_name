@@ -163,18 +163,6 @@ export const DEMOSTRACION = {
       titulo: "Permisos",
       detalle: "Puede preparar el pedido; no puede facturarlo ni tocar precios.",
     },
-    {
-      titulo: "Reglas",
-      detalle: "Si el cliente no figura en el sistema, no avanza.",
-    },
-    {
-      titulo: "Registro",
-      detalle: "Cada paso queda escrito y la empresa puede revisarlo.",
-    },
-    {
-      titulo: "Intervención humana",
-      detalle: "El pedido lo confirma una persona antes de que sea firme.",
-    },
   ],
 
   /** Lo que hay que entender al terminar de mirar la pieza. */

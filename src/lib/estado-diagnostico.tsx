@@ -51,6 +51,12 @@ type ContextoDiagnostico = {
   /* ---- acciones ---- */
   elegirRubro: (id: string) => void;
   responder: (preguntaId: string, siONo: boolean) => void;
+  /**
+   * Borra la respuesta de una pregunta. La usa el botón de atrás: volver un
+   * paso tiene que DESHACER lo contestado, no dejarlo puesto. Sin esto, quien
+   * vuelve para corregir un "sí" se lo encuentra igual en el resultado.
+   */
+  olvidar: (preguntaId: string) => void;
   escribirTextoLibre: (texto: string) => void;
   marcarCompleto: () => void;
   reiniciar: () => void;
@@ -132,6 +138,13 @@ export function ProveedorDiagnostico({ children }: { children: ReactNode }) {
     setRespuestas((previas) => ({ ...previas, [preguntaId]: siONo }));
   }, []);
 
+  const olvidar = useCallback((preguntaId: string) => {
+    setRespuestas((previas) => {
+      const { [preguntaId]: _descartada, ...resto } = previas;
+      return resto;
+    });
+  }, []);
+
   const escribirTextoLibre = useCallback((texto: string) => {
     setTextoLibre(texto);
   }, []);
@@ -190,6 +203,7 @@ export function ProveedorDiagnostico({ children }: { children: ReactNode }) {
     semanas,
     elegirRubro,
     responder,
+    olvidar,
     escribirTextoLibre,
     marcarCompleto,
     reiniciar,

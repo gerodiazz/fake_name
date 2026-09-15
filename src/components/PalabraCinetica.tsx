@@ -12,6 +12,30 @@
  *
  * Bajo prefers-reduced-motion se muestra la primera palabra y no rota nunca:
  * el titular se lee igual, simplemente no se mueve.
+ *
+ * ┌──────────────────────────────────────────────────────────────────────┐
+ * │ POR QUÉ LAS PALABRAS SE PINTAN CON content: attr()                   │
+ * │                                                                       │
+ * │ Antes cada palabra era un nodo de texto adentro del H1: la que se va, │
+ * │ la que entra y una regla de medición por palabra. Visualmente estaba  │
+ * │ bien —la máscara recorta todo— pero el textContent del H1 quedaba     │
+ * │ así:                                                                  │
+ * │                                                                       │
+ * │   "Procesos que hoy hace una personauna secretariauna personauna      │
+ * │    secretariaun empleadoalguien a las nueve de la noche, hechos por   │
+ * │    software."                                                         │
+ * │                                                                       │
+ * │ Eso es lo que leen Google, el copiar y pegar, el modo lectura, los    │
+ * │ traductores y cualquier cosa que no mire pixeles. En el H1, que es la │
+ * │ línea más importante del sitio.                                       │
+ * │                                                                       │
+ * │ El contenido de un pseudo-elemento NO forma parte del textContent.    │
+ * │ Poniendo la palabra en un data-texto y pintándola con                 │
+ * │ `content: attr(data-texto)`, el ojo ve exactamente lo mismo y el H1   │
+ * │ vuelve a decir, como texto, una sola cosa:                            │
+ * │                                                                       │
+ * │   "Procesos que hoy hace una persona, hechos por software."           │
+ * └──────────────────────────────────────────────────────────────────────┘
  */
 
 import { useEffect, useRef, useState } from "react";
@@ -100,9 +124,11 @@ export default function PalabraCinetica({ palabras }: Props) {
       >
         {/* La palabra que se va, subiendo fuera de la máscara. */}
         {saliendo !== null && !quieto ? (
-          <span className="palabra-pieza" data-rol="saliente">
-            {palabras[saliendo]}
-          </span>
+          <span
+            className="palabra-pieza"
+            data-rol="saliente"
+            data-texto={palabras[saliendo]}
+          />
         ) : null}
 
         {/* La que está o la que entra. Al cambiar de key se remonta abajo y
@@ -111,6 +137,7 @@ export default function PalabraCinetica({ palabras }: Props) {
           key={quieto ? "fijo" : indice}
           className="palabra-pieza"
           data-rol={quieto ? "entrante" : "esperando"}
+          data-texto={palabraActual}
           ref={(nodo) => {
             // En el mismo frame en que monta abajo, se la manda a su lugar.
             if (nodo && !quieto) {
@@ -119,21 +146,18 @@ export default function PalabraCinetica({ palabras }: Props) {
               );
             }
           }}
-        >
-          {palabraActual}
-        </span>
+        />
 
-        {/* Reglas de medición. Nunca se ven. */}
+        {/* Reglas de medición. Nunca se ven y tampoco aportan texto. */}
         {palabras.map((palabra, i) => (
           <span
             key={palabra}
             className="palabra-regla"
+            data-texto={palabra}
             ref={(nodo) => {
               reglas.current[i] = nodo;
             }}
-          >
-            {palabra}
-          </span>
+          />
         ))}
       </span>
     </>

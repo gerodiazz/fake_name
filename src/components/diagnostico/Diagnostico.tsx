@@ -43,6 +43,7 @@ export default function Diagnostico() {
     semanas,
     elegirRubro,
     responder,
+    olvidar,
     escribirTextoLibre,
     marcarCompleto,
     reiniciar,
@@ -161,6 +162,23 @@ export default function Diagnostico() {
     }, 1100);
   }
 
+  /**
+   * Un paso atrás. Deshace la respuesta de la pregunta anterior —borrarla es
+   * el punto: se vuelve para corregir— y saca su ficha de la pila.
+   */
+  function volver() {
+    if (indice === 0) return;
+    limpiarTemporizadores();
+    const previa = preguntas[indice - 1];
+    if (previa) {
+      olvidar(previa.id);
+      setMostradas((previas) => previas.filter((id) => id !== previa.id));
+    }
+    setTachada(null);
+    setApagada(null);
+    setIndice(indice - 1);
+  }
+
   function rehacer() {
     limpiarTemporizadores();
     reiniciar();
@@ -196,9 +214,19 @@ export default function Diagnostico() {
       {/* Rubro elegido, siempre a la vista, con salida para cambiarlo. */}
       <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
         <p className="kicker kicker-tinta">{rubro.nombre}</p>
-        <button type="button" onClick={rehacer} className="boton boton-texto">
-          cambiar de rubro
-        </button>
+
+        <div className="flex items-center gap-5">
+          {/* Atrás. Solo cuando hay a dónde volver, y nunca en el resultado:
+              ahí la salida es rehacer el diagnóstico entero. */}
+          {!completo && !modoLista && indice > 0 ? (
+            <button type="button" onClick={volver} className="boton boton-texto">
+              <span aria-hidden="true">←</span> atrás
+            </button>
+          ) : null}
+          <button type="button" onClick={rehacer} className="boton boton-texto">
+            cambiar de rubro
+          </button>
+        </div>
       </div>
 
       <div className="mt-2">

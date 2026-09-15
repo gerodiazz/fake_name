@@ -15,7 +15,7 @@
  * parte del argumento: no vendemos agentes para todo.
  */
 
-import { COMPARACION, DEFINICION, NO_ES } from "@/lib/agente";
+import { A_VECES_ALCANZA_UNA_REGLA, COMPARACION, DEFINICION } from "@/lib/agente";
 
 export default function QueEsUnAgente() {
   return (
@@ -39,7 +39,7 @@ export default function QueEsUnAgente() {
           return (
             <div key={columna.titulo} className="py-8 lg:px-6">
               <p className={`kicker ${esAgente ? "" : "kicker-tinta"}`}>
-                {esAgente ? "Lo que construimos" : "Lo que ya se conoce"}
+                {esAgente ? "Lo que construimos" : "Con lo que se confunde"}
               </p>
               <h3 className="mt-3 font-serif text-[23px] leading-tight sm:text-[26px]">
                 {columna.titulo}
@@ -74,24 +74,11 @@ export default function QueEsUnAgente() {
         })}
       </div>
 
-      {/* Lo que un agente no es. Va explícito porque son las tres cosas que la
-          palabra sugiere y que no vendemos. */}
-      <div className="mt-10">
-        <p className="kicker kicker-tinta">Lo que no es</p>
-        <ul className="mt-4 max-w-[56ch]">
-          {NO_ES.map((linea) => (
-            <li
-              key={linea}
-              className="flex gap-3 py-1.5 text-[14px] leading-relaxed text-tinta-2"
-            >
-              <span aria-hidden="true" className="select-none">
-                ·
-              </span>
-              <span>{linea}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
+      {/* Cuándo NO hace falta un agente. Decirlo vale más que la venta. */}
+      <p className="mt-8 max-w-[60ch] text-[14px] leading-relaxed text-tinta-2">
+        {A_VECES_ALCANZA_UNA_REGLA}
+      </p>
+
     </div>
   );
 }

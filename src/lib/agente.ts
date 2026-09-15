@@ -25,14 +25,12 @@ export const DEFINICION =
   "Un agente es software que recibe una tarea, interpreta qué hay que hacer, consulta la información que tiene autorizada, ejecuta acciones con las herramientas que le dimos y deja registro de lo que hizo.";
 
 /**
- * Lo que un agente NO es. Va explícito porque son las tres cosas que la
- * palabra sugiere y que nosotros no vendemos.
+ * A veces la respuesta correcta no es un agente. Decirlo vale más que la
+ * venta: una regla fija es más barata, más rápida de construir y más fácil de
+ * mantener, y cuando el proceso entra ahí, se hace así.
  */
-export const NO_ES = [
-  "No es un chatbot que contesta preguntas con un texto armado de antemano.",
-  "No decide por su cuenta fuera del proceso para el que fue construido.",
-  "No reemplaza al equipo: se lleva la parte repetitiva del trabajo y frena cuando hace falta una persona.",
-];
+export const A_VECES_ALCANZA_UNA_REGLA =
+  "Cuando el caso es siempre igual y no hay nada que interpretar, no hace falta un agente: alcanza con una regla fija —si pasa esto, hacer aquello—, que es más barata y más fácil de mantener. Si el proceso entra ahí, lo decimos y se hace así.";
 
 export type Columna = {
   titulo: string;
@@ -45,34 +43,31 @@ export type Columna = {
 };
 
 /**
- * La comparación. A la izquierda lo que casi todo el mundo ya conoce; a la
- * derecha lo que agrega un agente. La diferencia se ve en la cantidad de
- * pasos: donde una regla tiene dos, el agente tiene seis.
+ * La comparación. A la izquierda lo que casi cualquiera ya conoce y con lo que
+ * nos van a confundir; a la derecha lo que hacemos. La diferencia se ve en la
+ * cantidad de pasos, sin que haya que explicarla: donde un chatbot tiene dos,
+ * un agente tiene cinco, y tres de esos cinco tocan los sistemas de la empresa.
  */
 export const COMPARACION: Columna[] = [
   {
-    titulo: "Automatización simple",
-    resumen: "Una regla fija: cuando pasa A, hacer B.",
-    pasos: [
-      "Ocurre algo previsto.",
-      "Se ejecuta siempre la misma acción.",
-    ],
+    titulo: "Chatbot",
+    resumen: "Contesta. No toca ningún sistema.",
+    pasos: ["Recibe una pregunta.", "Devuelve una respuesta."],
     cuandoConviene:
-      "Cuando el caso es siempre igual y no hay nada que interpretar. Es más barata, más rápida de construir y más fácil de mantener: si el proceso entra acá, lo decimos y se hace así.",
+      "Cuando alcanza con informar: horarios, dirección, preguntas frecuentes.",
   },
   {
     titulo: "Agente",
-    resumen: "Un recorrido: recibe un pedido en texto libre y lo resuelve.",
+    resumen: "Hace el trabajo. Deja el proceso avanzado.",
     pasos: [
       "Recibe una solicitud como la escribió una persona.",
       "Interpreta qué se necesita.",
       "Consulta la información que tiene autorizada.",
-      "Decide qué acción corresponde entre las que puede hacer.",
-      "Ejecuta y deja registro.",
+      "Ejecuta la acción que corresponde y deja registro.",
       "Pide intervención humana si no puede resolverlo con seguridad.",
     ],
     cuandoConviene:
-      "Cuando el pedido llega en lenguaje de persona, cambia de forma en cada caso y hay que cruzar datos de más de un sistema para resolverlo.",
+      "Cuando el pedido llega en lenguaje de persona, cambia de forma en cada caso y hay que tocar los sistemas de la empresa para resolverlo.",
   },
 ];
 
