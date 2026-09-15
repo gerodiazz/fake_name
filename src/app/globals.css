@@ -1631,34 +1631,3 @@ label {
     transition: none !important;
   }
 }
-
-/* --------------------------------------------------------------------------
-   Celdas de rubro del diagnóstico (paso 01)
-
-   Elegir un rubro lo MARCA, no avanza. El estado se lee por el peso de la
-   celda —tinte del acento y una regla de 2px a la izquierda— y no por un
-   tilde: es la misma gramática que el resto del sitio, donde nada tiene caja.
-   -------------------------------------------------------------------------- */
-
-.rubro {
-  color: var(--color-tinta);
-  border-left: 2px solid transparent;
-  transition-property: background-color, border-color, color;
-  transition-duration: 150ms;
-  transition-timing-function: ease-out;
-}
-.rubro:hover {
-  background-color: var(--color-acento-tinte);
-}
-.rubro[data-marcado="true"] {
-  background-color: var(--color-acento-tinte);
-  border-left-color: var(--color-acento);
-}
-
-/* La pregunta que quedó sin contestar al intentar continuar. La señal es la
-   misma regla del rubro marcado, en el rojo del sistema de campos: una barra
-   al margen, sin recuadro ni fondo de alarma. */
-[data-falta="true"] {
-  box-shadow: inset 2px 0 0 0 #a33327;
-  padding-left: 0.875rem;
-}
