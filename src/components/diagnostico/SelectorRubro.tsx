@@ -1,76 +1,73 @@
 "use client";
 
 /**
- * PASO 0 DEL DIAGNÓSTICO — "¿A qué se dedica la empresa?"
+ * PASO 01 — "¿A qué se dedica tu empresa?"
  *
- * Es la primera acción del sitio: va inmediatamente debajo del hero y ocupa el
- * lugar que en otros sitios tendría un botón de contacto.
- *
- * La pregunta es un h3: el h2 de la sección es el titular del diagnóstico, y
- * este paso desaparece al elegir el rubro.
+ * La primera pantalla del diagnóstico. Elegir un rubro ya no dispara el
+ * recorrido: lo MARCA. Avanzar es una decisión aparte, con el botón de
+ * continuar, y eso permite cambiar de opinión antes de arrancar y —sobre
+ * todo— volver desde el paso 2 y encontrar la elección donde estaba.
  *
  * Grilla de dos columnas con hairlines expuestas. "Otro rubro" ocupa el ancho
  * completo porque cierra la lista impar de siete.
+ *
+ * El rubro elegido se marca con el tinte del acento y una regla de 2px a la
+ * izquierda. Sin checkbox ni tilde: el estado se lee por el peso de la celda,
+ * que es como se lee todo lo demás en este sitio. Para quien no distingue el
+ * tinte, está `aria-pressed`.
  */
 
 import { RUBROS } from "@/lib/diagnostico";
-import { SITIO } from "@/lib/sitio";
 
 type Props = {
-  /** Se dispara con el id del rubro elegido. */
+  /** Id del rubro marcado, o null si todavía no se eligió ninguno. */
+  elegido: string | null;
   onElegir: (id: string) => void;
 };
 
-export default function SelectorRubro({ onElegir }: Props) {
+export default function SelectorRubro({ elegido, onElegir }: Props) {
   return (
     <div>
-      {/* El rótulo de la herramienta. El diagnóstico es un producto de la
-          casa, no un formulario prestado, y dice de quién es. */}
-      <p className="kicker kicker-tinta">
-        {SITIO.marcaCorta} · Diagnóstico de procesos
-      </p>
-      <h3 className="titular mt-5 text-[clamp(1.4rem,6vw,2.2rem)]">
-        ¿A qué se dedica la empresa?
+      <h3 className="titular text-[clamp(1.4rem,6vw,2.2rem)]">
+        ¿A qué se dedica tu empresa?
       </h3>
-      <p className="mt-3 max-w-[48ch] text-[15px] text-tinta-2">
+      <p className="mt-3 max-w-[48ch] text-[15px] leading-relaxed text-tinta-2">
         El rubro define las tres primeras preguntas. Las otras tres son comunes
-        a cualquier empresa. No se piden datos de contacto.
+        a cualquier empresa.
       </p>
 
-      {/* Grilla expuesta. Las líneas interiores son bordes de 0.5px puestos
-          por .grilla-dos, que se encarga de que ninguna celda duplique el
-          hairline de su vecina. */}
       <ul className="grilla-dos mt-8 grid grid-cols-2 hairline hairline-t hairline-b">
-        {RUBROS.map((rubro) => (
-          <li
-            key={rubro.id}
-            className={`${
+        {RUBROS.map((rubro) => {
+          const marcado = elegido === rubro.id;
+
+          return (
+            <li
+              key={rubro.id}
               // "Otro rubro" cierra la grilla impar ocupando las dos columnas.
-              rubro.pideTextoLibre ? "col-span-2" : ""
-            }`}
-          >
-            <button
-              type="button"
-              onClick={() => onElegir(rubro.id)}
-              className="
-                group flex min-h-[76px] w-full items-center justify-between
-                gap-3 px-4 py-4 text-left text-[15px] leading-snug text-tinta
-                transition-colors duration-150
-                hover:bg-acento-tinte active:bg-acento-tinte
-                sm:min-h-[88px] sm:px-6 sm:text-[17px]
-              "
+              className={rubro.pideTextoLibre ? "col-span-2" : ""}
             >
-              {rubro.nombre}
-              {/* Punta de flecha discreta: aparece al enfocar o apuntar. */}
-              <span
-                aria-hidden="true"
-                className="text-acento opacity-0 transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100"
+              <button
+                type="button"
+                onClick={() => onElegir(rubro.id)}
+                aria-pressed={marcado}
+                data-marcado={marcado}
+                className="rubro group flex min-h-[76px] w-full items-center justify-between gap-3 px-4 py-4 text-left text-[15px] leading-snug sm:min-h-[92px] sm:px-6 sm:text-[17px]"
               >
-                →
-              </span>
-            </button>
-          </li>
-        ))}
+                {rubro.nombre}
+                {/* La punta de flecha aparece al apuntar y se queda en el
+                    elegido: es la única señal que se mueve. */}
+                <span
+                  aria-hidden="true"
+                  className={`text-acento transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100 ${
+                    marcado ? "opacity-100" : "opacity-0"
+                  }`}
+                >
+                  →
+                </span>
+              </button>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

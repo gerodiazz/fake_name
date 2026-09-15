@@ -15,6 +15,10 @@
  * el proceso, el otro a quien puede presentarla— y mezclarlos hacía que la
  * home tuviera que vender dos cosas a la vez.
  *
+ * Las preguntas del diagnóstico ya no se escriben aparte para buscadores: ese
+ * índice oculto ponía las veintiuna preguntas de los siete rubros en el HTML,
+ * y cualquier cosa que lea texto en vez de pixeles las veía todas juntas.
+ *
  * Un solo H1, el del hero. Cada sección abre con un H2 que lleva el término
  * por el que se busca ese contenido.
  */
@@ -34,49 +38,7 @@ import Casos from "@/components/secciones/Casos";
 import Faq from "@/components/secciones/Faq";
 import Contacto from "@/components/secciones/Contacto";
 import PieDePagina from "@/components/PieDePagina";
-import { PREGUNTAS_UNIVERSALES, RUBROS } from "@/lib/diagnostico";
 import { kickerDe, numeroDe } from "@/lib/secciones";
-
-/**
- * Las preguntas del diagnóstico, escritas en el HTML inicial.
- *
- * El recorrido es interactivo: hasta que no se elige un rubro, las preguntas
- * de ese rubro no existen en el DOM, así que un buscador no las ve. Esta lista
- * las deja escritas desde el servidor. No está oculta para engañar a nadie: es
- * el mismo texto que se recorre arriba, disponible también para quien navega
- * con lector de pantalla.
- */
-function PreguntasDelDiagnostico() {
-  return (
-    <section className="sr-only" aria-labelledby="preguntas-indice">
-      <h3 id="preguntas-indice">Preguntas del diagnóstico, por rubro</h3>
-      {RUBROS.filter((rubro) => rubro.preguntas.length > 0).map((rubro) => (
-        <div key={rubro.id}>
-          <h4>{rubro.nombre}</h4>
-          <ul>
-            {rubro.preguntas.map((pregunta) => (
-              <li key={pregunta.id}>
-                {pregunta.texto} {pregunta.agente.nombre}:{" "}
-                {pregunta.agente.descripcion}
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
-      <div>
-        <h4>Preguntas comunes a cualquier rubro</h4>
-        <ul>
-          {PREGUNTAS_UNIVERSALES.map((pregunta) => (
-            <li key={pregunta.id}>
-              {pregunta.texto} {pregunta.agente.nombre}:{" "}
-              {pregunta.agente.descripcion}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  );
-}
 
 export default function Home() {
   return (
@@ -119,8 +81,6 @@ export default function Home() {
             <div className="mt-10">
               <Diagnostico />
             </div>
-
-            <PreguntasDelDiagnostico />
           </div>
         </Seccion>
 
