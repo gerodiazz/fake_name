@@ -60,7 +60,7 @@ const RANGOS = [
  * `enviar()` por la llamada real, esta constante pasa a ser la frase corta.
  */
 const CONFIRMACION =
-  "Se abrió el correo con el caso escrito. Al enviarlo, respondemos dentro de las 24 horas hábiles.";
+  "Se abrió el correo con el caso escrito. Al enviarlo, respondemos dentro de las 24 horas hábiles. Si no se abrió ningún correo, escribinos a";
 
 export default function Contacto({
   numero,
@@ -252,9 +252,20 @@ export default function Contacto({
               className="mt-4 min-h-[1.5rem] max-w-[46ch] text-[13px] text-tinta-2"
               aria-live="polite"
             >
-              {enviado
-                ? CONFIRMACION
-                : "Respondemos dentro de las 24 horas hábiles."}
+              {enviado ? (
+                <>
+                  {CONFIRMACION}{" "}
+                  <a
+                    href={`mailto:${SITIO.email}`}
+                    className="text-tinta underline decoration-linea underline-offset-4"
+                  >
+                    {SITIO.email}
+                  </a>
+                  .
+                </>
+              ) : (
+                "Respondemos dentro de las 24 horas hábiles."
+              )}
             </p>
           </form>
 

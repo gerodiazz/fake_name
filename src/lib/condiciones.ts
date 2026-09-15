@@ -32,7 +32,7 @@ export const CONDICIONES: Condicion[] = [
     id: "pago-unico",
     titulo: "Pago único",
     detalle:
-      "La implementación se presupuesta como proyecto cerrado y se paga una vez. El soporte posterior es opcional y se cotiza aparte.",
+      "Se presupuesta como proyecto cerrado y se paga una vez. El soporte posterior es opcional y se cotiza aparte.",
     implicancia:
       "No hay suscripción obligatoria para que el software siga funcionando.",
   },
@@ -40,14 +40,14 @@ export const CONDICIONES: Condicion[] = [
     id: "codigo-del-cliente",
     titulo: "El código es del cliente",
     detalle:
-      "El software desarrollado pertenece a la empresa. Se entrega el repositorio completo, la documentación y las credenciales, a su nombre.",
+      "Se entrega el repositorio, la documentación y las credenciales, a nombre de la empresa.",
     implicancia: "Lo puede seguir el equipo interno o cualquier otro proveedor.",
   },
   {
     id: "costos-de-api",
     titulo: "Costos de API",
     detalle:
-      "La empresa paga los servicios externos que usa su sistema —el consumo de los modelos, entre otros— en su propia cuenta y directo al proveedor. No hay intermediación ni recargo.",
+      "Los servicios externos que usa el sistema se pagan en la cuenta de la empresa y directo al proveedor. Sin intermediación ni recargo.",
     implicancia:
       "El costo mensual se estima antes de empezar, no aparece después.",
   },
@@ -55,7 +55,7 @@ export const CONDICIONES: Condicion[] = [
     id: "noventa-dias",
     titulo: "90 días de corrección",
     detalle:
-      "Desde la entrega, corregimos sin costo los errores de lo que construimos, dentro del alcance acordado. No cubre cambios que haga un tercero o la propia empresa, ni requerimientos nuevos: eso se cotiza como trabajo aparte y se dice antes de hacerlo.",
+      "Corregimos sin costo los errores de lo que construimos, dentro del alcance acordado. No cubre cambios de terceros o de la empresa, requerimientos nuevos ni ampliaciones: eso se cotiza aparte y se avisa antes.",
     implicancia:
       "Lo que entregamos funcionando, sigue funcionando. Sin discutir de quién es la culpa.",
   },
@@ -63,7 +63,7 @@ export const CONDICIONES: Condicion[] = [
     id: "sin-lock-in",
     titulo: "Sin lock-in",
     detalle:
-      "El software no depende de una cuenta ni de un servidor del estudio para funcionar. Dónde corre lo define la empresa.",
+      "No depende de una cuenta ni de un servidor nuestro para funcionar. Dónde corre lo define la empresa.",
     implicancia:
       "Nadie queda obligado a seguir con nosotros para poder usar lo que se construyó.",
   },
@@ -71,7 +71,7 @@ export const CONDICIONES: Condicion[] = [
     id: "alcance-cerrado",
     titulo: "Alcance cerrado",
     detalle:
-      "Qué se va a construir, cuánto cuesta y cuánto demora quedan por escrito antes de empezar. Si el alcance no cierra, no hay propuesta y no se debe nada.",
+      "Qué se construye, cuánto cuesta y cuánto demora, por escrito antes de empezar. Si el alcance no cierra, no hay propuesta y no se debe nada.",
     implicancia: "No se factura por hora contra un alcance que se mueve.",
   },
 ];

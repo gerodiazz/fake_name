@@ -36,9 +36,14 @@ export type Columna = {
   titulo: string;
   /** Cómo se lo describe en una línea. */
   resumen: string;
-  /** El recorrido, paso por paso. Es la comparación que importa. */
-  pasos: string[];
-  /** Cuándo conviene. Que la automatización simple tenga su lugar es el punto. */
+  /**
+   * El recorrido, como cadena de eslabones. No es una lista de pasos con
+   * explicación: el flujo completo se cuenta en la demo, un poco más abajo, y
+   * contarlo dos veces no es énfasis. Acá la diferencia tiene que VERSE —dos
+   * eslabones contra seis— y eso no necesita oraciones.
+   */
+  cadena: string[];
+  /** Cuándo conviene cada uno. */
   cuandoConviene: string;
 };
 
@@ -52,19 +57,20 @@ export const COMPARACION: Columna[] = [
   {
     titulo: "Chatbot",
     resumen: "Contesta. No toca ningún sistema.",
-    pasos: ["Recibe una pregunta.", "Devuelve una respuesta."],
+    cadena: ["pregunta", "respuesta"],
     cuandoConviene:
       "Cuando alcanza con informar: horarios, dirección, preguntas frecuentes.",
   },
   {
     titulo: "Agente",
     resumen: "Hace el trabajo. Deja el proceso avanzado.",
-    pasos: [
-      "Recibe una solicitud como la escribió una persona.",
-      "Interpreta qué se necesita.",
-      "Consulta la información que tiene autorizada.",
-      "Ejecuta la acción que corresponde y deja registro.",
-      "Pide intervención humana si no puede resolverlo con seguridad.",
+    cadena: [
+      "solicitud",
+      "interpreta",
+      "consulta",
+      "ejecuta",
+      "registra",
+      "deriva si hace falta",
     ],
     cuandoConviene:
       "Cuando el pedido llega en lenguaje de persona, cambia de forma en cada caso y hay que tocar los sistemas de la empresa para resolverlo.",

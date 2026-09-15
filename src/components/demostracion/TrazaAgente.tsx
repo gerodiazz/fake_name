@@ -112,10 +112,7 @@ function EtapaDelRecorrido({
         </span>
       </div>
 
-      <p className="mt-1 max-w-[42ch] text-[14px] leading-relaxed text-tinta">
-        {etapa.que}
-      </p>
-      <p className="mt-1 max-w-[42ch] text-[13px] leading-relaxed text-tinta-2">
+      <p className="mt-1 max-w-[44ch] text-[14px] leading-relaxed text-tinta-2">
         {etapa.detalle}
       </p>
 

@@ -48,22 +48,24 @@ export default function QueEsUnAgente() {
                 {columna.resumen}
               </p>
 
-              <ol className="mt-6 max-w-[44ch]">
-                {columna.pasos.map((paso, j) => (
-                  <li
-                    key={paso}
-                    className="flex gap-3 py-1.5 text-[14px] leading-relaxed text-tinta-2"
-                  >
+              {/* La cadena. Dos eslabones contra seis: la diferencia se ve
+                  antes de leerse, y el recorrido completo se cuenta abajo. */}
+              <ul className="mt-5 flex flex-wrap items-center gap-x-1.5 gap-y-2">
+                {columna.cadena.map((eslabon, j) => (
+                  <li key={eslabon} className="flex items-center gap-1.5">
                     <span
-                      aria-hidden="true"
-                      className="shrink-0 text-[11px] tabular-nums tracking-[0.14em]"
+                      className={esAgente ? "chip chip-klein" : "chip chip-superficie"}
                     >
-                      {String(j + 1).padStart(2, "0")}
+                      {eslabon}
                     </span>
-                    <span>{paso}</span>
+                    {j < columna.cadena.length - 1 ? (
+                      <span className="flecha" aria-hidden="true">
+                        →
+                      </span>
+                    ) : null}
                   </li>
                 ))}
-              </ol>
+              </ul>
 
               <p className="hairline hairline-t mt-6 max-w-[44ch] pt-4 text-[13px] leading-relaxed text-tinta-2">
                 <span className="kicker kicker-tinta">Cuándo conviene · </span>

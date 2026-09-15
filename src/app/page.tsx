@@ -111,9 +111,11 @@ export default function Home() {
             </TitularRevelado>
             <p className="mt-5 max-w-[50ch] text-[15px] leading-relaxed text-tinta-2 sm:text-[16px]">
               Seis preguntas sobre cómo se trabaja hoy. Al terminar queda la
-              lista de procesos que se pueden pasar a software, una estimación
-              de las horas que hoy consumen y un plazo de implementación. No se
-              piden datos de contacto para verlo.
+              lista de los procesos que se pueden pasar a software, con valores
+              de referencia de cuánto tiempo suele llevar cada uno y en cuántas
+              semanas se implementarían. Es un punto de partida, no un análisis
+              de tu empresa: eso sale de la reunión. No se piden datos de
+              contacto para verlo.
             </p>
 
             <div className="mt-10">

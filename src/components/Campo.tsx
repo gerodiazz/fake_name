@@ -11,28 +11,78 @@
  * enfocar y rompe el layout mobile.
  */
 
-import type { FormEvent, ReactNode } from "react";
+import { useState, type FormEvent, type ReactNode } from "react";
 
 /** Cualquiera de los tres controles que usa el sitio. */
 type Control = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
 
-/** Microcopy del navegador cuando falta un campo obligatorio. */
+/** Microcopy propio, en el idioma del sitio y no en el del sistema operativo. */
 const FALTA_COMPLETAR = "Falta completar este campo.";
+const EMAIL_INVALIDO = "Revisá el email: falta el @ o el dominio.";
+const REVISAR = "Revisá este campo.";
 
 /**
- * El navegador trae su propio mensaje de validación, con su redacción y en el
- * idioma del sistema. Estos dos manejadores lo reemplazan por el del sitio
- * cuando el campo está vacío, y lo limpian apenas se escribe para que el aviso
- * no quede pegado. El resto de las validaciones (un email mal escrito, por
- * ejemplo) las sigue explicando el navegador.
+ * Al suprimir el globo del navegador se pierde algo que el navegador hacía
+ * gratis: llevar el foco al primer campo inválido cuando se intenta enviar.
+ * Sin eso, quien manda un formulario vacío desde un teléfono ve tres avisos
+ * arriba y se queda parado abajo, al lado del botón.
+ *
+ * Los eventos `invalid` de un mismo envío se disparan todos juntos y en orden
+ * de documento, así que alcanza con atender al primero y soltar la marca en el
+ * siguiente turno del bucle de eventos.
  */
-function alSerInvalido(evento: FormEvent<Control>) {
-  const campo = evento.currentTarget;
-  if (campo.validity.valueMissing) campo.setCustomValidity(FALTA_COMPLETAR);
+let yaSeEnfoco = false;
+
+function enfocarSiEsElPrimero(campo: Control) {
+  if (yaSeEnfoco) return;
+  yaSeEnfoco = true;
+  campo.focus();
+  campo.scrollIntoView({ block: "center", behavior: "smooth" });
+  window.setTimeout(() => {
+    yaSeEnfoco = false;
+  }, 0);
 }
 
-function limpiarValidacion(campo: Control) {
-  campo.setCustomValidity("");
+/**
+ * ESTADO DE VALIDACIÓN DE UN CAMPO
+ *
+ * El navegador trae su propio globo de validación, con su redacción y en el
+ * idioma del sistema operativo: un formulario en castellano que avisa
+ * "Please fill out this field". Además el globo se va solo a los pocos
+ * segundos y no deja rastro de qué campo falta.
+ *
+ * Acá el globo se suprime —preventDefault sobre el evento invalid— y el aviso
+ * se escribe debajo del campo, en la línea que ya existía para la ayuda. El
+ * navegador sigue encargándose de lo suyo: enfocar el primer campo inválido al
+ * intentar enviar, y decidir qué es válido.
+ *
+ * El mensaje se borra apenas el campo pasa a ser válido, no al primer tecleo:
+ * un aviso que desaparece antes de que el problema se resuelva no sirve.
+ */
+function useValidacion() {
+  const [error, setError] = useState<string | null>(null);
+
+  function alSerInvalido(evento: FormEvent<Control>) {
+    evento.preventDefault();
+    const campo = evento.currentTarget;
+    if (campo.validity.valueMissing) setError(FALTA_COMPLETAR);
+    else if (campo.validity.typeMismatch) setError(EMAIL_INVALIDO);
+    else setError(REVISAR);
+    enfocarSiEsElPrimero(campo);
+  }
+
+  function alEscribir(campo: Control) {
+    if (error && campo.checkValidity()) setError(null);
+  }
+
+  /** Revalida al salir del campo: avisa antes de llegar al botón. */
+  function alSalir(campo: Control) {
+    if (campo.value && !campo.checkValidity()) {
+      setError(campo.validity.typeMismatch ? EMAIL_INVALIDO : REVISAR);
+    }
+  }
+
+  return { error, alSerInvalido, alEscribir, alSalir };
 }
 
 type BaseProps = {
@@ -48,8 +98,9 @@ function Envoltorio({
   etiqueta,
   requerido,
   ayuda,
+  error,
   children,
-}: BaseProps & { children: ReactNode }) {
+}: BaseProps & { error?: string | null; children: ReactNode }) {
   return (
     <div>
       <label htmlFor={id} className="kicker kicker-tinta block">
@@ -57,14 +108,23 @@ function Envoltorio({
         {requerido ? <span aria-hidden="true"> ·</span> : null}
       </label>
       {children}
-      {ayuda ? <p className="mt-1.5 text-[13px] text-tinta-2">{ayuda}</p> : null}
+      {/* El error reemplaza a la ayuda: dos renglones debajo del mismo campo,
+          uno diciendo qué poner y otro diciendo qué está mal, es ruido.
+          aria-live para que el lector de pantalla lo anuncie al aparecer. */}
+      {error ? (
+        <p id={`${id}-error`} className="campo-error mt-1.5 text-[13px]" aria-live="polite">
+          {error}
+        </p>
+      ) : ayuda ? (
+        <p className="mt-1.5 text-[13px] text-tinta-2">{ayuda}</p>
+      ) : null}
     </div>
   );
 }
 
 /** Clases compartidas por todos los controles: línea abajo y nada más. */
 const CONTROL =
-  "hairline hairline-b mt-2 w-full bg-transparent pb-2 text-[16px] text-tinta placeholder:text-tinta-2/60";
+  "campo hairline hairline-b mt-2 w-full bg-transparent pb-2 text-[16px] text-tinta placeholder:text-tinta-2/60";
 
 export function CampoTexto({
   id,
@@ -83,8 +143,16 @@ export function CampoTexto({
   marcador?: string;
   autoCompletar?: string;
 }) {
+  const { error, alSerInvalido, alEscribir, alSalir } = useValidacion();
+
   return (
-    <Envoltorio id={id} etiqueta={etiqueta} requerido={requerido} ayuda={ayuda}>
+    <Envoltorio
+      id={id}
+      etiqueta={etiqueta}
+      requerido={requerido}
+      ayuda={ayuda}
+      error={error}
+    >
       <input
         id={id}
         name={id}
@@ -92,10 +160,14 @@ export function CampoTexto({
         required={requerido}
         value={valor}
         onChange={(e) => {
-          limpiarValidacion(e.currentTarget);
+          alEscribir(e.currentTarget);
           onCambio(e.target.value);
         }}
+        onBlur={(e) => alSalir(e.currentTarget)}
         onInvalid={alSerInvalido}
+        aria-invalid={error ? true : undefined}
+        aria-describedby={error ? `${id}-error` : undefined}
+        data-estado={error ? "error" : undefined}
         placeholder={marcador}
         autoComplete={autoCompletar}
         className={CONTROL}
@@ -119,8 +191,16 @@ export function CampoArea({
   marcador?: string;
   filas?: number;
 }) {
+  const { error, alSerInvalido, alEscribir } = useValidacion();
+
   return (
-    <Envoltorio id={id} etiqueta={etiqueta} requerido={requerido} ayuda={ayuda}>
+    <Envoltorio
+      id={id}
+      etiqueta={etiqueta}
+      requerido={requerido}
+      ayuda={ayuda}
+      error={error}
+    >
       <textarea
         id={id}
         name={id}
@@ -128,10 +208,13 @@ export function CampoArea({
         rows={filas}
         value={valor}
         onChange={(e) => {
-          limpiarValidacion(e.currentTarget);
+          alEscribir(e.currentTarget);
           onCambio(e.target.value);
         }}
         onInvalid={alSerInvalido}
+        aria-invalid={error ? true : undefined}
+        aria-describedby={error ? `${id}-error` : undefined}
+        data-estado={error ? "error" : undefined}
         placeholder={marcador}
         className={`${CONTROL} resize-none leading-relaxed`}
       />
@@ -152,18 +235,29 @@ export function CampoSelect({
   onCambio: (valor: string) => void;
   opciones: { valor: string; texto: string }[];
 }) {
+  const { error, alSerInvalido, alEscribir } = useValidacion();
+
   return (
-    <Envoltorio id={id} etiqueta={etiqueta} requerido={requerido} ayuda={ayuda}>
+    <Envoltorio
+      id={id}
+      etiqueta={etiqueta}
+      requerido={requerido}
+      ayuda={ayuda}
+      error={error}
+    >
       <select
         id={id}
         name={id}
         required={requerido}
         value={valor}
         onChange={(e) => {
-          limpiarValidacion(e.currentTarget);
+          alEscribir(e.currentTarget);
           onCambio(e.target.value);
         }}
         onInvalid={alSerInvalido}
+        aria-invalid={error ? true : undefined}
+        aria-describedby={error ? `${id}-error` : undefined}
+        data-estado={error ? "error" : undefined}
         // appearance-none saca el estilo de sistema; la flecha se dibuja con
         // un background SVG inline para no depender de ningún ícono externo.
         className={`${CONTROL} appearance-none bg-[length:10px] bg-[right_2px_center] bg-no-repeat pr-6`}

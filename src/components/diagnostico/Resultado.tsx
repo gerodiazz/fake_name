@@ -18,6 +18,7 @@
  */
 
 import NumeroGigante from "@/components/NumeroGigante";
+import { SEMANAS_BASE } from "@/lib/diagnostico";
 import { BandaKlein } from "@/components/Decoracion";
 import PilaAgentes from "@/components/diagnostico/PilaAgentes";
 import EngancheReferidos from "@/components/diagnostico/EngancheReferidos";
@@ -129,9 +130,15 @@ export default function Resultado({
 
       {/* El detalle, en una línea: cuántos procesos y en cuánto tiempo. Va
           entre hairlines para que se lea como el dato de cierre del bloque. */}
-      <p className="hairline hairline-t hairline-b mt-10 max-w-[46ch] py-5 font-serif text-[19px] leading-snug tabular-nums sm:text-[21px]">
+      <p className="hairline hairline-t mt-10 max-w-[46ch] pt-5 font-serif text-[19px] leading-snug tabular-nums sm:text-[21px]">
         {agentes.length} {agentes.length === 1 ? "proceso" : "procesos"} ·
         implementación estimada en {semanas} semanas
+      </p>
+      {/* La regla que produce el número, a la vista: un plazo con su cuenta
+          escrita se puede discutir en la reunión; uno sin explicación, solo se
+          puede creer o no. */}
+      <p className="hairline hairline-b max-w-[46ch] pb-5 pt-1 text-[13px] text-tinta-2">
+        {SEMANAS_BASE} semanas de base más una por proceso, con tope de ocho.
       </p>
 
       {/* El botón Klein: agendar la reunión. */}

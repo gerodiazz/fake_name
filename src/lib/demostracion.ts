@@ -38,8 +38,6 @@ export type Etapa = {
   id: string;
   /** El nombre de la etapa. Se repite en toda la sección de ejemplos. */
   nombre: string;
-  /** Qué pasa en esta etapa, en una línea. */
-  que: string;
   /** El dato concreto de este ejemplo. Inventado, como todo el bloque. */
   detalle: string;
   /** Marca las etapas que no son automáticas. */
@@ -60,7 +58,7 @@ export const DEMOSTRACION = {
   rotulo: "Ejemplo conceptual · así podría funcionar",
   titulo: "Un pedido que entra por mensaje y termina cargado en el sistema",
   bajada:
-    "El mismo recorrido que hoy hace una persona a mano: leer el mensaje, buscar el producto, chequear el stock, cargar el pedido. A la derecha, qué hace el software en cada etapa.",
+    "El mismo recorrido que hoy hace una persona a mano, con el dato que maneja el software en cada etapa.",
 
   /** Canal de entrada. El pedido llega como lo escribiría cualquiera. */
   canal: "WhatsApp · Pedidos",
@@ -78,18 +76,12 @@ export const DEMOSTRACION = {
         "Tengo 20 unidades del filtro 45 mm disponibles y el jueves entra sin problema. Dejo el pedido preparado a nombre de Distribuidora del Sur para que lo confirme el equipo.",
       hora: "21:04",
     },
-    {
-      de: "cliente",
-      texto: "Perfecto, dale.",
-      hora: "21:05",
-    },
   ] satisfies Mensaje[],
 
   etapas: [
     {
       id: "solicitud",
       nombre: "Solicitud",
-      que: "Entra un pedido por el canal que la empresa ya usa.",
       detalle: "Un mensaje de WhatsApp, a las nueve de la noche.",
       corriendo: "recibiendo",
       estado: "recibido",
@@ -98,7 +90,6 @@ export const DEMOSTRACION = {
     {
       id: "interpretacion",
       nombre: "Interpretación",
-      que: "El software identifica qué se está pidiendo.",
       detalle: "Producto, cantidad 20, entrega el jueves, cliente identificado.",
       corriendo: "procesando",
       estado: "procesado",
@@ -107,7 +98,6 @@ export const DEMOSTRACION = {
     {
       id: "consulta",
       nombre: "Consulta",
-      que: "Busca en las fuentes que tiene autorizadas.",
       detalle: "Catálogo y stock de la empresa. No responde de memoria.",
       corriendo: "consultando",
       estado: "consultado",
@@ -116,7 +106,6 @@ export const DEMOSTRACION = {
     {
       id: "accion",
       nombre: "Acción",
-      que: "Ejecuta lo que corresponde dentro de sus permisos.",
       detalle: "Deja el pedido preparado, a la espera de confirmación.",
       intervencion: "aprobacion",
       corriendo: "ejecutando",
@@ -126,7 +115,6 @@ export const DEMOSTRACION = {
     {
       id: "registro",
       nombre: "Registro",
-      que: "Deja escrito qué hizo y con qué datos.",
       detalle: "Mensaje original, consulta al stock y pedido generado.",
       corriendo: "registrando",
       estado: "registrado",
@@ -135,7 +123,6 @@ export const DEMOSTRACION = {
     {
       id: "escalamiento",
       nombre: "Escalamiento",
-      que: "Si no puede resolverlo con seguridad, lo pasa a una persona.",
       detalle:
         "Si el filtro no estuviera o el cliente no figurara, frena y avisa.",
       intervencion: "persona",

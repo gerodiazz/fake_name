@@ -1365,11 +1365,6 @@ label {
   color: #a33327;
 }
 
-/* Éxito. Usa el verde de la paleta, el mismo de las horas. */
-.campo[data-estado="ok"] {
-  border-bottom-color: var(--color-verde);
-}
-
 /* --------------------------------------------------------------------------
    Chip — una etiqueta de dato, no un botón
 
