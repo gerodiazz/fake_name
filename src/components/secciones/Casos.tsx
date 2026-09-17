@@ -1,24 +1,72 @@
 /**
- * SECCIÓN 09 — CASOS
+ * SECCIÓN — CASOS REALES
  *
- * NO SE RENDERIZA MIENTRAS NO HAYA CASOS REALES.
+ * Va inmediatamente después de "cómo funciona", que es donde termina la
+ * demostración conceptual. El orden no es casual: el visitante acaba de ver un
+ * ejemplo inventado corriendo, y la pregunta que sigue es siempre la misma
+ * —"¿esto ya lo hicieron en una empresa de verdad?"—. La sección contesta que
+ * sí antes de pedirle nada.
  *
- * El componente devuelve null si CASOS y DEMOS están vacíos, y la sección
- * tampoco ocupa número de expediente (src/lib/secciones.ts la marca como no
- * visible). No hay sección "casos en preparación", ni recuadros grises, ni
- * logos de ejemplo: la falta de casos no se resuelve inventando prueba social.
+ * CASOS ≠ EJEMPLOS. Acá hay tres clientes con nombre y apellido; en la sección
+ * de ejemplos hay procesos que se podrían construir. Las dos dicen lo que son
+ * en la primera línea y nunca se mezclan.
  *
- * Cuando se cargue el primer caso en src/lib/casos.ts, la sección aparece sola
- * con su número y las siguientes se corren.
+ * TRES TARJETAS CORTAS, NO TRES MUROS DE TEXTO. La home ya es larga. Cada
+ * tarjeta contesta cliente, rubro, problema, qué se construyó y con qué, y el
+ * que quiere más entra al caso: /casos/<slug>. El detalle largo vive ahí.
  *
- * Casos y demos propias se muestran separados a propósito: una demo construida
- * por el estudio no es prueba de que alguien nos haya contratado, y mezclarlas
- * sería exactamente la clase de prueba social que el sitio evita.
+ * La sección sigue apagándose sola si algún día CASOS queda vacío: el arreglo
+ * manda, acá no hay nada escrito a mano (ver src/lib/secciones.ts).
  */
 
+import Link from "next/link";
 import Seccion from "@/components/Seccion";
 import TitularRevelado from "@/components/TitularRevelado";
-import { CASOS, DEMOS } from "@/lib/casos";
+import { CASOS, DEMOS, type Caso } from "@/lib/casos";
+
+function Tarjeta({ caso }: { caso: Caso }) {
+  return (
+    <Link
+      href={`/casos/${caso.slug}`}
+      aria-label={`Ver el caso de ${caso.cliente}`}
+      // `group` para que la flecha del pie reaccione al hover de toda la
+      // tarjeta. La tarjeta entera es el enlace: no hay nada interactivo
+      // adentro con lo que pueda competir.
+      className="group flex h-full flex-col py-7 sm:px-5"
+    >
+      <h3 className="font-serif text-[21px] leading-tight transition-opacity duration-100 group-hover:opacity-70 sm:text-[23px]">
+        {caso.cliente}
+      </h3>
+      <p className="kicker kicker-tinta mt-2">{caso.industria}</p>
+
+      {/* El antes y el después, en una oración. */}
+      <p className="mt-4 max-w-[38ch] font-serif text-[16px] leading-snug">
+        {caso.resumen}
+      </p>
+
+      {/* Qué se construyó, y de qué clase de software estamos hablando. */}
+      <p className="mt-3 max-w-[38ch] text-[14px] leading-relaxed text-tinta-2">
+        {caso.construido}
+      </p>
+
+      <p className="mt-auto pt-6 text-[13px] text-tinta-2">
+        {caso.integraciones.join(" · ")}
+      </p>
+
+      <p className="mt-4 flex items-center gap-2 text-[14px] text-acento transition-opacity duration-100 group-hover:opacity-80">
+        <span className="underline decoration-[1.5px] underline-offset-[7px]">
+          Ver caso
+        </span>
+        <span
+          aria-hidden="true"
+          className="transition-transform duration-150 group-hover:translate-x-1"
+        >
+          →
+        </span>
+      </p>
+    </Link>
+  );
+}
 
 export default function Casos({
   numero,
@@ -31,79 +79,27 @@ export default function Casos({
 
   return (
     <Seccion id="casos" numero={numero} kicker={kicker} aire>
-      <div className="pb-24 pt-2 sm:pb-32">
+      <div className="pb-20 pt-2 sm:pb-28">
         <TitularRevelado
           como="h2"
-          className="titular max-w-[20ch] text-[clamp(1.75rem,7.5vw,3rem)]"
+          className="titular mt-5 max-w-[20ch] text-[clamp(1.75rem,7.5vw,3rem)]"
         >
-          Trabajos hechos
+          Casos reales
         </TitularRevelado>
 
+        <p className="mt-5 max-w-[50ch] text-[15px] leading-relaxed text-tinta-2 sm:text-[16px]">
+          Problemas concretos y el software que construimos para resolverlos.
+          Tres clientes, con nombre. Lo que está más abajo, en ejemplos, es lo
+          que se puede construir; esto ya está construido.
+        </p>
+
         {CASOS.length > 0 ? (
-          <ul className="mt-12">
+          <ul className="grilla-expuesta grilla-expuesta-lg mt-12 grid grid-cols-1 hairline hairline-t hairline-b lg:grid-cols-3">
             {CASOS.map((caso) => (
-              <li key={caso.id} className="hairline hairline-t py-8">
-                <h3 className="font-serif text-[23px] leading-tight sm:text-[26px]">
-                  {caso.titulo}
-                </h3>
-                <p className="mt-1 text-[11px] uppercase tracking-[0.14em] text-tinta-2">
-                  {caso.empresa ?? caso.contexto}
-                </p>
-
-                <div className="mt-6 grid grid-cols-1 gap-x-12 gap-y-6 lg:grid-cols-2">
-                  <div>
-                    <p className="kicker kicker-tinta">El problema</p>
-                    <p className="mt-2 max-w-[46ch] text-[15px] leading-relaxed text-tinta">
-                      {caso.problema}
-                    </p>
-
-                    <p className="kicker kicker-tinta mt-6">Cómo se hacía</p>
-                    <ol className="mt-2 max-w-[46ch]">
-                      {caso.procesoAnterior.map((paso, i) => (
-                        <li
-                          key={paso}
-                          className="flex gap-3 py-1 text-[14px] leading-relaxed text-tinta-2"
-                        >
-                          <span
-                            aria-hidden="true"
-                            className="shrink-0 text-[11px] tabular-nums tracking-[0.14em]"
-                          >
-                            {String(i + 1).padStart(2, "0")}
-                          </span>
-                          <span>{paso}</span>
-                        </li>
-                      ))}
-                    </ol>
-                  </div>
-
-                  <div>
-                    <p className="kicker kicker-tinta">Qué se construyó</p>
-                    <p className="mt-2 max-w-[46ch] text-[15px] leading-relaxed text-tinta">
-                      {caso.solucion}
-                    </p>
-
-                    <p className="kicker kicker-tinta mt-6">Resultado</p>
-                    <p className="mt-2 max-w-[46ch] font-serif text-[18px] leading-snug">
-                      {caso.resultado}
-                    </p>
-
-                    <dl className="mt-6 flex flex-wrap gap-x-10 gap-y-3 text-[13px]">
-                      <div>
-                        <dt className="kicker kicker-tinta">Tiempo</dt>
-                        <dd className="mt-1 tabular-nums">{caso.tiempo}</dd>
-                      </div>
-                      <div>
-                        <dt className="kicker kicker-tinta">Herramientas</dt>
-                        <dd className="mt-1 max-w-[34ch] text-tinta-2">
-                          {caso.herramientas.join(" · ")}
-                        </dd>
-                      </div>
-                    </dl>
-                  </div>
-                </div>
+              <li key={caso.slug} className="flex">
+                <Tarjeta caso={caso} />
               </li>
             ))}
-            <li className="hairline hairline-t" aria-hidden="true" />
           </ul>
         ) : null}
 

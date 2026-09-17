@@ -1,5 +1,5 @@
 /**
- * EJEMPLOS (sección 04)
+ * EJEMPLOS — procesos que se podrían construir
  *
  * Contesta la pregunta que el visitante se hace después de entender qué es un
  * agente: "¿esto se puede aplicar a mi empresa?".
@@ -24,7 +24,9 @@
  * diagnóstico, y por eso siguen acá: cuando el visitante llega a las
  * preguntas, ya sabe de qué se está hablando.
  *
- * Ningún ejemplo lleva métricas: son ejemplos, no casos.
+ * Ningún ejemplo lleva métricas: son ejemplos, no casos. Los trabajos
+ * entregados, con cliente y nombre, viven en src/lib/casos.ts y tienen su
+ * propia sección más arriba en la home. Las dos cosas no se mezclan.
  */
 
 /** Los rubros que cubre el diagnóstico. Una línea, para reconocerse. */

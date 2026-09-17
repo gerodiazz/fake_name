@@ -10,8 +10,8 @@
  * mover una línea de este arreglo.
  *
  * Una sección puede estar oculta (`visible: false`). Cuando lo está, no ocupa
- * número: si todavía no hay casos reales, la 09 no queda vacía ni deja un
- * agujero en la numeración. Las que siguen se corren solas.
+ * número: si algún día no hubiera casos reales cargados, la sección no queda
+ * vacía ni deja un agujero en la numeración. Las que siguen se corren solas.
  */
 
 import { CASOS } from "@/lib/casos";
@@ -19,13 +19,13 @@ import { CASOS } from "@/lib/casos";
 export type IdSeccion =
   | "contenido"
   | "como-funciona"
+  | "casos"
   | "diagnostico"
   | "ejemplos"
   | "socios"
   | "como-trabajamos"
   | "condiciones"
   | "control"
-  | "casos"
   | "faq"
   | "contacto";
 
@@ -62,6 +62,11 @@ const DEFINICIONES: DefinicionSeccion[] = [
   // el botón secundario del hero: el visitante toca "Ver cómo funciona" y
   // llega a una sección que se llama así.
   { id: "como-funciona", kicker: "Cómo funciona", corto: "Cómo funciona", enIndice: true },
+  // Va apenas termina la demostración conceptual y antes del diagnóstico: el
+  // visitante acaba de ver un ejemplo inventado corriendo y lo primero que se
+  // pregunta es si esto ya se hizo en una empresa de verdad. Se enciende sola
+  // cuando hay casos cargados; sin casos no hay sección ni número.
+  { id: "casos", kicker: "Casos reales", corto: "Casos", enIndice: false, visible: CASOS.length > 0 },
   { id: "diagnostico", kicker: "Diagnóstico", corto: "Diagnóstico", enIndice: true },
   // El kicker dejó de decir "por industria": la sección ya no está organizada
   // por rubro, son tres procesos y los rubros van en una línea de chips.
@@ -70,9 +75,6 @@ const DEFINICIONES: DefinicionSeccion[] = [
   { id: "como-trabajamos", kicker: "Cómo trabajamos", corto: "Proceso", enIndice: false },
   { id: "condiciones", kicker: "Condiciones claras", corto: "Condiciones", enIndice: false },
   { id: "control", kicker: "Control, errores y datos", corto: "Control", enIndice: false },
-  // Se enciende sola cuando haya un caso real cargado. Sin casos no hay
-  // sección: el sitio no rellena el hueco con prueba social inventada.
-  { id: "casos", kicker: "Casos", corto: "Casos", enIndice: false, visible: CASOS.length > 0 },
   { id: "faq", kicker: "Preguntas", corto: "Preguntas", enIndice: true },
   // Contacto no es un enlace más del índice: es el botón de la barra, que se
   // ve siempre. Ponerlo además como enlace sería ofrecer la misma acción dos

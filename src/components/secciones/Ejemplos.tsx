@@ -1,5 +1,5 @@
 /**
- * SECCIÓN 04 — EJEMPLOS
+ * SECCIÓN — EJEMPLOS (procesos que se podrían construir, no trabajos hechos)
  *
  * Dos bloques y nada más: la lista de rubros en una línea, para que el
  * visitante se reconozca, y tres ejemplos de tres líneas.
@@ -54,8 +54,24 @@ export default function Ejemplos({
           como="h2"
           className="titular max-w-[22ch] text-[clamp(1.75rem,7.5vw,3rem)]"
         >
-          Qué se puede automatizar
+          Procesos que podemos automatizar
         </TitularRevelado>
+
+        {/* La línea que separa esta sección de la de casos. Va acá arriba,
+            antes de que nadie pueda leer un ejemplo como si fuera un trabajo
+            entregado. Los casos tienen cliente con nombre; estos, no. */}
+        <p className="mt-5 max-w-[52ch] text-[15px] leading-relaxed text-tinta-2 sm:text-[16px]">
+          Son ejemplos, no casos: procesos que aparecen en casi cualquier
+          empresa del rubro y que se pueden pasar a software. Lo que ya
+          construimos para clientes está en{" "}
+          <a
+            href="#casos"
+            className="text-tinta underline decoration-linea underline-offset-4 transition-colors duration-100 hover:decoration-tinta-2"
+          >
+            casos reales
+          </a>
+          .
+        </p>
 
         {/* Los rubros, en una línea. Para reconocerse alcanza con el nombre. */}
         <p className="kicker kicker-tinta mt-8">

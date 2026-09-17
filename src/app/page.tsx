@@ -58,7 +58,12 @@ export default function Home() {
           kicker={kickerDe("como-funciona")}
         />
 
-        {/* 03 · Reconocer el problema propio, con números propios */}
+        {/* 03 · La prueba: esto ya lo construimos, con clientes con nombre.
+            Va acá porque es la pregunta que queda después de ver la
+            demostración, y porque llega antes de pedirle nada a nadie. */}
+        <Casos numero={numeroDe("casos")} kicker={kickerDe("casos")} />
+
+        {/* 04 · Reconocer el problema propio, con números propios */}
         <Seccion
           id="diagnostico"
           numero={numeroDe("diagnostico")}
@@ -84,29 +89,26 @@ export default function Home() {
           </div>
         </Seccion>
 
-        {/* 04 · "¿Qué podrían automatizar en una empresa como la mía?" */}
+        {/* 05 · "¿Qué podrían automatizar en una empresa como la mía?" */}
         <Ejemplos numero={numeroDe("ejemplos")} kicker={kickerDe("ejemplos")} />
 
-        {/* 05 · Confiar: quién lo construye */}
+        {/* 06 · Confiar: quién lo construye */}
         <Socios numero={numeroDe("socios")} kicker={kickerDe("socios")} />
 
-        {/* 06 · Entender el modelo: las cuatro etapas y sus plazos */}
+        {/* 07 · Entender el modelo: las cuatro etapas y sus plazos */}
         <ComoTrabajamos
           numero={numeroDe("como-trabajamos")}
           kicker={kickerDe("como-trabajamos")}
         />
 
-        {/* 07 · Entender el modelo: qué se contrata y qué se recibe */}
+        {/* 08 · Entender el modelo: qué se contrata y qué se recibe */}
         <Condiciones
           numero={numeroDe("condiciones")}
           kicker={kickerDe("condiciones")}
         />
 
-        {/* 08 · Bajar el riesgo: control, errores y datos */}
+        {/* 09 · Bajar el riesgo: control, errores y datos */}
         <Control numero={numeroDe("control")} kicker={kickerDe("control")} />
-
-        {/* 09 · Prueba. No se renderiza mientras no haya casos reales. */}
-        <Casos numero={numeroDe("casos")} kicker={kickerDe("casos")} />
 
         {/* 10 · Lo secundario */}
         <Faq numero={numeroDe("faq")} kicker={kickerDe("faq")} />
