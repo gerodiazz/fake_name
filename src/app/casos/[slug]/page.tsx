@@ -284,18 +284,20 @@ export default async function PaginaDeCaso({
               ))}
             </div>
 
-            {/* Sin porcentajes ni horas ahorradas: no se midieron. Decirlo
-                cuesta menos que inventar un número que después hay que
-                sostener. */}
-            <p className="hairline hairline-t mt-10 max-w-[56ch] pt-6 text-[14px] leading-relaxed text-tinta-2">
-              No hay porcentajes de ahorro en esta página porque no se midieron.
-              Lo que está escrito acá es lo que el cliente puede confirmar.
-            </p>
-
-            {/* El testimonio solo existe si tenemos las palabras exactas. */}
+            {/* El testimonio solo existe si tenemos las palabras exactas.
+                Una cita se publica entera o no se publica, así que lo que se
+                adapta es el cuerpo: cuatro palabras piden tamaño de bajada y
+                cincuenta piden tamaño de lectura. A 26px, la de Sol serían
+                siete renglones de display y se leería como un muro. */}
             {caso.testimonio?.cita ? (
               <figure className="hairline hairline-t mt-10 pt-8">
-                <blockquote className="max-w-[40ch] font-serif text-[22px] leading-snug sm:text-[26px]">
+                <blockquote
+                  className={
+                    caso.testimonio.cita.length > 120
+                      ? "max-w-[54ch] font-serif text-[18px] leading-relaxed sm:text-[20px]"
+                      : "max-w-[40ch] font-serif text-[22px] leading-snug sm:text-[26px]"
+                  }
+                >
                   «{caso.testimonio.cita}»
                 </blockquote>
                 <figcaption className="kicker kicker-tinta mt-4">
@@ -303,6 +305,19 @@ export default async function PaginaDeCaso({
                 </figcaption>
               </figure>
             ) : null}
+
+            {/* Sin porcentajes ni horas ahorradas: no se midieron. Decirlo
+                cuesta menos que inventar un número que después hay que
+                sostener.
+
+                Va al cierre y no antes de la cita: la de Sol empieza diciendo
+                lo mismo con sus palabras, y las dos pegadas se leían como un
+                tartamudeo. Primero habla el cliente, después aclaramos
+                nosotros. */}
+            <p className="hairline hairline-t mt-10 max-w-[56ch] pt-6 text-[14px] leading-relaxed text-tinta-2">
+              No hay porcentajes de ahorro en esta página porque no se midieron.
+              Lo que está escrito acá es lo que el cliente puede confirmar.
+            </p>
           </div>
         </Seccion>
 

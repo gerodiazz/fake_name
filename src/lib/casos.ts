@@ -178,15 +178,17 @@ export const CASOS: Caso[] = [
       },
     ],
     resultado: [
-      "El equipo, que antes estaba saturado de consultas y turnos, puede dedicarse a otras tareas.",
       "El control de validaciones apunta a evitar pérdidas como la que ya habían tenido: una práctica realizada, no validada a tiempo y no pagada por PAMI.",
     ],
-    // Sol, directora de Grupo Medex, nos dejó su testimonio, pero todavía no
-    // tenemos el texto exacto. Hasta que lo tengamos, `cita` queda en null y
-    // el bloque no se dibuja. La idea que expresó —que el equipo, antes
-    // saturado de turnos y consultas, ahora puede enfocarse en lo suyo— ya
-    // está dicha arriba, en `resultado`, con nuestras palabras y sin comillas.
-    testimonio: { cita: null, persona: "Sol", rol: "Directora de Grupo Medex" },
+    // Texto exacto, tal como lo dijo. Es larga para el ritmo de la sección
+    // —las de Emoty y Las Titas tienen cuatro palabras— y el bloque de cita
+    // achica el cuerpo cuando pasa de 120 caracteres, en vez de recortarla:
+    // una cita se publica entera o no se publica.
+    testimonio: {
+      cita: "El agente ayudó a que el equipo, antes saturado con turnos y consultas, ahora puede enfocarse en lo que le corresponde. No hay un número de porcentaje medido, pero el ahorro de tiempo es notorio. La parte de facturación apunta directamente a evitar la pérdida de plata que ya tuvieron por prácticas no validadas.",
+      persona: "Sol",
+      rol: "Directora de Grupo Medex",
+    },
     herramientas: [
       "WhatsApp Business",
       "Poly Digital",

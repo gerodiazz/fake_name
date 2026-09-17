@@ -31,7 +31,6 @@ la página, aunque falten datos.
 | **Rango de inversión real** | `src/lib/condiciones.ts:89` | Aparece una línea arriba del formulario con el orden de magnitud del trabajo, para que alguien pueda descartarse solo. Escribir algo como `"Los proyectos arrancan en USD 2.000"`. |
 | **Tramos de presupuesto del formulario** | `src/components/secciones/Contacto.tsx:40` | Hoy son tramos tentativos en dólares. Hay que confirmarlos contra el precio real del trabajo. |
 | **Recomprimir el video de Medex** | `/public/videos/` (ver `LEEME.md` ahí) | Ya está publicado y funcionando, pero pesa 16 MB para 2:20 a 384×832. Con `preload="none"` no afecta la carga de la página —solo se baja si alguien toca play— así que no bloquea nada. Recortarlo a un minuto y recomprimirlo lo dejaría en un par de megas. En el mismo paso conviene tapar el DNI y el correo personal que se ven pasado el minuto uno. |
-| **Cita exacta de Sol (Grupo Medex)** | `src/lib/casos.ts`, en `testimonio.cita` del caso `grupo-medex` | Tenemos su testimonio pero no el texto literal, así que `cita` está en `null` y el bloque no se dibuja. **No se parafrasea entre comillas.** Al pegar la frase exacta, aparece el testimonio con su nombre y su cargo. Los de Emoty y Las Titas ya están cargados con sus palabras textuales. |
 | **Demos propias** | `src/lib/casos.ts`, en `DEMOS` | Aparecen dentro de la sección de casos, separadas de ellos y rotuladas como lo que son: construidas por el estudio, sin cliente detrás. |
 
 ---
