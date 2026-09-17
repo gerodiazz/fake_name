@@ -19,7 +19,6 @@ la página, aunque falten datos.
 | Qué falta | Dónde se carga | Qué pasa mientras tanto |
 |---|---|---|
 | **Dominio y email reales** | `src/lib/sitio.ts` (`url` y `email`) | La marca ya es Telesca Justel, pero `telescajustel.com` es un supuesto: hay que registrar el dominio real y crear la casilla. **Es el único dato de relleno que sigue a la vista**, porque es a donde el formulario manda el mensaje: hasta que exista, el sitio no recibe nada. |
-| **Foto, rol y LinkedIn de cada socio** | `src/lib/sitio.ts`, en `SOCIOS` | Los nombres ya están: Matheo Telesca y Geronimo Justel. Falta el resto, y cada cosa se dibuja sola cuando existe. **Fotos:** en `/public/images/` (ver `LEEME.md` ahí); mientras falte la de alguno de los dos, la sección no dibuja ningún recuadro. **LinkedIn:** la URL completa del perfil; sin ella no hay ícono. **Rol:** una o dos palabras. Nada de esto se inventa. |
 
 ## No bloquea, pero el sitio dice menos de lo que podría
 
@@ -30,6 +29,7 @@ la página, aunque falten datos.
 | **Enlace de agendamiento** (Cal.com, Calendly) | `src/lib/sitio.ts:57` | Aparece el botón "Agendar directo" arriba del formulario, y el botón del formulario baja a tinta para no competir. Resuelve el pedido de que contactar no sea una barrera. |
 | **Rango de inversión real** | `src/lib/condiciones.ts:89` | Aparece una línea arriba del formulario con el orden de magnitud del trabajo, para que alguien pueda descartarse solo. Escribir algo como `"Los proyectos arrancan en USD 2.000"`. |
 | **Tramos de presupuesto del formulario** | `src/components/secciones/Contacto.tsx:40` | Hoy son tramos tentativos en dólares. Hay que confirmarlos contra el precio real del trabajo. |
+| **Retratos de mayor resolución** | `/public/images/` (ver `LEEME.md` ahí) | Las dos fotos actuales son cuadradas de 640 × 640 y la sección las encuadra a 4:5. Se ven bien porque las caras están centradas, pero quedan apenas blandas en retina y las dos no están a la misma escala. Verticales de 800 × 1000 arreglan las dos cosas. No bloquea nada. |
 | **Recomprimir el video de Medex** | `/public/videos/` (ver `LEEME.md` ahí) | Ya está publicado y funcionando, pero pesa 16 MB para 2:20 a 384×832. Con `preload="none"` no afecta la carga de la página —solo se baja si alguien toca play— así que no bloquea nada. Recortarlo a un minuto y recomprimirlo lo dejaría en un par de megas. En el mismo paso conviene tapar el DNI y el correo personal que se ven pasado el minuto uno. |
 | **Demos propias** | `src/lib/casos.ts`, en `DEMOS` | Aparecen dentro de la sección de casos, separadas de ellos y rotuladas como lo que son: construidas por el estudio, sin cliente detrás. |
 

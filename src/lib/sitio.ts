@@ -80,25 +80,25 @@ export const SITIO = {
  * ┌──────────────────────────────────────────────────────────────────────┐
  * │ LO QUE FALTA, Y DÓNDE VA                                             │
  * │                                                                       │
- * │ Los nombres son reales. El rol, la foto y el LinkedIn están en null   │
- * │ porque todavía no los tengo, y no se inventan: un cargo inventado en  │
- * │ la sección que dice "vas a hablar con quien escribe el código" es     │
- * │ exactamente donde más caro sale.                                      │
+ * │ Están los cuatro datos de los dos: nombre, rol, foto y LinkedIn. Lo   │
+ * │ que sigue vale para el día que haya que reemplazar alguno.            │
  * │                                                                       │
- * │ · FOTO — el archivo va en /public/images/ y `foto` apunta ahí:        │
- * │       foto: "/images/matheo-telesca.jpg"                              │
- * │   Formato: JPG o WebP, vertical, al menos 800×1000. Retrato normal,   │
- * │   sin filtros. Mientras falte la de alguno de los dos, la sección no  │
- * │   dibuja ningún recuadro de foto: o están las dos, o no está ninguna. │
- * │   Un marco vacío al lado de una foto rompe la simetría, que es        │
- * │   justamente lo que esta sección tiene que transmitir.                 │
+ * │ · FOTO — el archivo va en /public/images/ y `foto` apunta ahí. Las    │
+ * │   dos actuales son cuadradas de 640×640 y la sección las encuadra a   │
+ * │   4:5 con object-cover, así que pierden un 10% de cada costado: van   │
+ * │   bien porque las dos caras están centradas. Si se reemplazan, lo     │
+ * │   ideal sigue siendo vertical 4:5 de al menos 800×1000, encuadrada.   │
+ * │   Mientras falte la de alguno de los dos, la sección no dibuja        │
+ * │   ningún recuadro: o están las dos, o no está ninguna. Un marco       │
+ * │   vacío al lado de una foto rompe la simetría, que es justamente lo   │
+ * │   que esta sección tiene que transmitir.                              │
  * │                                                                       │
- * │ · LINKEDIN — la URL completa del perfil:                              │
- * │       linkedin: "https://www.linkedin.com/in/usuario-real/"           │
- * │   Sin URL no se dibuja el ícono. No se adivina el nombre de usuario.  │
+ * │ · LINKEDIN — cargado. Los dos perfiles son los que pasaron ellos,     │
+ * │   tal cual: no se adivinó ningún nombre de usuario.                   │
  * │                                                                       │
- * │ · ROL — una o dos palabras, en minúscula. Lo que cada uno hace de     │
- * │   verdad en los proyectos.                                            │
+ * │ · ROL — cargado, el mismo para los dos. Es el que usan ellos, y va    │
+ * │   tal cual: es también el `jobTitle` de los datos estructurados, así  │
+ * │   que tiene que coincidir con lo que dicen en LinkedIn.               │
  * └──────────────────────────────────────────────────────────────────────┘
  */
 export type Socio = {
@@ -115,14 +115,14 @@ export type Socio = {
 export const SOCIOS: Socio[] = [
   {
     nombre: "Matheo Telesca",
-    rol: null,
-    foto: null,
-    linkedin: null,
+    rol: "AI Automation Engineer",
+    foto: "/images/matheo-telesca.jpg",
+    linkedin: "https://www.linkedin.com/in/matheo-telesca-084a20209/",
   },
   {
     nombre: "Geronimo Justel",
-    rol: null,
-    foto: null,
-    linkedin: null,
+    rol: "AI Automation Engineer",
+    foto: "/images/geronimo-justel.jpg",
+    linkedin: "https://www.linkedin.com/in/gdiazjustel/",
   },
 ];

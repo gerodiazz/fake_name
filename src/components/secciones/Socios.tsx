@@ -38,7 +38,7 @@ function Perfil({ socio }: { socio: Socio }) {
             src={socio.foto}
             alt={socio.nombre}
             fill
-            sizes="(min-width: 640px) 20rem, 100vw"
+            sizes="20rem"
             className="object-cover"
           />
         </div>
