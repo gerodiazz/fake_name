@@ -1,5 +1,5 @@
 /**
- * SECCIÓN 03 — CÓMO TRABAJAMOS
+ * SECCIÓN — CÓMO TRABAJAMOS
  *
  * Las cuatro etapas, dibujadas como diagrama de proceso: un eje de 0.5px en
  * color línea con un nodo por etapa, el primero en acento, y el texto de cada
@@ -18,44 +18,37 @@ import TitularRevelado from "@/components/TitularRevelado";
 import { SITIO } from "@/lib/sitio";
 
 /**
- * Las cuatro etapas, con su plazo habitual.
+ * Las cuatro etapas: nombre, plazo y una sola frase.
  *
- * Cada una contesta la pregunta que el cliente tiene en ese momento del
- * proyecto, y la pregunta va escrita: es la diferencia entre leer una lista de
- * etapas y entender qué pasa en cada una.
+ * Cada etapa llevaba además la pregunta que el cliente tiene en ese momento
+ * —"¿qué proceso vamos a automatizar?", "¿qué se construye?"—. Era una línea
+ * de más por etapa que decía con otras palabras lo que ya dice el detalle.
+ * Cuatro etapas se entienden leyendo cuatro frases, no ocho.
  */
 const PASOS = [
   {
     numero: "01",
     titulo: "Diagnóstico",
-    pregunta: "¿Qué proceso vamos a automatizar?",
     plazo: "45 minutos · sin costo",
-    detalle:
-      "Vemos el proceso con la persona que lo hace. De ahí sale qué conviene automatizar y qué no.",
+    detalle: "Vemos el proceso con quien lo hace y definimos qué conviene automatizar.",
   },
   {
     numero: "02",
     titulo: "Propuesta",
-    pregunta: "¿Qué se construye, cuánto cuesta y cuánto tarda?",
     plazo: "5 días hábiles",
-    detalle:
-      "Alcance, plazo y precio por escrito. Si no cierra, no hay propuesta y no se debe nada.",
+    detalle: "Alcance, precio y plazo por escrito. Si no cierra, no se debe nada.",
   },
   {
     numero: "03",
     titulo: "Implementación",
-    pregunta: "¿Cómo pasa de la idea al sistema funcionando?",
     plazo: "2 a 8 semanas",
-    detalle:
-      "Desarrollo e integración con los sistemas que la empresa ya usa, con una revisión en cada entrega parcial.",
+    detalle: "Construimos e integramos con los sistemas que la empresa ya usa.",
   },
   {
     numero: "04",
     titulo: "Entrega",
-    pregunta: "¿Qué queda en manos de la empresa?",
     plazo: "1 semana",
-    detalle:
-      "El sistema funcionando, el repositorio, la documentación y la capacitación de quien lo va a usar.",
+    detalle: "El sistema, el código y la documentación quedan en manos de la empresa.",
   },
 ];
 
@@ -145,17 +138,17 @@ export default function ComoTrabajamos({
       marcasRegistro
       textoVertical={`${SITIO.nombre} · ${new Date().getFullYear()}`}
     >
-      <div className="pb-28 pt-2 sm:pb-40">
+      <div className="pb-20 pt-2 sm:pb-28">
         <TitularRevelado como="h2" className="titular max-w-[18ch] text-[clamp(1.75rem,7.5vw,3rem)]">
           Cómo trabajamos
         </TitularRevelado>
-        <p className="mt-6 max-w-[50ch] text-[15px] leading-relaxed text-tinta-2 sm:text-[16px]">
-          Cuatro etapas, cada una con su plazo. El precio y el alcance se
-          cierran en la segunda, antes de que el trabajo arranque.
+        <p className="mt-5 max-w-[50ch] text-[15px] leading-relaxed text-tinta-2 sm:text-[16px]">
+          El precio y el alcance se cierran en la segunda etapa, antes de que
+          el trabajo arranque.
         </p>
 
         {/* El diagrama solo en desktop, donde existen las cuatro columnas. */}
-        <div className="mt-16 hidden lg:block">
+        <div className="mt-12 hidden lg:block">
           <Diagrama />
         </div>
 
@@ -176,12 +169,7 @@ export default function ComoTrabajamos({
               <p className="mt-1 text-[13px] tabular-nums text-tinta-2">
                 {paso.plazo}
               </p>
-              {/* La pregunta que el cliente tiene en esta etapa. En tinta
-                  plena: es lo que se lee cuando se recorre el diagrama. */}
-              <p className="mt-4 max-w-[46ch] text-[14px] leading-relaxed text-tinta lg:mx-auto">
-                {paso.pregunta}
-              </p>
-              <p className="mt-2 max-w-[46ch] text-[14px] leading-relaxed text-tinta-2 lg:mx-auto">
+              <p className="mt-4 max-w-[46ch] text-[14px] leading-relaxed text-tinta-2 lg:mx-auto">
                 {paso.detalle}
               </p>
             </li>

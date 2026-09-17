@@ -1,71 +1,55 @@
 /**
- * LA TRANSFORMACIÓN — tres bloques y dos flechas.
+ * LA TRANSFORMACIÓN — dos renglones y una flecha.
  *
- * Es lo primero que se ve de la sección 02 y la explicación más corta del
- * sitio: el proceso de hoy, lo que se construye y lo que queda. Se entiende
- * sin leer una oración completa, que es exactamente para lo que está.
+ * Antes eran tres columnas con texto explicativo en cada una. Ahora son dos
+ * cadenas de eslabones, una arriba de la otra: el recorrido de hoy y el que
+ * queda. Se entiende de un vistazo, que es exactamente para lo que está.
  *
- * El bloque de la izquierda tiene más piezas que los otros dos a propósito:
- * esa acumulación es el problema, y se ve antes de leerse.
+ * La cadena de arriba es más larga a propósito: esos seis saltos entre
+ * personas y aplicaciones son el problema, y se ven antes de leerse. La de
+ * abajo va en acento porque es lo que se construye.
  *
- * En desktop son tres columnas con flechas horizontales; abajo de lg se apila
- * y las flechas giran. El giro lo hace una clase de rotación, no un segundo
- * juego de marcado: la misma flecha, orientada según el eje del flujo.
+ * Los eslabones envuelven solos en un teléfono —son chips en una lista con
+ * separadores, no un diagrama de ancho fijo—, así que no hay una versión
+ * distinta para mobile ni scroll horizontal.
  */
 
-import { TRANSFORMACION } from "@/lib/agente";
+import { TRANSFORMACION, type Fila } from "@/lib/agente";
 
-type Bloque = {
-  titulo: string;
-  detalle: string;
-  piezas: readonly string[];
-};
-
-function Columna({
-  bloque,
-  destacado = false,
-}: {
-  bloque: Bloque;
-  destacado?: boolean;
-}) {
+function Cadena({ fila, destacada = false }: { fila: Fila; destacada?: boolean }) {
   return (
-    <div className="min-w-0">
-      <p className={`kicker ${destacado ? "" : "kicker-tinta"}`}>
-        {bloque.titulo}
+    <div>
+      <p className={`kicker ${destacada ? "" : "kicker-tinta"}`}>
+        {fila.titulo}
       </p>
-      <p className="mt-3 max-w-[30ch] text-[14px] leading-relaxed text-tinta">
-        {bloque.detalle}
-      </p>
-      <ul className="mt-4 flex flex-wrap gap-1.5">
-        {bloque.piezas.map((pieza) => (
-          <li key={pieza}>
-            <span className={destacado ? "chip chip-acento" : "chip"}>
+      <ol className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-2">
+        {fila.piezas.map((pieza, i) => (
+          <li key={pieza + i} className="flex items-center gap-2">
+            {i > 0 ? (
+              <span aria-hidden="true" className="text-[13px] text-tinta-2">
+                →
+              </span>
+            ) : null}
+            <span className={destacada ? "chip chip-acento" : "chip"}>
               {pieza}
             </span>
           </li>
         ))}
-      </ul>
-    </div>
-  );
-}
-
-/** La flecha entre bloques. Apunta hacia abajo apilado, a la derecha en lg. */
-function Flecha() {
-  return (
-    <div className="flex items-center justify-center py-1 lg:py-0" aria-hidden="true">
-      <span className="flecha rotate-90 lg:rotate-0">→</span>
+      </ol>
     </div>
   );
 }
 
 export default function Transformacion() {
   return (
-    <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_auto_minmax(0,1fr)] lg:gap-8">
-      <Columna bloque={TRANSFORMACION.hoy} />
-      <Flecha />
-      <Columna bloque={TRANSFORMACION.software} destacado />
-      <Flecha />
-      <Columna bloque={TRANSFORMACION.resultado} />
+    <div>
+      <Cadena fila={TRANSFORMACION.antes} />
+
+      <div className="flex py-5" aria-hidden="true">
+        <span className="flecha rotate-90">→</span>
+      </div>
+
+      <Cadena fila={TRANSFORMACION.ahora} destacada />
     </div>
   );
 }

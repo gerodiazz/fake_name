@@ -1,13 +1,20 @@
 /**
- * CONDICIONES COMERCIALES (sección 07)
+ * CONDICIONES COMERCIALES
  *
- * No es letra chica: es parte de la oferta, y por eso tiene sección propia.
- * Tres de estos puntos estaban escondidos dentro del acordeón de preguntas.
+ * No es letra chica: es parte de la oferta, y por eso está a la vista y sin
+ * nada plegado.
  *
- * Cada punto es un título y una línea. Antes eran dos párrafos —el detalle y
- * "lo que eso significa para el cliente"— y el segundo terminaba diciendo lo
- * mismo que el primero con otras palabras. Si una condición necesita dos
- * párrafos para entenderse, el problema es la condición, no el texto.
+ * ERAN SIETE Y QUEDARON CUATRO. Las cuatro que quedan son las que bajan el
+ * riesgo de contratar, y son las que alguien repite cuando le cuenta a un
+ * socio de qué se trata. Las otras tres se fueron porque ya estaban dichas en
+ * otro lado o no pesan en la decisión:
+ *
+ *   · "Alcance cerrado" lo dice la etapa 02 de cómo trabajamos, que es
+ *     literalmente "alcance, precio y plazo por escrito".
+ *   · "Costos de API" pasó a una línea del pago único: es una aclaración de
+ *     esa condición, no una condición aparte.
+ *   · "90 días de corrección" pasó a la respuesta de la pregunta sobre la
+ *     suscripción, que es donde alguien se lo pregunta de verdad.
  *
  * ┌──────────────────────────────────────────────────────────────────────┐
  * │ REVISAR ANTES DE PUBLICAR                                            │
@@ -29,7 +36,7 @@ export const CONDICIONES: Condicion[] = [
     id: "pago-unico",
     titulo: "Pago único",
     detalle:
-      "Proyecto cerrado, se paga una vez. Ninguna suscripción es obligatoria para que el software siga funcionando.",
+      "Proyecto cerrado, se paga una vez. Ninguna suscripción es obligatoria para que el software siga funcionando; los costos de API, si los hay, se pagan directo al proveedor y sin recargo.",
   },
   {
     id: "codigo-del-cliente",
@@ -44,28 +51,10 @@ export const CONDICIONES: Condicion[] = [
       "Quedan en sus sistemas. No armamos una base propia ni los usamos para entrenar nada.",
   },
   {
-    id: "costos-de-api",
-    titulo: "Costos de API",
-    detalle:
-      "Se pagan en la cuenta de la empresa, directo al proveedor y sin recargo. El costo mensual se estima antes de empezar.",
-  },
-  {
     id: "sin-lock-in",
     titulo: "Sin lock-in",
     detalle:
       "No depende de una cuenta ni de un servidor nuestro. Dónde corre lo define la empresa.",
-  },
-  {
-    id: "alcance-cerrado",
-    titulo: "Alcance cerrado",
-    detalle:
-      "Qué se construye, cuánto cuesta y cuánto demora, por escrito antes de empezar.",
-  },
-  {
-    id: "noventa-dias",
-    titulo: "90 días de corrección",
-    detalle:
-      "Sin costo, los errores de lo que construimos dentro del alcance acordado. No cubre cambios de terceros, requerimientos nuevos ni ampliaciones.",
   },
 ];
 
@@ -73,12 +62,12 @@ export const CONDICIONES: Condicion[] = [
  * RANGO DE INVERSIÓN — pendiente de datos reales.
  *
  * La idea es que el visitante sepa en qué orden de magnitud se mueve el
- * trabajo ANTES de completar el formulario: que alguien se descarte solo es
- * preferible a una reunión que no iba a ningún lado, para las dos partes.
+ * trabajo ANTES de escribir: que alguien se descarte solo es preferible a una
+ * reunión que no iba a ningún lado, para las dos partes.
  *
  * Queda en null hasta que existan los precios reales. Un rango inventado acá
  * es de las pocas cosas que pueden hacer perder un cliente en la reunión
  * siguiente. Al escribir algo como "Los proyectos arrancan en USD 2.000",
- * aparece solo arriba del formulario de contacto.
+ * aparece solo arriba del formulario.
  */
 export const RANGO_INVERSION: string | null = null;

@@ -1,17 +1,14 @@
 /**
- * SECCIÓN 07 — CONDICIONES
+ * SECCIÓN — CONDICIONES
  *
- * Tres de estos seis puntos vivían adentro del acordeón de preguntas
- * frecuentes: había que abrir un <details> para enterarse de que el pago es
- * único y de que el código queda a nombre de la empresa. Eso es tratar la
- * mejor parte de la oferta como letra chica.
+ * Los cuatro puntos que bajan el riesgo de contratar, a la vista y sin nada
+ * plegado: tratar la mejor parte de la oferta como letra chica es tirarla.
  *
- * Acá están los seis a la vista, sin acordeón y sin nada plegado. La sección
- * usa la grilla expuesta del sitio: cada condición es una celda con su
- * hairline, como las etapas de "Cómo trabajamos".
+ * Eran siete. Las tres que se fueron estaban dichas en otro lado o no pesan
+ * en la decisión; el detalle de cuáles y por qué está en src/lib/condiciones.ts.
  *
- * Cada punto dice el compromiso y, debajo, qué significa para el cliente. Esa
- * segunda línea es la que baja el riesgo de contratar.
+ * Cuatro celdas entran en una sola fila en desktop, así que la grilla pasó de
+ * tres columnas a cuatro: la sección mide ahora una fila en vez de tres.
  */
 
 import Seccion from "@/components/Seccion";
@@ -27,19 +24,18 @@ export default function Condiciones({
 }) {
   return (
     <Seccion id="condiciones" numero={numero} kicker={kicker} superficie>
-      <div className="pb-24 pt-2 sm:pb-32">
+      <div className="pb-20 pt-2 sm:pb-24">
         <TitularRevelado
           como="h2"
           className="titular max-w-[20ch] text-[clamp(1.75rem,7.5vw,3rem)]"
         >
           Qué se contrata
         </TitularRevelado>
-        <p className="mt-6 max-w-[52ch] text-[15px] leading-relaxed text-tinta-2 sm:text-[16px]">
-          Las mismas que van escritas en la propuesta, acá arriba y no en la
-          letra chica del final.
+        <p className="mt-5 max-w-[52ch] text-[15px] leading-relaxed text-tinta-2 sm:text-[16px]">
+          Las mismas que van escritas en la propuesta.
         </p>
 
-        <ul className="grilla-expuesta grilla-expuesta-sm mt-12 grid grid-cols-1 hairline hairline-t hairline-b sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="grilla-expuesta grilla-expuesta-sm mt-10 grid grid-cols-1 hairline hairline-t hairline-b sm:grid-cols-2 lg:grid-cols-4">
           {CONDICIONES.map((condicion) => (
             <li key={condicion.id} className="py-7 sm:px-5">
               <h3 className="font-serif text-[21px] leading-tight sm:text-[23px]">
@@ -52,9 +48,6 @@ export default function Condiciones({
           ))}
         </ul>
 
-        <p className="mt-8 max-w-[52ch] text-[14px] leading-relaxed text-tinta-2">
-          Lo que no está acá tampoco está en la propuesta.
-        </p>
       </div>
     </Seccion>
   );

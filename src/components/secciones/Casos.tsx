@@ -7,11 +7,13 @@
  * —"¿esto ya lo hicieron en una empresa de verdad?"—. La sección contesta que
  * sí antes de pedirle nada.
  *
- * CASOS ≠ EJEMPLOS. Acá hay tres clientes con nombre y apellido; en la sección
- * de ejemplos hay procesos que se podrían construir. Las dos dicen lo que son
- * en la primera línea y nunca se mezclan.
+ * REEMPLAZÓ A LOS EJEMPLOS. El sitio tenía además una sección con tres
+ * procesos conceptuales —"esto se podría automatizar"— y los rubros en una
+ * línea de chips. Con tres clientes reales cargados, esa sección pasó a ser
+ * la versión débil de esta: un caso con nombre convence más que un ejemplo
+ * bien escrito. Los rubros ya los lista el selector del diagnóstico.
  *
- * TRES TARJETAS CORTAS, NO TRES MUROS DE TEXTO. La home ya es larga. Cada
+ * TRES TARJETAS CORTAS, NO TRES MUROS DE TEXTO. Cada
  * tarjeta contesta cliente, rubro, problema, qué se construyó y con qué, y el
  * que quiere más entra al caso: /casos/<slug>. El detalle largo vive ahí.
  *
@@ -79,7 +81,7 @@ export default function Casos({
 
   return (
     <Seccion id="casos" numero={numero} kicker={kicker} aire>
-      <div className="pb-20 pt-2 sm:pb-28">
+      <div className="pb-16 pt-2 sm:pb-20">
         <TitularRevelado
           como="h2"
           className="titular mt-5 max-w-[20ch] text-[clamp(1.75rem,7.5vw,3rem)]"
@@ -89,12 +91,11 @@ export default function Casos({
 
         <p className="mt-5 max-w-[50ch] text-[15px] leading-relaxed text-tinta-2 sm:text-[16px]">
           Problemas concretos y el software que construimos para resolverlos.
-          Tres clientes, con nombre. Lo que está más abajo, en ejemplos, es lo
-          que se puede construir; esto ya está construido.
+          Tres clientes, con nombre.
         </p>
 
         {CASOS.length > 0 ? (
-          <ul className="grilla-expuesta grilla-expuesta-lg mt-12 grid grid-cols-1 hairline hairline-t hairline-b lg:grid-cols-3">
+          <ul className="grilla-expuesta grilla-expuesta-lg mt-10 grid grid-cols-1 hairline hairline-t hairline-b lg:grid-cols-3">
             {CASOS.map((caso) => (
               <li key={caso.slug} className="flex">
                 <Tarjeta caso={caso} />

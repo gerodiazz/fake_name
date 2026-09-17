@@ -1,36 +1,32 @@
 /**
- * SECCIÓN 02 — CÓMO FUNCIONA
+ * SECCIÓN — CÓMO FUNCIONA
  *
- * Va inmediatamente después del hero porque es lo primero que el visitante
- * necesita: entender qué es esto. Antes, el sitio explicaba y no mostraba
- * nada, y encima usaba la palabra "agente" sin definirla nunca.
+ * QUÉ SALIÓ DE ACÁ Y POR QUÉ
  *
- * Tiene tres bloques, en este orden:
+ * Esta sección ocupaba dos pantallas y media. Tenía la transformación, la
+ * definición de "qué es un agente", la comparación entre chatbot y
+ * automatización, una conversación de WhatsApp completa y el recorrido del
+ * agente en seis etapas con su marco de permisos. Todo eso le enseñaba
+ * vocabulario técnico a alguien que vino a resolver un problema de su
+ * empresa, y lo hacía antes de mostrarle una sola cosa que hayamos
+ * construido.
  *
- *   1. LA TRANSFORMACIÓN — tres columnas y dos flechas: el proceso de hoy, lo
- *      que se construye, lo que queda. Se entiende sin leer una oración
- *      completa, y por eso va primero.
- *   2. QUÉ ES UN AGENTE — la definición en castellano y la comparación con la
- *      automatización simple.
- *   3. EJEMPLO CONCEPTUAL — el recorrido completo sobre un caso, con el marco
- *      de permisos y reglas dentro del que trabaja.
+ * Quedó el diagrama y dos oraciones. Lo que el visitante necesita entender
+ * acá es el mecanismo —de seis saltos a uno—; la prueba de que funciona está
+ * en la sección siguiente, que son tres clientes con nombre. Un caso real
+ * convence más que cualquier definición.
  *
- * El ritmo de la sección alterna a propósito: diagrama, texto, producto. Tres
- * bloques de texto seguidos serían la misma información y nadie los leería.
+ * La segunda oración es lo que antes era una sección entera, "qué pasa si el
+ * software se equivoca": permisos, reglas, registro y derivación a una
+ * persona. Son detalles de implementación, y un renglón alcanza.
  *
- * Se llama igual que el botón secundario del hero: el visitante toca "Ver cómo
- * funciona" y llega a una sección que se llama así.
- *
- * El rótulo de "ejemplo conceptual" va ARRIBA de la pieza, antes de que nadie
- * pueda confundirla con el caso de un cliente. No es letra chica al pie.
+ * Se llama igual que el botón secundario del hero: el visitante toca "Ver
+ * cómo funciona" y llega a una sección que se llama así.
  */
 
 import Seccion from "@/components/Seccion";
 import TitularRevelado from "@/components/TitularRevelado";
-import QueEsUnAgente from "@/components/demostracion/QueEsUnAgente";
 import Transformacion from "@/components/demostracion/Transformacion";
-import TrazaAgente from "@/components/demostracion/TrazaAgente";
-import { DEMOSTRACION } from "@/lib/demostracion";
 
 export default function ComoFunciona({
   numero,
@@ -41,7 +37,7 @@ export default function ComoFunciona({
 }) {
   return (
     <Seccion id="como-funciona" numero={numero} kicker={kicker} superficie>
-      <div className="pb-20 pt-2 sm:pb-28">
+      <div className="pb-16 pt-2 sm:pb-20">
         <TitularRevelado
           como="h2"
           className="titular mt-5 max-w-[20ch] text-[clamp(1.75rem,7.5vw,3rem)]"
@@ -49,41 +45,19 @@ export default function ComoFunciona({
           De un proceso a mano a un proceso que corre solo
         </TitularRevelado>
 
-        {/* 1 · La transformación, antes que cualquier explicación. */}
         <div className="hairline hairline-t hairline-b mt-10 py-10">
           <Transformacion />
         </div>
 
-        {/* 2 · Qué es un agente. */}
-        <div className="mt-14">
-          <QueEsUnAgente />
-        </div>
-
-        {/* 3 · El ejemplo, corriendo. */}
-        <div className="hairline hairline-t mt-20 pt-12">
-          <p className="kicker">{DEMOSTRACION.rotulo}</p>
-
-          <h3 className="titular mt-5 max-w-[22ch] text-[clamp(1.5rem,6vw,2.4rem)]">
-            {DEMOSTRACION.titulo}
-          </h3>
-          <div className="mt-10">
-            <TrazaAgente />
-          </div>
-
-          {/* El cierre engancha con la sección de control: lo que se ve acá es
-              lo mismo que se explica allá. */}
-          <p className="hairline hairline-t mt-10 max-w-[58ch] pt-6 text-[14px] leading-relaxed text-tinta-2">
-            Qué etapas quedan automáticas y cuáles esperan a una persona se
-            define con la empresa.{" "}
-            <a
-              href="#control"
-              className="text-tinta underline decoration-linea underline-offset-4 transition-colors duration-100 hover:decoration-tinta-2"
-            >
-              Qué pasa si se equivoca
-            </a>
-            .
-          </p>
-        </div>
+        <p className="mt-8 max-w-[58ch] text-[15px] leading-relaxed text-tinta sm:text-[16px]">
+          El software consulta información, ejecuta acciones en los sistemas
+          que la empresa ya usa y deriva a una persona cuando el caso se sale
+          de lo previsto.
+        </p>
+        <p className="mt-3 max-w-[58ch] text-[14px] leading-relaxed text-tinta-2">
+          Trabaja con permisos y reglas definidos antes de construirlo, y
+          registra lo que hace.
+        </p>
       </div>
     </Seccion>
   );

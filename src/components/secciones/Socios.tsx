@@ -1,5 +1,5 @@
 /**
- * SECCIÓN 05 — QUIÉNES ESTAMOS DETRÁS
+ * SECCIÓN — QUIÉNES ESTAMOS DETRÁS
  *
  * Dos personas con nombre y apellido, con exactamente el mismo peso visual.
  * No hay un fundador y un segundo: misma columna, mismo cuerpo, mismo orden
@@ -89,7 +89,7 @@ export default function Socios({
       forma="socios"
       textoVertical="quiénes estamos detrás"
     >
-      <div className="pb-24 pt-2 sm:pb-32">
+      <div className="pb-20 pt-2 sm:pb-24">
         <TitularRevelado
           como="h2"
           className="titular max-w-[20ch] text-[clamp(1.75rem,7.5vw,3rem)]"
@@ -114,9 +114,8 @@ export default function Socios({
           ))}
         </div>
 
-        <p className="hairline hairline-t mt-12 max-w-[52ch] pt-6 text-[15px] leading-relaxed text-tinta-2">
-          La reunión de diagnóstico la toma quien después escribe el código. No
-          hay un vendedor adelante y un equipo desconocido atrás.
+        <p className="hairline hairline-t mt-10 max-w-[52ch] pt-6 text-[15px] leading-relaxed text-tinta-2">
+          La reunión de diagnóstico la toma quien después escribe el código.
         </p>
       </div>
     </Seccion>

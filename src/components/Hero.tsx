@@ -1,5 +1,5 @@
 /**
- * SECCIÓN 01 — HERO
+ * SECCIÓN — HERO
  *
  * Es el único H1 del sitio.
  *
@@ -39,7 +39,7 @@ export default function Hero({ numero }: { numero: string }) {
   return (
     <header
       id="contenido"
-      className="relative overflow-clip pb-16 pt-14 sm:pb-24 sm:pt-24"
+      className="relative overflow-clip pb-14 pt-14 sm:pb-20 sm:pt-24"
     >
       <MarcaAgua numero={numero} />
 
@@ -65,9 +65,8 @@ export default function Hero({ numero }: { numero: string }) {
             </h1>
 
             <p className="mt-8 max-w-[46ch] text-[16px] leading-relaxed text-tinta-2 sm:text-[17px]">
-              Analizamos procesos que hoy dependen de personas, mensajes,
-              planillas o sistemas separados, y construimos el software que se
-              encarga de ese trabajo.
+              Detectamos los procesos repetitivos de una empresa y construimos
+              el software que se encarga de ellos.
             </p>
 
             {/* Las dos salidas del hero. La tinta es para la principal. */}
@@ -91,13 +90,6 @@ export default function Hero({ numero }: { numero: string }) {
             <FragmentoProducto />
           </div>
         </div>
-
-        {/* Las tres condiciones que más pesan, dichas en una línea; las seis
-            completas están en la sección de condiciones. */}
-        <p className="hairline hairline-t mt-12 max-w-[56ch] pt-5 text-[13px] leading-relaxed text-tinta-2 lg:mt-14">
-          Diagnóstico sin costo · pago único, sin suscripción · el código queda
-          a nombre de la empresa
-        </p>
       </Contenedor>
     </header>
   );
