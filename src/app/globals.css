@@ -881,9 +881,9 @@ label {
     width: 7rem;
   }
 
-  /* FAQ: cuarto de círculo en la esquina inferior derecha, dentro del aire de
-     cierre de la sección: queda por debajo del último renglón del acordeón. */
-  .forma-faq {
+  /* Qué hacemos: cuarto de círculo en la esquina inferior derecha, dentro del
+     aire de cierre de la sección: queda por debajo del último renglón. */
+  .forma-servicios {
     bottom: -4rem;
     right: -6rem;
     height: 10rem;
@@ -949,98 +949,6 @@ label {
 }
 
 /* --------------------------------------------------------------------------
-   7 · Diagrama de proceso de la sección 03
-
-   Las cuatro etapas dibujadas con las líneas del sistema: eje de 0.5px en color
-   línea, un nodo por etapa y el paso activo en tinta. El SVG escala de forma
-   uniforme, así que los nodos caen siempre en el centro de cada columna de la
-   grilla de texto de abajo.
-
-   Solo de 1024px para arriba: es donde existen las cuatro columnas. En anchos
-   menores las etapas se apilan con sus hairlines, como el resto del sitio.
-   -------------------------------------------------------------------------- */
-
-.diagrama {
-  display: block;
-  width: 100%;
-  height: auto;
-  overflow: visible;
-}
-
-.diagrama-eje,
-.diagrama-tic,
-.diagrama-nodo {
-  fill: none;
-  stroke: var(--color-linea);
-  stroke-width: 0.5;
-}
-
-/* El paso activo: relleno de tinta, sin contorno. */
-.diagrama-nodo-activo {
-  fill: var(--color-tinta);
-  stroke: none;
-}
-
-/* Trazado al entrar en viewport, con scroll-driven animations nativas. Donde no
-   haya soporte, el diagrama ya está dibujado: nunca queda invisible. */
-@supports (animation-timeline: view()) {
-  .diagrama-eje {
-    stroke-dasharray: 1000;
-    stroke-dashoffset: 1000;
-    animation: diagrama-trazar linear both;
-    animation-timeline: view();
-    animation-range: entry 10% entry 70%;
-  }
-
-  .diagrama-nodo,
-  .diagrama-nodo-activo,
-  .diagrama-tic {
-    opacity: 0;
-    animation: diagrama-aparecer linear both;
-    animation-timeline: view();
-  }
-}
-
-@keyframes diagrama-trazar {
-  from {
-    stroke-dashoffset: 1000;
-  }
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes diagrama-aparecer {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-/* Las cuatro etapas de la sección 03. Apiladas llevan hairlines, como toda
-   grilla expuesta del sitio; en desktop cuelgan de los nodos del diagrama y las
-   líneas desaparecen, porque la línea ya la dibuja el eje del SVG.
-
-   Va con reglas propias en vez de .grilla-expuesta porque esas clases viven
-   fuera de las capas de Tailwind y una utilidad `lg:border-0` no las pisaría. */
-.grilla-etapas {
-  border-top: 0.5px solid var(--color-linea);
-  border-bottom: 0.5px solid var(--color-linea);
-}
-.grilla-etapas > * + * {
-  border-top: 0.5px solid var(--color-linea);
-}
-
-@media (min-width: 1024px) {
-  .grilla-etapas,
-  .grilla-etapas > * + * {
-    border: 0;
-  }
-}
-
-/* --------------------------------------------------------------------------
    Barra superior — índice del expediente
 
    Los enlaces son kickers: 11px, mayúsculas, tracking ancho. En reposo van en
@@ -1094,22 +1002,6 @@ label {
 
 /* El signo del botón de índice gira de + a ×, igual que en la FAQ. */
 .nav-boton[data-abierto="true"] .nav-signo {
-  transform: rotate(45deg);
-}
-
-/* --------------------------------------------------------------------------
-   Acordeón de la FAQ (sección 06). Hairlines, sin cajas.
-   -------------------------------------------------------------------------- */
-
-/* El triángulo nativo de <summary> no entra en el sistema visual. */
-.faq summary::-webkit-details-marker {
-  display: none;
-}
-.faq summary {
-  list-style: none;
-}
-/* El signo gira de + a × al abrirse. */
-.faq[open] .faq-signo {
   transform: rotate(45deg);
 }
 
@@ -1200,20 +1092,6 @@ label {
     animation: none !important;
     transform: none !important;
   }
-
-  /* El diagrama de la sección 03 se muestra dibujado y quieto: el eje completo
-     y los nodos visibles, sin trazado. */
-  .diagrama-eje {
-    animation: none !important;
-    stroke-dasharray: none !important;
-    stroke-dashoffset: 0 !important;
-  }
-  .diagrama-nodo,
-  .diagrama-nodo-activo,
-  .diagrama-tic {
-    animation: none !important;
-    opacity: 1 !important;
-  }
 }
 
 /* ==========================================================================
@@ -1245,9 +1123,9 @@ label {
    que se ve distinto en dos secciones es la diferencia entre un sitio hecho
    por un estudio y uno hecho por partes.
 
-   Acá viven los cuatro componentes que se repiten: botón, campo, chip y
-   panel. Cada uno con sus estados: reposo, hover, active, foco, deshabilitado
-   y —donde aplique— error y éxito.
+   Acá viven los tres componentes que se repiten: botón, campo y chip. Cada
+   uno con sus estados: reposo, hover, active, foco, deshabilitado y —donde
+   aplique— error y éxito.
 
    DECISIONES DEL SISTEMA, para que no se rompan sin querer:
 
@@ -1413,165 +1291,6 @@ label {
   background-color: var(--color-superficie);
 }
 
-/* El chip del software: tinte del acento, sin borde. */
-.chip-acento {
-  color: var(--color-acento);
-  background-color: var(--color-acento-tinte);
-  border-color: transparent;
-}
-
-/* --------------------------------------------------------------------------
-   Panel — la superficie de "esto es software"
-
-   Un rectángulo con hairline, una barra de título con su punto de estado y
-   contenido adentro. Es lo que hace que la demostración y el fragmento del
-   hero se lean como una interfaz y no como un bloque de texto más.
-
-   Sin blur, sin transparencias, sin sombra: papel sobre papel, separado por
-   una línea de medio pixel. La profundidad sale del contraste entre papel y
-   superficie, no de un efecto.
-   -------------------------------------------------------------------------- */
-
-.panel {
-  background-color: var(--color-superficie);
-  border: 0.5px solid var(--color-linea);
-}
-
-/* Sobre secciones que ya son superficie, el panel se invierte a papel. */
-.panel-papel {
-  background-color: var(--color-papel);
-}
-
-.panel-barra {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0.625rem 0.875rem;
-  border-bottom: 0.5px solid var(--color-linea);
-}
-
-.panel-cuerpo {
-  padding: 0.875rem;
-}
-
-/* El punto de estado del panel. Tinta mientras corre, tinta-2 cuando terminó,
-   acento cuando espera a una persona: el único estado que pide algo. */
-.panel-punto {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background-color: var(--color-tinta-2);
-  flex: none;
-}
-.panel-punto[data-estado="corriendo"] {
-  background-color: var(--color-tinta);
-}
-.panel-punto[data-estado="listo"] {
-  background-color: var(--color-tinta-2);
-}
-.panel-punto[data-estado="atencion"] {
-  /* El paso que espera a una persona. No es un error: es una parada prevista,
-     y es lo único de la pieza que lleva color. */
-  background-color: var(--color-acento);
-}
-
-/* --------------------------------------------------------------------------
-   Traza del agente — la demostración que corre sola
-
-   Las etapas aparecen de a una, 380ms cada una: el recorrido entero dura algo
-   más de dos segundos. La animación existe para que se entienda que hay un
-   ORDEN y que cada paso depende del anterior; no para lucirse. Quien no espera
-   a que termine igual lee todo, porque el estado final es el contenido
-   completo y el HTML del servidor ya viene con todas las etapas puestas.
-
-   El JS solo agrega el atributo data-visible. Sin JavaScript, sin soporte o
-   con prefers-reduced-motion, las etapas están todas visibles desde el
-   principio: la regla de abajo solo esconde cuando el contenedor declara que
-   va a animar.
-   -------------------------------------------------------------------------- */
-
-.traza[data-anima="true"] .traza-etapa {
-  opacity: 0;
-  transform: translateY(6px);
-}
-
-.traza-etapa {
-  transition-property: opacity, transform;
-  transition-duration: 320ms;
-  transition-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-.traza[data-anima="true"] .traza-etapa[data-visible="true"] {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* La línea que une las etapas, y que se pinta a medida que avanzan. */
-.traza-eje {
-  position: absolute;
-  left: 0;
-  top: 0.35rem;
-  bottom: 0.35rem;
-  width: 0.5px;
-  background-color: var(--color-linea);
-}
-.traza-eje-avance {
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 0.5px;
-  background-color: var(--color-tinta);
-  transform-origin: top center;
-  transform: scaleY(var(--avance, 0));
-  transition: transform 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-/* El punto de cada etapa, sobre el eje. */
-.traza-punto {
-  position: absolute;
-  left: -3px;
-  /* El centro de la primera línea de la etapa. Cambia con el cuerpo del
-     texto, así que cada contexto lo ajusta con --punto-top. */
-  top: var(--punto-top, 0.95rem);
-  width: 6.5px;
-  height: 6.5px;
-  border-radius: 50%;
-  background-color: var(--color-papel);
-  border: 0.5px solid var(--color-linea);
-}
-.traza-etapa[data-visible="true"] .traza-punto {
-  background-color: var(--color-tinta);
-  border-color: var(--color-acento);
-}
-/* La etapa que espera a una persona no se pinta llena: se deja hueca y en
-   tinta. Es una parada, no un paso cumplido. */
-.traza-etapa[data-intervencion="true"][data-visible="true"] .traza-punto {
-  background-color: var(--color-papel);
-  border-color: var(--color-tinta);
-  border-width: 1.5px;
-}
-
-/* Etiqueta de estado de cada etapa: procesando, consultando, ejecutando,
-   completado, requiere intervención. Comunica que hay un proceso corriendo y
-   no un texto generándose. */
-.traza-estado {
-  font-family: var(--font-sans);
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-tinta-2);
-  font-variant-numeric: tabular-nums;
-}
-.traza-estado[data-tono="corriendo"] {
-  color: var(--color-tinta);
-}
-.traza-estado[data-tono="listo"] {
-  color: var(--color-tinta-2);
-}
-.traza-estado[data-tono="atencion"] {
-  color: var(--color-acento);
-}
-
 /* --------------------------------------------------------------------------
    Barra de progreso del diagnóstico
 
@@ -1620,19 +1339,6 @@ label {
    -------------------------------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
-  /* La traza no corre: se muestra completa y quieta. El componente además no
-     programa los temporizadores, así que esto es solo la red de seguridad. */
-  .traza[data-anima="true"] .traza-etapa,
-  .traza-etapa {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-  }
-  .traza-eje-avance {
-    transition: none !important;
-    transform: scaleY(1) !important;
-  }
-
   /* La barra de progreso salta al valor que corresponde, sin recorrerlo. */
   .progreso-avance {
     transition: none !important;

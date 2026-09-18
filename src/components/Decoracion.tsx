@@ -74,7 +74,7 @@ export function TextoVertical({ children }: { children: string }) {
 export function Forma({
   variante,
 }: {
-  variante: "hero" | "socios" | "faq";
+  variante: "hero" | "socios" | "servicios";
 }) {
   return <span className={`forma forma-${variante}`} aria-hidden="true" />;
 }

@@ -44,7 +44,7 @@ type Props = {
    * Forma que sangra por un borde. Una por sección como máximo y solo en
    * tres secciones del sitio: el hero la monta por su cuenta.
    */
-  forma?: "socios" | "faq";
+  forma?: "socios" | "servicios";
 };
 
 /** Ancho de lectura común a todo el sitio. */

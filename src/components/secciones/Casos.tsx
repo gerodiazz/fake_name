@@ -1,21 +1,25 @@
 /**
  * SECCIÓN — CASOS REALES
  *
- * Va inmediatamente después de "cómo funciona", que es donde termina la
- * demostración conceptual. El orden no es casual: el visitante acaba de ver un
- * ejemplo inventado corriendo, y la pregunta que sigue es siempre la misma
- * —"¿esto ya lo hicieron en una empresa de verdad?"—. La sección contesta que
- * sí antes de pedirle nada.
+ * Va inmediatamente después del diagnóstico. El orden no es casual: el
+ * visitante acaba de ver su propia estimación y la pregunta que sigue es
+ * siempre la misma —"¿esto ya lo hicieron en una empresa de verdad?"—. La
+ * sección contesta que sí antes de pedirle nada y antes de explicarle nada.
  *
- * REEMPLAZÓ A LOS EJEMPLOS. El sitio tenía además una sección con tres
- * procesos conceptuales —"esto se podría automatizar"— y los rubros en una
- * línea de chips. Con tres clientes reales cargados, esa sección pasó a ser
- * la versión débil de esta: un caso con nombre convence más que un ejemplo
- * bien escrito. Los rubros ya los lista el selector del diagnóstico.
+ * ESTA SECCIÓN REEMPLAZA A LAS EXPLICACIONES. El sitio tenía además el
+ * mecanismo dibujado, un ejemplo inventado con su conversación y su recorrido,
+ * y tres procesos conceptuales rotulados "esto se podría automatizar". Con
+ * tres clientes reales cargados, todo eso era la versión débil de esto: un
+ * caso con nombre convence más que un ejemplo bien escrito.
  *
- * TRES TARJETAS CORTAS, NO TRES MUROS DE TEXTO. Cada
- * tarjeta contesta cliente, rubro, problema, qué se construyó y con qué, y el
- * que quiere más entra al caso: /casos/<slug>. El detalle largo vive ahí.
+ * TRES FRASES POR CASO: problema, solución, resultado. Salen de `caso.tarjeta`
+ * y no de los campos largos, que existen para la página del caso. La tarjeta
+ * ya no lista las integraciones —eran tres nombres de software en una sección
+ * que vende resultados— ni el resumen, que decía lo mismo que el problema.
+ *
+ * El detalle largo vive en /casos/<slug>, detrás de "Ver caso": ahí entra
+ * quien ya decidió que le interesa, y ahí sí puede leer las etapas, los
+ * flujos, el testimonio y el video.
  *
  * La sección sigue apagándose sola si algún día CASOS queda vacío: el arreglo
  * manda, acá no hay nada escrito a mano (ver src/lib/secciones.ts).
@@ -25,6 +29,18 @@ import Link from "next/link";
 import Seccion from "@/components/Seccion";
 import TitularRevelado from "@/components/TitularRevelado";
 import { CASOS, DEMOS, type Caso } from "@/lib/casos";
+
+/** Rótulo y frase de cada uno de los tres renglones de la tarjeta. */
+function Renglon({ rotulo, children }: { rotulo: string; children: string }) {
+  return (
+    <div className="mt-4">
+      <p className="kicker kicker-tinta">{rotulo}</p>
+      <p className="mt-1.5 max-w-[38ch] text-[15px] leading-relaxed text-tinta">
+        {children}
+      </p>
+    </div>
+  );
+}
 
 function Tarjeta({ caso }: { caso: Caso }) {
   return (
@@ -41,21 +57,11 @@ function Tarjeta({ caso }: { caso: Caso }) {
       </h3>
       <p className="kicker kicker-tinta mt-2">{caso.industria}</p>
 
-      {/* El antes y el después, en una oración. */}
-      <p className="mt-4 max-w-[38ch] font-serif text-[16px] leading-snug">
-        {caso.resumen}
-      </p>
+      <Renglon rotulo="Problema">{caso.tarjeta.problema}</Renglon>
+      <Renglon rotulo="Solución">{caso.tarjeta.solucion}</Renglon>
+      <Renglon rotulo="Resultado">{caso.tarjeta.resultado}</Renglon>
 
-      {/* Qué se construyó, y de qué clase de software estamos hablando. */}
-      <p className="mt-3 max-w-[38ch] text-[14px] leading-relaxed text-tinta-2">
-        {caso.construido}
-      </p>
-
-      <p className="mt-auto pt-6 text-[13px] text-tinta-2">
-        {caso.integraciones.join(" · ")}
-      </p>
-
-      <p className="mt-4 flex items-center gap-2 text-[14px] text-acento transition-opacity duration-100 group-hover:opacity-80">
+      <p className="mt-auto flex items-center gap-2 pt-7 text-[14px] text-acento transition-opacity duration-100 group-hover:opacity-80">
         <span className="underline decoration-[1.5px] underline-offset-[7px]">
           Ver caso
         </span>
@@ -80,7 +86,7 @@ export default function Casos({
   if (CASOS.length === 0 && DEMOS.length === 0) return null;
 
   return (
-    <Seccion id="casos" numero={numero} kicker={kicker} aire>
+    <Seccion id="casos" numero={numero} kicker={kicker} aire superficie>
       <div className="pb-16 pt-2 sm:pb-20">
         <TitularRevelado
           como="h2"
@@ -89,8 +95,7 @@ export default function Casos({
           Casos reales
         </TitularRevelado>
 
-        <p className="mt-5 max-w-[50ch] text-[15px] leading-relaxed text-tinta-2 sm:text-[16px]">
-          Problemas concretos y el software que construimos para resolverlos.
+        <p className="mt-5 max-w-[46ch] text-[15px] leading-relaxed text-tinta-2 sm:text-[16px]">
           Tres clientes, con nombre.
         </p>
 
@@ -106,7 +111,7 @@ export default function Casos({
 
         {/* Demos propias. Separadas de los casos y rotuladas como lo que son. */}
         {DEMOS.length > 0 ? (
-          <div className={CASOS.length > 0 ? "mt-16" : "mt-12"}>
+          <div className={CASOS.length > 0 ? "mt-14" : "mt-12"}>
             <p className="kicker kicker-tinta">
               Demos propias · construidas por el estudio, sin cliente detrás
             </p>

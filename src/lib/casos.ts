@@ -85,6 +85,26 @@ export type Flujo = {
   pasos: string[];
 };
 
+/**
+ * LA TARJETA DE LA HOME — problema, solución y resultado, una frase cada uno.
+ *
+ * Está separada del resto del caso a propósito. La home muestra únicamente
+ * esto; todo lo demás —el problema en párrafos, las etapas, los flujos, las
+ * herramientas, el video y el testimonio— vive en /casos/<slug>, que es donde
+ * entra quien ya decidió que le interesa.
+ *
+ * Tres frases y ninguna más: si una no entra en un renglón y medio, el que
+ * sobra es el detalle, no la tarjeta.
+ */
+export type Tarjeta = {
+  /** Qué estaba roto. Una frase. */
+  problema: string;
+  /** Qué construimos. Una o dos frases. */
+  solucion: string;
+  /** Qué cambió. Una frase, y solo lo que el cliente puede confirmar. */
+  resultado: string;
+};
+
 export type Caso = {
   /** Segmento de la URL: /casos/<slug>. */
   slug: string;
@@ -102,6 +122,8 @@ export type Caso = {
   resumen: string;
   /** Qué se construyó, en una línea. */
   construido: string;
+  /** Las tres frases de la home. Ver `Tarjeta`. */
+  tarjeta: Tarjeta;
   /** Tres nombres cortos para la tarjeta. La lista completa es `herramientas`. */
   integraciones: string[];
   /** El problema, en párrafos. Sin adjetivos y sin dramatizar. */
@@ -126,6 +148,14 @@ export const CASOS: Caso[] = [
       "De atender consultas y cargar turnos a mano para dos sedes a un agente que atiende y agenda por WhatsApp.",
     construido:
       "Agente de atención y turnos, más un control automático de las validaciones de PAMI.",
+    tarjeta: {
+      problema:
+        "Dos sedes, y las consultas y los turnos se atendían a mano.",
+      solucion:
+        "Un agente que atiende por WhatsApp, agenda y carga el turno en el sistema, más un control automático de las validaciones de PAMI.",
+      resultado:
+        "La atención y la agenda dejaron de depender del equipo.",
+    },
     integraciones: ["WhatsApp", "Trilan", "PAMI"],
     problema: [
       "El equipo pasaba gran parte del día respondiendo consultas y sacando turnos a mano para las dos sedes.",
@@ -219,6 +249,14 @@ export const CASOS: Caso[] = [
       "De una atención manual que ya no daba abasto a un agente que responde automáticamente.",
     construido:
       "Agente de atención al público, conectado con WhatsApp, Tiendanube y Kommo.",
+    tarjeta: {
+      problema:
+        "El volumen de consultas por Instagram y WhatsApp superó al equipo.",
+      solucion:
+        "Un agente que responde y guía al cliente, conectado con Tiendanube y el CRM.",
+      resultado:
+        "Responder dejó de ser tarea de una persona.",
+    },
     integraciones: ["WhatsApp", "Tiendanube", "Kommo"],
     problema: [
       "El equipo atendía personalmente las consultas que llegaban por Instagram, WhatsApp y el resto de los canales.",
@@ -270,6 +308,14 @@ export const CASOS: Caso[] = [
       "Del email de carrito abandonado de Tiendanube a un seguimiento por WhatsApp cada dos horas.",
     construido:
       "Automatización que detecta los carritos abandonados y manda el enlace para completar la compra.",
+    tarjeta: {
+      problema:
+        "El carrito abandonado solo tenía el email que manda Tiendanube.",
+      solucion:
+        "Una automatización que revisa los carritos cada dos horas y manda un WhatsApp con el link de compra.",
+      resultado:
+        "El seguimiento pasó a hacerse por el canal que el cliente contesta.",
+    },
     integraciones: ["Make", "Tiendanube", "WhatsApp"],
     problema: [
       "Tenían carritos abandonados en Tiendanube, y el único seguimiento era el email que la plataforma envía por defecto.",

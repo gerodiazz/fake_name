@@ -3,12 +3,12 @@
 /**
  * CTA FINAL — el cierre del recorrido
  *
- * YA NO ES UNA SECCIÓN PROPIA. Vive dentro de la sección del diagnóstico,
- * separada por una hairline, y por eso no se envuelve en <Seccion>: eran dos
- * bloques consecutivos que pedían lo mismo —que la persona cuente su proceso—
- * con dos cabeceras, dos números de expediente y dos titulares. El ancla
- * #contacto sigue existiendo acá adentro, así que los enlaces de la barra
- * superior, del pie y del resultado del diagnóstico siguen funcionando.
+ * NO ES UNA SECCIÓN PROPIA. Vive dentro de la sección de socios, separada por
+ * una hairline, y por eso no se envuelve en <Seccion>: son las dos últimas
+ * preguntas del visitante —quién está detrás y cómo los contacto— y tenerlas
+ * separadas significaba dos cabeceras, dos números de expediente y dos
+ * titulares. El ancla #contacto vive acá adentro, así que los enlaces de la
+ * barra superior, del pie y del resultado del diagnóstico siguen funcionando.
  *
  * QUÉ SE SACÓ Y POR QUÉ
  *
@@ -17,8 +17,11 @@
  *   presupuesto era un placeholder sin precios confirmados detrás. Cada campo
  *   de más es gente que no completa.
  * · Se fue la columna de contacto directo: el email ya está en el pie, a dos
- *   centímetros de acá, y la línea sobre videollamadas no cambia la decisión
- *   de nadie.
+ *   centímetros de acá.
+ * · La sección de condiciones —cuatro compromisos comerciales con su grilla—
+ *   quedó reducida al renglón que cierra este bloque. Es la información que
+ *   baja el riesgo de escribir, y se lee en cuatro segundos justo antes de
+ *   hacerlo. El detalle va en la propuesta, que es donde se firma.
  *
  * El formulario llega precargado con el resultado del diagnóstico: rubro,
  * procesos marcados, horas y plazo. Lo contestado arriba no hay que volver a
@@ -38,7 +41,7 @@ import { useEffect, useState } from "react";
 import TitularRevelado from "@/components/TitularRevelado";
 import { CampoArea, CampoTexto } from "@/components/Campo";
 import { useDiagnostico } from "@/lib/estado-diagnostico";
-import { RANGO_INVERSION } from "@/lib/condiciones";
+import { RESUMEN_CONDICIONES } from "@/lib/condiciones";
 import { SITIO } from "@/lib/sitio";
 
 /**
@@ -87,27 +90,19 @@ export default function Contacto() {
   }
 
   return (
-    <div id="contacto" className="hairline hairline-t mt-20 pt-12 sm:mt-24">
+    <div id="contacto" className="hairline hairline-t mt-16 pt-12 sm:mt-20">
       <TitularRevelado
         como="h2"
         className="titular max-w-[22ch] text-[clamp(1.75rem,7.5vw,3rem)]"
       >
-        ¿Hay un proceso que todavía depende demasiado de una persona?
+        Empecemos por el proceso que más tiempo consume
       </TitularRevelado>
 
-      <p className="mt-5 max-w-[48ch] text-[15px] leading-relaxed text-tinta-2 sm:text-[16px]">
-        Lo analizamos y te decimos si tiene sentido convertirlo en software. Si
-        no conviene, también se dice.
+      <p className="mt-5 max-w-[46ch] text-[15px] leading-relaxed text-tinta-2 sm:text-[16px]">
+        Lo analizamos y te decimos qué conviene automatizar. Si no conviene,
+        también se dice.
       </p>
       <p className="kicker mt-4">45 minutos · sin costo</p>
-
-      {/* El orden de magnitud, antes del formulario. Solo aparece cuando haya
-          un rango real cargado: ver RANGO_INVERSION. */}
-      {RANGO_INVERSION ? (
-        <p className="hairline hairline-t hairline-b mt-8 max-w-[46ch] py-5 font-serif text-[19px] leading-snug sm:text-[21px]">
-          {RANGO_INVERSION}
-        </p>
-      ) : null}
 
       {/* Agendamiento directo, para quien no quiere escribir nada. Aparece
           solo si existe el enlace. */}
@@ -189,6 +184,11 @@ export default function Contacto() {
           )}
         </p>
       </form>
+
+      {/* Lo que antes era la sección de condiciones, en un renglón. */}
+      <p className="hairline hairline-t mt-12 max-w-[52ch] pt-6 text-[14px] leading-relaxed text-tinta-2">
+        {RESUMEN_CONDICIONES}
+      </p>
     </div>
   );
 }

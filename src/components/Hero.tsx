@@ -1,22 +1,22 @@
 /**
  * SECCIÓN — HERO
  *
- * Es el único H1 del sitio.
+ * Es el único H1 del sitio y contesta una sola cosa: qué hacemos.
  *
- * COMPOSICIÓN — dos columnas de 1024px para arriba: a la izquierda la
- * jerarquía completa (etiqueta, titular, explicación, dos acciones), a la
- * derecha un fragmento de la interfaz. Apiladas más abajo, y en ese orden: el
- * visual entra después de los botones, para que en un teléfono la primera
- * pantalla siga siendo titular + acción.
+ * QUÉ SALIÓ DE ACÁ. El hero tenía a la derecha un fragmento de interfaz —una
+ * conversación de WhatsApp inventada, con su rótulo aclarando que lo era— que
+ * anticipaba la sección de "cómo funciona". Esa sección ya no existe y los
+ * casos reales hacen ese trabajo con clientes de verdad, así que el fragmento
+ * quedó siendo un ejemplo conceptual arriba de todo. Se fue, y con él la
+ * segunda columna: el hero volvió a una sola columna y al cuarto de círculo
+ * que entra por el borde derecho.
  *
- * El cuarto de círculo que entraba por el borde derecho se fue: ese era
- * el lugar del fragmento de producto. Cambiar un adorno por un pedazo de la
- * cosa que vendemos es exactamente el criterio del sitio, y además el hero
- * pasa a anticipar la sección 02 en vez de solo anunciarla.
+ * También se fue la línea de "seis preguntas, no se piden datos": la sección
+ * 02 está inmediatamente abajo y lo dice ahí, que es donde importa.
  *
- * EL HERO CONTESTA CUATRO COSAS y ninguna ocupa más de una línea: qué hacemos
- * (el titular), para quién (la etiqueta), qué recibe el cliente (la bajada) y
- * qué hay que hacer para avanzar (los dos botones).
+ * QUEDAN CUATRO COSAS y ninguna ocupa más de dos renglones: para quién es (la
+ * etiqueta), qué hacemos (el titular), cómo (la bajada) y qué hay que hacer
+ * para avanzar (los dos botones).
  *
  * APOYO 1 DEL SISTEMA DE MOVIMIENTO — la palabra variable del titular rota en
  * loop dentro de una máscara. El hero nunca está quieto, pero tampoco grita:
@@ -25,8 +25,7 @@
 
 import { Contenedor } from "@/components/Seccion";
 import PalabraCinetica from "@/components/PalabraCinetica";
-import { MarcaAgua } from "@/components/Decoracion";
-import FragmentoProducto from "@/components/demostracion/FragmentoProducto";
+import { Forma, MarcaAgua } from "@/components/Decoracion";
 import Boton from "@/components/ui/Boton";
 
 /**
@@ -39,56 +38,40 @@ export default function Hero({ numero }: { numero: string }) {
   return (
     <header
       id="contenido"
-      className="relative overflow-clip pb-14 pt-14 sm:pb-20 sm:pt-24"
+      className="relative overflow-clip pb-16 pt-14 sm:pb-24 sm:pt-28"
     >
       <MarcaAgua numero={numero} />
+      <Forma variante="hero" />
 
       <Contenedor className="relative z-10">
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_26rem] lg:items-start lg:gap-16">
-          {/* ---- la columna de texto ---- */}
-          <div>
-            {/* Para quién es esto, en el primer renglón de la página. */}
-            <p className="kicker [text-wrap:balance]">
-              Desarrollo de software · automatización de procesos para empresas
-            </p>
+        {/* Para quién es esto, en el primer renglón de la página. */}
+        <p className="kicker [text-wrap:balance]">
+          Desarrollo de software · automatización de procesos para empresas
+        </p>
 
-            {/* La coma va pegada a la palabra que rota, dentro del mismo
-                nowrap: la máscara es inline-block y de ancho variable, así que
-                sin esto la coma se cae sola al renglón siguiente cuando entra
-                una palabra larga. */}
-            <h1 className="titular mt-7 max-w-[16ch] text-[clamp(2.25rem,9.5vw,4.5rem)]">
-              Procesos que hoy hace{" "}
-              <span className="whitespace-nowrap">
-                <PalabraCinetica palabras={QUIEN_LO_HACE} />,
-              </span>{" "}
-              hechos por software.
-            </h1>
+        {/* La coma va pegada a la palabra que rota, dentro del mismo nowrap:
+            la máscara es inline-block y de ancho variable, así que sin esto la
+            coma se cae sola al renglón siguiente cuando entra una palabra
+            larga. */}
+        <h1 className="titular mt-7 max-w-[16ch] text-[clamp(2.25rem,9.5vw,4.5rem)]">
+          Procesos que hoy hace{" "}
+          <span className="whitespace-nowrap">
+            <PalabraCinetica palabras={QUIEN_LO_HACE} />,
+          </span>{" "}
+          hechos por software.
+        </h1>
 
-            <p className="mt-8 max-w-[46ch] text-[16px] leading-relaxed text-tinta-2 sm:text-[17px]">
-              Detectamos los procesos repetitivos de una empresa y construimos
-              el software que se encarga de ellos.
-            </p>
+        <p className="mt-8 max-w-[44ch] text-[16px] leading-relaxed text-tinta-2 sm:text-[17px]">
+          Analizamos los procesos repetitivos de una empresa y construimos el
+          software que los ejecuta.
+        </p>
 
-            {/* Las dos salidas del hero. La tinta es para la principal. */}
-            <div className="mt-9 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:gap-4">
-              <Boton href="#diagnostico">Analizar mi proceso</Boton>
-              <Boton href="#como-funciona" tono="lineal">
-                Ver cómo funciona
-              </Boton>
-            </div>
-
-            {/* Qué pasa si toca el botón principal. Va pegado a los botones:
-                es lo que baja la fricción de tocarlo. */}
-            <p className="mt-5 max-w-[44ch] text-[13px] leading-relaxed text-tinta-2">
-              Seis preguntas. No se piden datos de contacto para ver el
-              resultado.
-            </p>
-          </div>
-
-          {/* ---- el fragmento de producto ---- */}
-          <div className="lg:pt-2">
-            <FragmentoProducto />
-          </div>
+        {/* Las dos salidas del hero. La tinta es para la principal. */}
+        <div className="mt-9 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:gap-4">
+          <Boton href="#diagnostico">Analizar mi proceso</Boton>
+          <Boton href="#casos" tono="lineal">
+            Ver casos
+          </Boton>
         </div>
       </Contenedor>
     </header>

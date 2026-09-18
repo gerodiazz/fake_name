@@ -1,22 +1,24 @@
 /**
  * HOME
  *
- * El recorrido sigue el orden en que un visitante decide: entender qué
- * hacemos, ver que ya lo hicimos, saber quién lo construye, entender el modelo
- * y recién ahí contar su proceso.
+ * Cuatro preguntas y una sección para cada una: qué hacen, me sirve a mí, ya
+ * lo hicieron, cómo empiezo. Si esas cuatro están contestadas, no hace falta
+ * explicar nada más.
  *
- * LA REDUCCIÓN. La página tenía once secciones y dos pantallas y media solo de
- * explicación conceptual: qué es un agente, en qué se diferencia de un
- * chatbot, un ejemplo inventado con su conversación y su recorrido de seis
- * etapas, tres ejemplos por industria y una sección entera sobre qué pasa si
- * el software se equivoca. Todo eso le enseñaba vocabulario técnico a alguien
- * que vino a resolver un problema de su empresa.
+ * LA REDUCCIÓN, SEGUNDA PASADA. La página tenía ocho secciones y el
+ * diagnóstico —la única herramienta de conversión del sitio— estaba último,
+ * detrás de siete pantallas de explicación: el mecanismo dibujado, tres
+ * clientes, los dos socios, cuatro etapas de trabajo con sus plazos, cuatro
+ * condiciones comerciales y cuatro preguntas frecuentes. Para probar el
+ * producto había que atravesar una clase entera sobre automatización.
  *
- * Quedaron ocho. El criterio para sacar fue uno solo: si una sección no ayuda
- * a entender qué hacemos, a demostrar que sabemos hacerlo, a generar confianza
- * o a llegar al diagnóstico, se fue. Los casos reales hicieron la mayor parte
- * del trabajo: con tres clientes con nombre, los ejemplos conceptuales pasaron
- * a ser la versión débil de lo mismo.
+ * Quedaron cinco, y el diagnóstico subió a la 02. Se fueron "cómo funciona",
+ * "cómo trabajamos", "condiciones" y las preguntas frecuentes: lo que valía de
+ * las cuatro entra en la sección "qué hacemos" y en el renglón que cierra el
+ * CTA final. El criterio fue el mismo de siempre, aplicado más fuerte: si una
+ * sección no ayuda a entender qué hacemos, a demostrar que sabemos hacerlo, a
+ * generar confianza o a llegar al diagnóstico, se fue. Y si un caso real lo
+ * demuestra mejor que un párrafo, gana el caso.
  *
  * EL ORDEN Y LA NUMERACIÓN NO ESTÁN ACÁ. Viven en src/lib/secciones.ts, que
  * es también de donde los lee la barra superior. Cada sección recibe su número
@@ -35,12 +37,9 @@ import Hero from "@/components/Hero";
 import Seccion from "@/components/Seccion";
 import TitularRevelado from "@/components/TitularRevelado";
 import Diagnostico from "@/components/diagnostico/Diagnostico";
-import ComoFunciona from "@/components/secciones/ComoFunciona";
 import Casos from "@/components/secciones/Casos";
+import QueHacemos from "@/components/secciones/QueHacemos";
 import Socios from "@/components/secciones/Socios";
-import ComoTrabajamos from "@/components/secciones/ComoTrabajamos";
-import Condiciones from "@/components/secciones/Condiciones";
-import Faq from "@/components/secciones/Faq";
 import Contacto from "@/components/secciones/Contacto";
 import PieDePagina from "@/components/PieDePagina";
 import { kickerDe, numeroDe } from "@/lib/secciones";
@@ -57,35 +56,10 @@ export default function Home() {
         {/* 01 · Qué hacemos, en un titular */}
         <Hero numero={numeroDe("contenido")} />
 
-        {/* 02 · El mecanismo: de seis saltos a uno. Diez segundos de lectura */}
-        <ComoFunciona
-          numero={numeroDe("como-funciona")}
-          kicker={kickerDe("como-funciona")}
-        />
-
-        {/* 03 · La prueba: tres clientes con nombre */}
-        <Casos numero={numeroDe("casos")} kicker={kickerDe("casos")} />
-
-        {/* 04 · Quién lo construye */}
-        <Socios numero={numeroDe("socios")} kicker={kickerDe("socios")} />
-
-        {/* 05 · Cómo se trabaja: cuatro etapas con sus plazos */}
-        <ComoTrabajamos
-          numero={numeroDe("como-trabajamos")}
-          kicker={kickerDe("como-trabajamos")}
-        />
-
-        {/* 06 · Qué queda en manos de la empresa */}
-        <Condiciones
-          numero={numeroDe("condiciones")}
-          kicker={kickerDe("condiciones")}
-        />
-
-        {/* 07 · Las cuatro objeciones que quedan */}
-        <Faq numero={numeroDe("faq")} kicker={kickerDe("faq")} />
-
-        {/* 08 · El diagnóstico y la salida, en una sola sección. Contacto ya no
-            es sección propia: es el cierre de esta, y conserva su ancla. */}
+        {/* 02 · Probalo ahora. Es lo primero después del hero a propósito: el
+            diagnóstico es la herramienta de conversión del sitio, no un
+            contenido de cierre. La introducción es mínima porque la
+            herramienta se explica sola al usarla. */}
         <Seccion
           id="diagnostico"
           numero={numeroDe("diagnostico")}
@@ -94,23 +68,35 @@ export default function Home() {
           <div className="pb-20 pt-2 sm:pb-24">
             <TitularRevelado
               como="h2"
-              className="titular mt-5 max-w-[20ch] text-[clamp(1.75rem,7.5vw,3rem)]"
+              className="titular mt-5 max-w-[22ch] text-[clamp(1.75rem,7.5vw,3rem)]"
             >
-              Diagnóstico de procesos automatizables
+              ¿Qué parte de tu empresa todavía depende demasiado de una persona?
             </TitularRevelado>
-            <p className="mt-5 max-w-[50ch] text-[15px] leading-relaxed text-tinta-2 sm:text-[16px]">
-              Seis preguntas sobre cómo se trabaja hoy. Al terminar queda la
-              lista de procesos que se pueden pasar a software, con valores de
-              referencia. No se piden datos de contacto para verlo.
+            <p className="mt-5 max-w-[48ch] text-[15px] leading-relaxed text-tinta-2 sm:text-[16px]">
+              Seis preguntas. Al terminar queda la lista de procesos que se
+              pueden pasar a software, sin dejar datos de contacto.
             </p>
 
             <div className="mt-10">
               <Diagnostico />
             </div>
-
-            <Contacto />
           </div>
         </Seccion>
+
+        {/* 03 · La prueba: tres clientes con nombre */}
+        <Casos numero={numeroDe("casos")} kicker={kickerDe("casos")} />
+
+        {/* 04 · Qué clase de software construimos */}
+        <QueHacemos
+          numero={numeroDe("que-hacemos")}
+          kicker={kickerDe("que-hacemos")}
+        />
+
+        {/* 05 · Quién lo construye y la salida. Contacto no es sección propia:
+            es el cierre de esta, y conserva su ancla #contacto. */}
+        <Socios numero={numeroDe("socios")} kicker={kickerDe("socios")}>
+          <Contacto />
+        </Socios>
       </main>
 
       <PieDePagina />

@@ -1,23 +1,31 @@
 /**
- * SECCIÓN — QUIÉNES ESTAMOS DETRÁS
+ * SECCIÓN — QUIÉNES ESTAMOS DETRÁS (y el cierre del sitio)
  *
  * Dos personas con nombre y apellido, con exactamente el mismo peso visual.
  * No hay un fundador y un segundo: misma columna, mismo cuerpo, mismo orden
  * de lectura. Esa simetría ES el argumento de la sección.
  *
- * LO QUE NO SE INVENTA. El rol, la foto y el LinkedIn se dibujan solo cuando
- * existen de verdad (ver SOCIOS en src/lib/sitio.ts). Sin foto no hay recuadro
- * vacío ni silueta gris; sin LinkedIn no hay ícono muerto. Un cargo inventado
- * en la sección que promete que vas a hablar con quien escribe el código es
- * exactamente donde más caro sale.
+ * UNA SOLA FRASE. La sección tenía además una bajada, un renglón de cierre
+ * entre hairlines y el rol de cada uno debajo del nombre. Quedó la frase que
+ * importa —el desarrollo no se terceriza— y el resto se fue: quien quiera
+ * saber a qué se dedica cada uno tiene el LinkedIn ahí mismo.
  *
- * LAS FOTOS VAN DE A DOS. O están las dos o no está ninguna: un marco vacío al
- * lado de una foto rompe la simetría que la sección necesita.
+ * LO QUE NO SE INVENTA. La foto y el LinkedIn se dibujan solo cuando existen
+ * de verdad (ver SOCIOS en src/lib/sitio.ts). Sin foto no hay recuadro vacío
+ * ni silueta gris; sin LinkedIn no hay ícono muerto. Las fotos van de a dos: o
+ * están las dos o no está ninguna, porque un marco vacío al lado de una foto
+ * rompe la simetría que la sección necesita.
+ *
+ * EL CIERRE VIVE ACÁ. `children` es el CTA final, que entra debajo de los dos
+ * perfiles y dentro de esta misma sección: son las dos últimas preguntas del
+ * visitante —quién está detrás y cómo los contacto— y separarlas en dos
+ * secciones significaba dos cabeceras y dos números para una sola intención.
  *
  * El sitio no lleva logos de clientes, testimonios ni métricas de terceros, y
  * el espacio que queda libre no se rellena con prueba social.
  */
 
+import type { ReactNode } from "react";
 import Image from "next/image";
 import Seccion from "@/components/Seccion";
 import TitularRevelado from "@/components/TitularRevelado";
@@ -33,42 +41,34 @@ function Perfil({ socio }: { socio: Socio }) {
       {HAY_FOTOS && socio.foto ? (
         // Sin marco, sin sombra y sin recorte circular: un rectángulo
         // editorial con una hairline de contención, como el resto del sitio.
-        <div className="relative aspect-[4/5] w-full max-w-[20rem] overflow-hidden bg-superficie hairline hairline-t hairline-b">
+        <div className="relative aspect-[4/5] w-full max-w-[18rem] overflow-hidden bg-superficie hairline hairline-t hairline-b">
           <Image
             src={socio.foto}
             alt={socio.nombre}
             fill
-            sizes="20rem"
+            sizes="18rem"
             className="object-cover"
           />
         </div>
       ) : null}
 
-      <h3
-        className={`font-serif text-[23px] leading-tight sm:text-[26px] ${
-          HAY_FOTOS ? "mt-5" : ""
-        }`}
-      >
-        {socio.nombre}
-      </h3>
+      <div className="mt-4 flex items-center gap-3">
+        <h3 className="font-serif text-[21px] leading-tight sm:text-[23px]">
+          {socio.nombre}
+        </h3>
 
-      {socio.rol ? (
-        <p className="mt-1 text-[14px] leading-relaxed text-tinta-2">
-          {socio.rol}
-        </p>
-      ) : null}
-
-      {socio.linkedin ? (
-        <a
-          href={socio.linkedin}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={`Ver perfil de LinkedIn de ${socio.nombre}`}
-          className="enlace-linkedin mt-3 inline-flex h-11 w-11 items-center justify-center text-tinta-2"
-        >
-          <IconoLinkedIn className="h-[18px] w-[18px]" />
-        </a>
-      ) : null}
+        {socio.linkedin ? (
+          <a
+            href={socio.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Ver perfil de LinkedIn de ${socio.nombre}`}
+            className="enlace-linkedin -my-3 inline-flex h-11 w-11 items-center justify-center text-tinta-2"
+          >
+            <IconoLinkedIn className="h-[18px] w-[18px]" />
+          </a>
+        ) : null}
+      </div>
     </article>
   );
 }
@@ -76,9 +76,12 @@ function Perfil({ socio }: { socio: Socio }) {
 export default function Socios({
   numero,
   kicker,
+  children,
 }: {
   numero: string;
   kicker: string;
+  /** El CTA final, que cierra esta misma sección. */
+  children?: ReactNode;
 }) {
   return (
     <Seccion
@@ -97,26 +100,19 @@ export default function Socios({
           Quiénes estamos detrás
         </TitularRevelado>
 
-        <p className="mt-6 max-w-[46ch] font-serif text-[21px] leading-snug sm:text-[24px]">
-          Somos dos. El desarrollo no se terceriza.
+        <p className="mt-5 max-w-[42ch] text-[15px] leading-relaxed text-tinta-2 sm:text-[16px]">
+          Somos dos. Diseñamos y desarrollamos personalmente cada solución.
         </p>
 
         {/* Los dos perfiles. Dos columnas de igual ancho en desktop, apilados
-            abajo de sm. El gap es generoso a propósito: son dos personas, no
-            dos tarjetas de un catálogo. */}
-        <div
-          className={`grid grid-cols-1 gap-10 sm:grid-cols-2 sm:gap-12 ${
-            HAY_FOTOS ? "mt-12" : "mt-10"
-          }`}
-        >
+            abajo de sm. */}
+        <div className="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-2 sm:gap-12">
           {SOCIOS.map((socio) => (
             <Perfil key={socio.nombre} socio={socio} />
           ))}
         </div>
 
-        <p className="hairline hairline-t mt-10 max-w-[52ch] pt-6 text-[15px] leading-relaxed text-tinta-2">
-          La reunión de diagnóstico la toma quien después escribe el código.
-        </p>
+        {children}
       </div>
     </Seccion>
   );

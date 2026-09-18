@@ -13,24 +13,32 @@
  * número: si algún día no hubiera casos reales cargados, la sección no queda
  * vacía ni deja un agujero en la numeración. Las que siguen se corren solas.
  *
- * ERAN ONCE Y QUEDARON OCHO. Se fueron "ejemplos" —tres procesos conceptuales
- * que los casos reales dejaron sin trabajo— y "control", que era una sección
- * entera para explicar que el software pide permisos y avisa cuando no sabe:
- * eso hoy es un renglón de "cómo funciona". "Contacto" dejó de ser sección
- * propia y pasó a ser el cierre de la del diagnóstico.
+ * ERAN OCHO Y QUEDARON CINCO, Y EL ORDEN CAMBIÓ.
+ *
+ * El diagnóstico estaba último, detrás de siete secciones de explicación:
+ * era la herramienta de conversión del sitio escondida al final de una clase
+ * sobre automatización. Ahora es la 02, pegada al hero: primero qué hacemos,
+ * inmediatamente después probalo.
+ *
+ * Se fueron cuatro secciones enteras: "cómo funciona" (el mecanismo explicado
+ * con un diagrama, que los casos reales demuestran mejor), "cómo trabajamos"
+ * (cuatro etapas con sus plazos), "condiciones" (cuatro compromisos, hoy una
+ * línea bajo el CTA final) y las preguntas frecuentes. Ninguna ayudaba a
+ * entender qué hacemos, a demostrar que sabemos hacerlo ni a llegar al
+ * diagnóstico. Entró "qué hacemos", que son tres bloques de una línea.
+ *
+ * "Contacto" no es sección propia: es el cierre de la de socios, y conserva
+ * su ancla #contacto.
  */
 
 import { CASOS } from "@/lib/casos";
 
 export type IdSeccion =
   | "contenido"
-  | "como-funciona"
+  | "diagnostico"
   | "casos"
-  | "socios"
-  | "como-trabajamos"
-  | "condiciones"
-  | "faq"
-  | "diagnostico";
+  | "que-hacemos"
+  | "socios";
 
 type DefinicionSeccion = {
   id: IdSeccion;
@@ -38,15 +46,12 @@ type DefinicionSeccion = {
   kicker: string;
   /**
    * Nombre en el índice de la barra superior. Más corto que el kicker: a 11px
-   * y en mayúsculas, once nombres largos no entran en un renglón.
+   * y en mayúsculas, los nombres largos no entran en un renglón.
    */
   corto: string;
   /**
-   * Si aparece en el índice de la barra superior. Son cuatro: cómo funciona,
-   * casos, nosotros y diagnóstico. El hero no aparece —la marca de la
-   * izquierda ya vuelve ahí— y las secciones de apoyo tampoco: a 11px y en
-   * mayúsculas, una barra cargada es una barra que nadie mira. El panel de
-   * mobile las lista todas.
+   * Si aparece en el índice de la barra superior. El hero no aparece —la marca
+   * de la izquierda ya vuelve ahí—; el resto sí, que ahora son cuatro.
    */
   enIndice: boolean;
   /** Secciones que dependen de datos que todavía no existen. */
@@ -54,27 +59,22 @@ type DefinicionSeccion = {
 };
 
 /**
- * El recorrido de la home, en orden. Sigue el funnel: entender, reconocer el
- * problema, ver la solución, confiar, entender el modelo, bajar el riesgo,
- * contactar.
+ * El recorrido de la home, en orden. Cuatro preguntas y una sección para cada
+ * una: qué hacen, me sirve, ya lo hicieron, cómo empiezo.
  */
 const DEFINICIONES: DefinicionSeccion[] = [
   { id: "contenido", kicker: "Portada", corto: "Portada", enIndice: false },
-  // Se llama igual que el botón secundario del hero: el visitante toca "Ver
-  // cómo funciona" y llega a una sección que se llama así.
-  { id: "como-funciona", kicker: "Cómo funciona", corto: "Cómo funciona", enIndice: true },
-  // La prueba, apenas contado el mecanismo. Se enciende sola cuando hay casos
-  // cargados; sin casos no hay sección ni número.
-  { id: "casos", kicker: "Casos reales", corto: "Casos", enIndice: true, visible: CASOS.length > 0 },
-  { id: "socios", kicker: "Quiénes estamos detrás", corto: "Nosotros", enIndice: true },
-  { id: "como-trabajamos", kicker: "Cómo trabajamos", corto: "Proceso", enIndice: false },
-  { id: "condiciones", kicker: "Condiciones", corto: "Condiciones", enIndice: false },
-  { id: "faq", kicker: "Preguntas", corto: "Preguntas", enIndice: false },
-  // El diagnóstico y la salida son una sola sección: los dos piden lo mismo
-  // —que la persona cuente su proceso— y tenerlos separados significaba dos
-  // cabeceras y dos titulares para una sola intención. El ancla #contacto
-  // vive adentro, así que los enlaces de la barra y del pie siguen andando.
+  // La herramienta de conversión, apenas dicho qué hacemos. El visitante
+  // puede probar el producto antes de leer un solo argumento.
   { id: "diagnostico", kicker: "Diagnóstico", corto: "Diagnóstico", enIndice: true },
+  // La prueba. Se enciende sola cuando hay casos cargados; sin casos no hay
+  // sección ni número.
+  { id: "casos", kicker: "Casos reales", corto: "Casos", enIndice: true, visible: CASOS.length > 0 },
+  { id: "que-hacemos", kicker: "Qué hacemos", corto: "Qué hacemos", enIndice: true },
+  // Quiénes somos y la salida. El ancla #contacto vive adentro, así que los
+  // enlaces de la barra, del pie y del resultado del diagnóstico siguen
+  // funcionando.
+  { id: "socios", kicker: "Quiénes estamos detrás", corto: "Nosotros", enIndice: true },
 ];
 
 export type Seccion = DefinicionSeccion & {

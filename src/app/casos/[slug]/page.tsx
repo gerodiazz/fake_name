@@ -32,6 +32,7 @@ import PieDePagina from "@/components/PieDePagina";
 import Boton from "@/components/ui/Boton";
 import VideoCaso from "@/components/casos/VideoCaso";
 import { CASOS, casoPorSlug, type Flujo } from "@/lib/casos";
+import { RESUMEN_CONDICIONES } from "@/lib/condiciones";
 
 /** Las tres rutas se prerenderizan en build. No hay caso que no conozcamos. */
 export function generateStaticParams() {
@@ -339,16 +340,10 @@ export default async function PaginaDeCaso({
               ))}
             </ul>
 
+            {/* La home ya no tiene sección de condiciones: quedó en un
+                renglón debajo del CTA final, y es el mismo que va acá. */}
             <p className="mt-8 max-w-[54ch] text-[15px] leading-relaxed text-tinta-2">
-              El software queda en manos del cliente. El detalle de qué se
-              entrega y bajo qué condiciones está en{" "}
-              <Link
-                href="/#condiciones"
-                className="text-tinta underline decoration-linea underline-offset-4 transition-colors duration-100 hover:decoration-tinta-2"
-              >
-                condiciones
-              </Link>
-              .
+              {RESUMEN_CONDICIONES}
             </p>
 
             <div className="mt-10">
